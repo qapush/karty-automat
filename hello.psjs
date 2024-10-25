@@ -1,16 +1,25 @@
 const app = require('photoshop').app;
-const {openWithModal} = require('./utils');
+const { openWithModal } = require('./utils');
 const fs = require('uxp').storage.localFileSystem;
+const {executeAsModal} = require("photoshop").core;
 const SolidColor = require("photoshop").app.SolidColor;
-const db = require('./db');
 const configDat = await(fetch('./config.json'));
+const db = require('./db-test');
 const config = await configDat.json();
-const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR } = config;    
+const changeTitle = require('./changeTitle');
+const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR } = config;
+const { batchPlay } = require("photoshop").action;
+
+// COLORS
+const goldenColor = new SolidColor();
+goldenColor.rgb.red = 175;
+goldenColor.rgb.green = 134;
+goldenColor.rgb.blue = 84;
 
 
 
 
-const mainProcess = async ({id, cechy, title, subtitle}) => {
+const mainProcess = async ({ id, cechy, title, subtitle }) => {
 
     // OPEN DOCUMENTS
     await openWithModal(TEMPLATE_URL);
@@ -26,52 +35,94 @@ const mainProcess = async ({id, cechy, title, subtitle}) => {
     await decorationDocument.close('DONOTSAVECHANGES');
     await templateDocument.paste();
 
-    // DELETE ONE LEGACY CECHA LAYER
-    const chechaLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('CECHY').layers.getByName('cecha');
-    chechaLayer.delete();
 
-
-    // CECHY
-        // COLOR
-    const goldenColor = new SolidColor();
-    goldenColor.rgb.red = 163;
-    goldenColor.rgb.green = 134;
-    goldenColor.rgb.blue = 80;
-
-    // CECHY LABELS
-    for (let rightbound = 102, index = 1; index <= cechy.length; index++) {
-        const cecha = await templateDocument.createTextLayer( {name: `cecha-${index}`, position:{x: rightbound, y: 1123}, fontName: 'Lato-Bold', fontSize: 21, textColor: goldenColor});
-        cecha.textItem.contents = cechy[index - 1];
-        rightbound = cecha.bounds.right + 60;
-    }
 
     // TITLE
-        // FIRST LETTER
-    templateDocument.layers.getByName('TEKSTY').layers.getByName('TITLE').layers.getByName('PIERWSZA LITERA').layers.forEach(layer => {
-        if(layer.name === title[0].toUpperCase()) {
-            layer.visible = true;
-        } else {
-            layer.visible = false;
-        }
-    });
+    const titleLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('TYTUL');
+    await changeTitle(titleLayer.id, title);
 
-        // TITLE
-    const titleLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('TITLE').layers.getByName('title');
-    titleLayer.visible = true;
-    titleLayer.textItem.contents = title.slice(1);
 
-        // SUBTITLE
+    // SUBTITLE
+    const subtitleLayer = await templateDocument.createTextLayer({
+        contents: subtitle,
+        fontSize: 22.92,
+        fontName: 'lato',
+        position: {
+            x: titleLayer.boundsNoEffects.left + 3,
+            y: titleLayer.boundsNoEffects.bottom + 54
+        },
+        textColor: goldenColor
+    })
 
-    const subtitleLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('TITLE').layers.getByName('subtitle');
-    subtitleLayer.visible = true;
-    subtitleLayer.textItem.contents = subtitle;
+    subtitleLayer.name = "PODTYTUL";
+
+    // CECHY
+
+    for(let offset = subtitleLayer.boundsNoEffects.bottom + 12, i = 0; i < cechy.length; i++, offset += 137){
+
+        
+            const cechaLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').layers.getByName(cechy[i]);
+             
+            cechaLayer.visible = true;
+            
+            await executeAsModal( async () => {
+                await batchPlay(
+                    [
+                        {
+                            "_obj": "select",
+                            "_target": [
+                                {
+                                    "_ref": "layer",
+                                    "_name": cechy[i]
+                                }
+                            ],
+                            "makeVisible": false,
+                            "layerID": [
+                                cechaLayer.id
+                            ],
+                            "_isCommand": false
+                        },
+
+                        
+                        {
+                            "_obj": "move",
+                            "_target": [
+                               {
+                                "_ref": "layer",
+                                "_name": cechy[i]
+                               }
+                            ],
+                            "to": {
+                               "_obj": "offset",
+                               "horizontal": {
+                                  "_unit": "pixelsUnit",
+                                  "_value": 54
+                               },
+                               "vertical": {
+                                  "_unit": "pixelsUnit",
+                                  "_value": offset
+                               }
+                            },
+                            "_isCommand": false
+                         }
+    
+                    ],
+                    {}
+                );
+            }, { "commandName": "Select cecha layer" });
+            
+        
+    }
+
 
     debugger;
-    
+    return;
+
+
     // SAVE
-    const resultEntry = await fs.createEntryWithUrl(`${OUTPUT_DIR}/${id}.psd`, {overwrite: true});
-    await templateDocument.saveAs.psd(resultEntry);
-    await templateDocument.close('DONOTSAVECHANGES');
+    // const resultEntry = await fs.createEntryWithUrl(`${OUTPUT_DIR}/${id}.psd`, { overwrite: true });
+    // await templateDocument.saveAs.psd(resultEntry);
+    // await templateDocument.close('DONOTSAVECHANGES');
 }
 
 // MAIN LOOP
