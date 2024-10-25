@@ -1,0 +1,83 @@
+const app = require('photoshop').app;
+const {openWithModal} = require('./utils');
+const fs = require('uxp').storage.localFileSystem;
+const SolidColor = require("photoshop").app.SolidColor;
+const db = require('./db');
+const configDat = await(fetch('./config.json'));
+const config = await configDat.json();
+const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR } = config;    
+
+
+
+
+const mainProcess = async ({id, cechy, title, subtitle}) => {
+
+    // OPEN DOCUMENTS
+    await openWithModal(TEMPLATE_URL);
+    await openWithModal(`${SRC_DIR}/${id}.psd`);
+
+    // GET DOCUMENTS AND LAYERS
+    const decorationDocument = await app.documents.getByName(`${id}.psd`);
+    const templateDocument = await app.documents.getByName('template.psd');
+    const decorationLayer = await decorationDocument.layers.getByName(id.toString());
+
+    // COPY DECORATION LAYER
+    await decorationLayer.copy();
+    await decorationDocument.close('DONOTSAVECHANGES');
+    await templateDocument.paste();
+
+    // DELETE ONE LEGACY CECHA LAYER
+    const chechaLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('CECHY').layers.getByName('cecha');
+    chechaLayer.delete();
+
+
+    // CECHY
+        // COLOR
+    const goldenColor = new SolidColor();
+    goldenColor.rgb.red = 163;
+    goldenColor.rgb.green = 134;
+    goldenColor.rgb.blue = 80;
+
+    // CECHY LABELS
+    for (let rightbound = 102, index = 1; index <= cechy.length; index++) {
+        const cecha = await templateDocument.createTextLayer( {name: `cecha-${index}`, position:{x: rightbound, y: 1123}, fontName: 'Lato-Bold', fontSize: 21, textColor: goldenColor});
+        cecha.textItem.contents = cechy[index - 1];
+        rightbound = cecha.bounds.right + 60;
+    }
+
+    // TITLE
+        // FIRST LETTER
+    templateDocument.layers.getByName('TEKSTY').layers.getByName('TITLE').layers.getByName('PIERWSZA LITERA').layers.forEach(layer => {
+        if(layer.name === title[0].toUpperCase()) {
+            layer.visible = true;
+        } else {
+            layer.visible = false;
+        }
+    });
+
+        // TITLE
+    const titleLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('TITLE').layers.getByName('title');
+    titleLayer.visible = true;
+    titleLayer.textItem.contents = title.slice(1);
+
+        // SUBTITLE
+
+    const subtitleLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('TITLE').layers.getByName('subtitle');
+    subtitleLayer.visible = true;
+    subtitleLayer.textItem.contents = subtitle;
+
+    debugger;
+    
+    // SAVE
+    const resultEntry = await fs.createEntryWithUrl(`${OUTPUT_DIR}/${id}.psd`, {overwrite: true});
+    await templateDocument.saveAs.psd(resultEntry);
+    await templateDocument.close('DONOTSAVECHANGES');
+}
+
+// MAIN LOOP
+for (const entry of db) {
+    await mainProcess(entry);  // Await each process
+}
+
+
+
