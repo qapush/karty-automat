@@ -1,3 +1,4 @@
 config.json
 **/*.psd
+**/*.psb
 db*.js

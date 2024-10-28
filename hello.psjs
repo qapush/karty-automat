@@ -1,14 +1,17 @@
 const app = require('photoshop').app;
 const { openWithModal } = require('./utils');
 const fs = require('uxp').storage.localFileSystem;
-const {executeAsModal} = require("photoshop").core;
 const SolidColor = require("photoshop").app.SolidColor;
 const configDat = await(fetch('./config.json'));
 const db = require('./db-test');
 const config = await configDat.json();
 const changeTitle = require('./changeTitle');
 const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR } = config;
-const { batchPlay } = require("photoshop").action;
+const moveLayer = require('./moveLayer');
+const alignAtoB = require('./alignAtoB');
+const changeLineWidth = require('./changeLineWidth');
+const changePrevAreaHeight = require('./changePrevAreaHeight');
+
 
 // COLORS
 const goldenColor = new SolidColor();
@@ -20,104 +23,91 @@ goldenColor.rgb.blue = 84;
 
 
 const mainProcess = async ({ id, cechy, title, subtitle }) => {
-
+    
+    
     // OPEN DOCUMENTS
     await openWithModal(TEMPLATE_URL);
     await openWithModal(`${SRC_DIR}/${id}.psd`);
 
     // GET DOCUMENTS AND LAYERS
-    const decorationDocument = await app.documents.getByName(`${id}.psd`);
     const templateDocument = await app.documents.getByName('template.psd');
-    const decorationLayer = await decorationDocument.layers.getByName(id.toString());
+    const decorationDocument = await app.documents.getByName(`${id}.psd`);
 
     // COPY DECORATION LAYER
-    await decorationLayer.copy();
+    await decorationDocument.layers.getByName(id.toString()).copy();
     await decorationDocument.close('DONOTSAVECHANGES');
     await templateDocument.paste();
 
+    // RESIZE DECORATION
+
+    const decorationLayer = templateDocument.layers.getByName(id.toString());
+    console.error(decorationLayer.name);
+    
+    const scale = 500 / decorationLayer.boundsNoEffects.width * 100;
+    decorationLayer.scale(scale, scale);
+    
+    // ALIGN DECORATION
+
+    await alignAtoB(decorationLayer, templateDocument.layers.getByName('BGAREA'));
+
+    
 
 
-    // TITLE
+    // TITLE    
+    
     const titleLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('TYTUL');
     await changeTitle(titleLayer.id, title);
 
-
     // SUBTITLE
+
+    
     const subtitleLayer = await templateDocument.createTextLayer({
         contents: subtitle,
         fontSize: 22.92,
-        fontName: 'lato',
+        fontName: 'Lato-Regular',
         position: {
             x: titleLayer.boundsNoEffects.left + 3,
-            y: titleLayer.boundsNoEffects.bottom + 54
+            y: titleLayer.boundsNoEffects.bottom + 55
         },
         textColor: goldenColor
     })
 
     subtitleLayer.name = "PODTYTUL";
 
+    let offset = subtitleLayer.bounds.bottom + 13;
+
     // CECHY
 
-    for(let offset = subtitleLayer.boundsNoEffects.bottom + 12, i = 0; i < cechy.length; i++, offset += 137){
-
-        
-            const cechaLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').layers.getByName(cechy[i]);
-             
-            cechaLayer.visible = true;
-            
-            await executeAsModal( async () => {
-                await batchPlay(
-                    [
-                        {
-                            "_obj": "select",
-                            "_target": [
-                                {
-                                    "_ref": "layer",
-                                    "_name": cechy[i]
-                                }
-                            ],
-                            "makeVisible": false,
-                            "layerID": [
-                                cechaLayer.id
-                            ],
-                            "_isCommand": false
-                        },
-
-                        
-                        {
-                            "_obj": "move",
-                            "_target": [
-                               {
-                                "_ref": "layer",
-                                "_name": cechy[i]
-                               }
-                            ],
-                            "to": {
-                               "_obj": "offset",
-                               "horizontal": {
-                                  "_unit": "pixelsUnit",
-                                  "_value": 54
-                               },
-                               "vertical": {
-                                  "_unit": "pixelsUnit",
-                                  "_value": offset
-                               }
-                            },
-                            "_isCommand": false
-                         }
     
-                    ],
-                    {}
-                );
-            }, { "commandName": "Select cecha layer" });
-            
-        
+
+    for (const element of cechy) {
+        const cechaLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').layers.getByName(element);        
+        await moveLayer(element, cechaLayer.id, subtitleLayer.boundsNoEffects.left, offset);
+        offset += cechaLayer.boundsNoEffects.height + 13;
+        cechaLayer.visible = true;
     }
 
 
-    debugger;
-    return;
+    // CREATE PREVIEW
 
+    const previewGroup = templateDocument.layers.getByName('WYMIARY');
+    const previewalign = previewGroup.layers.getByName('previewalign');
+        // Move preview group to the bottom
+    await moveLayer(previewGroup.name, previewGroup.id, subtitleLayer.boundsNoEffects.left, offset + 13);
+        //  Create preview image by duplicate and scale it
+    const prevImage = await decorationLayer.duplicate();
+    prevImage.name = 'preview';
+    const prevScale = (previewalign.boundsNoEffects.width - 20) / prevImage.boundsNoEffects.width * 100;
+    await prevImage.scale(prevScale, prevScale);
+
+        // Change prevarea height to fit the image
+    await changePrevAreaHeight(previewalign, prevImage.boundsNoEffects.height + 20);
+        // Align image to previewalign
+    await alignAtoB(prevImage, previewalign);
+    
+    previewalign.visible = false;
+    const widthLine = previewGroup.layers.getByName('width').layers.getByName('width-line');
+    
 
     // SAVE
     // const resultEntry = await fs.createEntryWithUrl(`${OUTPUT_DIR}/${id}.psd`, { overwrite: true });
@@ -125,7 +115,7 @@ const mainProcess = async ({ id, cechy, title, subtitle }) => {
     // await templateDocument.close('DONOTSAVECHANGES');
 }
 
-// MAIN LOOP
+// MAIN LOOP 
 for (const entry of db) {
     await mainProcess(entry);  // Await each process
 }
