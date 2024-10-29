@@ -1,16 +1,22 @@
 const app = require('photoshop').app;
-const { openWithModal } = require('./utils');
 const fs = require('uxp').storage.localFileSystem;
 const SolidColor = require("photoshop").app.SolidColor;
-const configDat = await(fetch('./config.json'));
 const db = require('./db-test');
+const configDat = await(fetch('./config.json'));
 const config = await configDat.json();
-const changeTitle = require('./changeTitle');
 const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR } = config;
-const moveLayer = require('./moveLayer');
-const alignAtoB = require('./alignAtoB');
-const changeLineWidth = require('./changeLineWidth');
-const changePrevAreaHeight = require('./changePrevAreaHeight');
+
+
+// UTILS
+const openWithModal = require('./utils/openWithModal');
+const changeTitle = require('./utils/changeTitle');
+const moveLayer = require('./utils/moveLayer');
+const alignAtoB = require('./utils/alignAtoB');
+const alignAtoBhorizontal = require('./utils/alignAtoBhorizontal');
+const alignAtoBvertical = require('./utils/alignAtoBvertical');
+const changePrevAreaHeight = require('./utils/changePrevAreaHeight');
+const changePrevAreaWidth = require('./utils/changePrevAreaWidth');
+const selectLayer = require('./utils/selectLayer');
 
 
 // COLORS
@@ -20,38 +26,41 @@ goldenColor.rgb.green = 134;
 goldenColor.rgb.blue = 84;
 
 
-
-
 const mainProcess = async ({ id, cechy, title, subtitle }) => {
-    
     
     // OPEN DOCUMENTS
     await openWithModal(TEMPLATE_URL);
     await openWithModal(`${SRC_DIR}/${id}.psd`);
-
+    
     // GET DOCUMENTS AND LAYERS
     const templateDocument = await app.documents.getByName('template.psd');
     const decorationDocument = await app.documents.getByName(`${id}.psd`);
-
+    
     // COPY DECORATION LAYER
     await decorationDocument.layers.getByName(id.toString()).copy();
     await decorationDocument.close('DONOTSAVECHANGES');
     await templateDocument.paste();
-
-    // RESIZE DECORATION
-
-    const decorationLayer = templateDocument.layers.getByName(id.toString());
-    console.error(decorationLayer.name);
+    await templateDocument.activeLayers[0].move( await templateDocument.layers.getByName('TEKSTY'), constants.ElementPlacement.PLACEAFTER);
     
-    const scale = 500 / decorationLayer.boundsNoEffects.width * 100;
-    decorationLayer.scale(scale, scale);
+    // RESIZE DECORATION
+    
+    const decorationLayer = templateDocument.layers.getByName(id.toString());
+    const VERTICAL = decorationLayer.boundsNoEffects.height > decorationLayer.boundsNoEffects.width;
+    const LONG = decorationLayer.boundsNoEffects.width / decorationLayer.boundsNoEffects.height > 2;
+    let scale = null;
+
+    if( VERTICAL) {
+        scale = 500 / decorationLayer.boundsNoEffects.height * 100;
+        decorationLayer.scale(scale, scale);
+    } else {
+        scale = 500 / decorationLayer.boundsNoEffects.width * 100;
+        decorationLayer.scale(scale, scale);
+    }
+
     
     // ALIGN DECORATION
 
     await alignAtoB(decorationLayer, templateDocument.layers.getByName('BGAREA'));
-
-    
-
 
     // TITLE    
     
@@ -60,7 +69,6 @@ const mainProcess = async ({ id, cechy, title, subtitle }) => {
 
     // SUBTITLE
 
-    
     const subtitleLayer = await templateDocument.createTextLayer({
         contents: subtitle,
         fontSize: 22.92,
@@ -78,8 +86,6 @@ const mainProcess = async ({ id, cechy, title, subtitle }) => {
 
     // CECHY
 
-    
-
     for (const element of cechy) {
         const cechaLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').layers.getByName(element);        
         await moveLayer(element, cechaLayer.id, subtitleLayer.boundsNoEffects.left, offset);
@@ -87,27 +93,86 @@ const mainProcess = async ({ id, cechy, title, subtitle }) => {
         cechaLayer.visible = true;
     }
 
-
     // CREATE PREVIEW
 
     const previewGroup = templateDocument.layers.getByName('WYMIARY');
     const previewalign = previewGroup.layers.getByName('previewalign');
         // Move preview group to the bottom
-    await moveLayer(previewGroup.name, previewGroup.id, subtitleLayer.boundsNoEffects.left, offset + 13);
+    await moveLayer(previewGroup.name, previewGroup.id, subtitleLayer.boundsNoEffects.left, offset);
         //  Create preview image by duplicate and scale it
     const prevImage = await decorationLayer.duplicate();
-    prevImage.name = 'preview';
-    const prevScale = (previewalign.boundsNoEffects.width - 20) / prevImage.boundsNoEffects.width * 100;
-    await prevImage.scale(prevScale, prevScale);
+    prevImage.name = 'preview image';
+    prevImage.move( previewGroup, 'placeInside');
+    
+    if(VERTICAL){
+        console.error('VERTICAL');
+        const PREVIEWIMAGESCALE = 120 / prevImage.bounds.height * 100;
+        await selectLayer(prevImage);
+        await prevImage.scale(PREVIEWIMAGESCALE, PREVIEWIMAGESCALE);
+        await changePrevAreaHeight(previewalign, prevImage.bounds.height);
+        await changePrevAreaWidth(previewalign, prevImage.boundsNoEffects.width, 0);
+        await selectLayer(prevImage);
+        await alignAtoB(prevImage, previewalign);
 
-        // Change prevarea height to fit the image
-    await changePrevAreaHeight(previewalign, prevImage.boundsNoEffects.height + 20);
-        // Align image to previewalign
-    await alignAtoB(prevImage, previewalign);
-    
+    } else if(LONG) {
+        console.error('LONG');
+        
+        const PREVSCALE = (180) / prevImage.boundsNoEffects.width * 100;
+        await selectLayer(prevImage);
+        await prevImage.scale(PREVSCALE, PREVSCALE);
+        await changePrevAreaHeight(previewalign, prevImage.boundsNoEffects.height);
+        await selectLayer(prevImage);
+        await alignAtoB(prevImage, previewalign);
+    } else {
+        console.error('SQUARE');
+        const PREVSCALE = (105) / prevImage.boundsNoEffects.width * 100;
+        await selectLayer(prevImage);
+        await prevImage.scale(PREVSCALE, PREVSCALE);
+        await changePrevAreaHeight(previewalign, prevImage.boundsNoEffects.height);
+        await selectLayer(prevImage);
+        await alignAtoB(prevImage, previewalign);
+    }
+
     previewalign.visible = false;
-    const widthLine = previewGroup.layers.getByName('width').layers.getByName('width-line');
+
+        // WIDTH
+    const widthGroup = previewGroup.layers.getByName('width');
+    const widthLine = widthGroup.layers.getByName('width-line');
+    const widthText = widthGroup.layers.getByName('width-text');
+
+    await changePrevAreaWidth(widthLine, prevImage.boundsNoEffects.width);
+    await selectLayer(widthText);
+    await alignAtoBhorizontal(widthText, previewalign);
+    await selectLayer(widthLine);
+    await alignAtoBhorizontal(widthLine, previewalign);
+    await moveLayer(widthGroup.name, widthGroup.id, 0, previewalign.boundsNoEffects.bottom - widthGroup.boundsNoEffects.top + 10);
     
+    
+    
+        // HEIGHT
+
+    const heightGroup = await previewGroup.layers.getByName('height');
+    const heightLine = await heightGroup.layers.getByName('height-line');
+    const heightText = await heightGroup.layers.getByName('height-text');
+
+    await changePrevAreaWidth(heightLine, prevImage.boundsNoEffects.height);
+    await selectLayer(heightText);
+    await alignAtoBhorizontal(heightText, heightLine); 
+    await selectLayer(heightGroup);
+    await heightGroup.rotate(-90, constants.AnchorPosition.TOPLEFT);
+    await moveLayer(heightGroup.name, heightGroup.id, prevImage.boundsNoEffects.right - heightGroup.boundsNoEffects.left + 10, heightGroup.boundsNoEffects.height);
+
+    
+    
+    
+
+        // DEPTH
+    
+    const depthGroup = await previewGroup.layers.getByName('depth');
+    const depthLine = await depthGroup.layers.getByName('depth-line');
+    const depthText = await depthGroup.layers.getByName('depth-text');
+
+    await moveLayer(depthGroup.name, depthGroup.id, heightGroup.boundsNoEffects.right - depthGroup.boundsNoEffects.left - 15, heightGroup.boundsNoEffects.bottom - depthGroup.boundsNoEffects.bottom + 22);
 
     // SAVE
     // const resultEntry = await fs.createEntryWithUrl(`${OUTPUT_DIR}/${id}.psd`, { overwrite: true });
