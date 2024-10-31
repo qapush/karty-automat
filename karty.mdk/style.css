@@ -1,0 +1,12 @@
+body {
+    color: white;
+    padding: 0 16px;
+  }
+
+  #openAfterSave {
+    margin: 0.5rem 0;
+  }
+
+  #idField {
+    margin-top: 0.5rem;
+  }

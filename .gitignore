@@ -1,4 +1,1 @@
-config.json
-**/*.psd
-**/*.psb
-db*.js
+**/node_modules

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script
+    src="https://jspm.dev/@spectrum-web-components/bundle/elements.js"
+    type="module" async
+></script>
+  </head>
+  <style>
+    body {
+      color: white;
+      padding: 0 16px;
+    }
+  </style>
+  <body>
+    <sp-heading>Karty graficzne</sp-heading>
+    <sp-textfield id="idField" placeholder="ID dekoracji" value="130044"></sp-textfield>
+    <sp-checkbox id="openAfterSave">Otwórz kartę po wygenerowaniu</sp-checkbox>
+    <sp-button id="btnGenerate" variant="secondary">Generuj</sp-button>
+    <sp-divider></sp-divider>
+    <sp-heading size="XS">Litera dysku design</sp-heading>
+    <sp-textfield id="discLetter" value="Z"></sp-textfield>
+    <sp-accordion>
+      <sp-accordion-item label="Heading 1">
+          <div>Item 1</div>
+      </sp-accordion-item>
+      <sp-accordion-item disabled label="Heading 2">
+          <div>Item 2</div>
+      </sp-accordion-item>
+      <sp-accordion-item label="Heading 3">
+          <div>Item 3</div>
+      </sp-accordion-item>
+      <sp-accordion-item label="Heading 4">
+          <div>Item 4</div>
+      </sp-accordion-item>
+      <sp-accordion-item label="Heading 5">
+          <div>Item 5</div>
+      </sp-accordion-item>
+      <sp-accordion-item label="Heading 6">
+          <div>Item 6</div>
+      </sp-accordion-item>
+  </sp-accordion>
+  </body>
+</html>
