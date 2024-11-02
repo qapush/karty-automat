@@ -1,0 +1,92 @@
+datasource db {
+  provider = "postgresql"    // or "mysql", "sqlite", etc.
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+model Dekoracja { // Decoration
+  id                Int                     @id                    // Manually inputted ID
+  szerokosc         Float                   // Width
+  wysokosc          Float                   // Height
+  glebokosc         Float                   // Depth
+  moc               Float                   // Power
+  ilosc_led         Int                     // LED Quantity
+  typ_dekoracji     TypDekoracji?          @relation(fields: [typ_dekoracji_id], references: [id])
+  typ_dekoracji_id  String?                 // Matching the type with DecorationType's UUID `id`
+  cechy             DekoracjaCechy[]       // Features
+  przewagi          DekoracjaPrzewagi[]    // Advantages
+  tlumaczenia       DekoracjaTlumaczenie[] // Translations for titles
+}
+
+model DekoracjaTlumaczenie { // DecorationTranslation
+  id                String         @id @default(uuid()) // Auto-generated UUID
+  dekoracja        Dekoracja     @relation(fields: [dekoracja_id], references: [id])
+  dekoracja_id      Int
+  tytul             String         // Title
+  kod_jezyka        String         // Language code
+}
+
+model TypDekoracji { // DecorationType
+  id                String                     @id @default(uuid()) // Auto-generated UUID
+  tlumaczenia       TypDekoracjiTlumaczenie[] // Translations
+  dekoracje        Dekoracja[]               // Decorations
+}
+
+model TypDekoracjiTlumaczenie { // DecorationTypeTranslation
+  id                 String          @id @default(uuid()) // Auto-generated UUID
+  typ_dekoracji     TypDekoracji    @relation(fields: [typ_dekoracji_id], references: [id])
+  typ_dekoracji_id  String
+  nazwa             String           // Name
+  kod_jezyka        String           // Language code
+}
+
+model Cechy { // Feature
+  id                String                     @id @default(uuid()) // Auto-generated UUID
+  tlumaczenia       CechyTlumaczenie[]        // Translations
+  dekoracje        DekoracjaCechy[]          // Decorations
+}
+
+model CechyTlumaczenie { // FeatureTranslation
+  id                String          @id @default(uuid()) // Auto-generated UUID
+  cecha            Cechy           @relation(fields: [cecha_id], references: [id])
+  cecha_id         String
+  nazwa            String           // Name
+  kod_jezyka       String           // Language code
+}
+
+model Przewagi { // Advantage
+  id                String                     @id @default(uuid()) // Auto-generated UUID
+  tlumaczenia       PrzewagiTlumaczenie[]     // Translations
+  dekoracje        DekoracjaPrzewagi[]       // Decorations
+}
+
+model PrzewagiTlumaczenie { // AdvantageTranslation
+  id                String          @id @default(uuid()) // Auto-generated UUID
+  przewaga         Przewagi        @relation(fields: [przewaga_id], references: [id])
+  przewaga_id      String
+  nazwa            String           // Name
+  kod_jezyka       String           // Language code
+}
+
+// Join tables for decoration-feature and decoration-advantage relationships
+
+model DekoracjaCechy { // DecorationFeature
+  id                String         @id @default(uuid()) // Auto-generated UUID
+  dekoracja        Dekoracja     @relation(fields: [dekoracja_id], references: [id])
+  dekoracja_id      Int
+  cecha            Cechy         @relation(fields: [cecha_id], references: [id])
+  cecha_id         String
+}
+
+model DekoracjaPrzewagi { // DecorationAdvantage
+  id                String         @id @default(uuid()) // Auto-generated UUID
+  dekoracja        Dekoracja     @relation(fields: [dekoracja_id], references: [id])
+  dekoracja_id      Int
+  przewaga         Przewagi      @relation(fields: [przewaga_id], references: [id])
+  przewaga_id      String
+}
+
