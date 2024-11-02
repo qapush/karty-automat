@@ -6,7 +6,7 @@ export async function POST(req) {
   const { name, language } = await req.json(); // Parse JSON from the request body
 
   try {
-    const newCecha = await prisma.cechy.create({
+    const newCecha = await prisma.typDekoracji.create({
       data: {
         tlumaczenia: {
           create: {
@@ -23,10 +23,14 @@ export async function POST(req) {
   }
 }
 
+// app/api/typy/route.js
+
+
+// GET /api/typy
 export async function GET(req) {
   try {
-    // Fetch features with their translations where language code is 'pl'
-    const cechy = await prisma.cechy.findMany({
+    // Fetch decoration types with their translations where language code is 'pl'
+    const typy = await prisma.typDekoracji.findMany({
       include: {
         tlumaczenia: {
           where: { kod_jezyka: 'pl' }, // Filter for Polish translations
@@ -34,14 +38,17 @@ export async function GET(req) {
       },
     });
 
-    return new Response(JSON.stringify(cechy), {
+    return new Response(JSON.stringify(typy), {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
       },
     });
   } catch (error) {
-    console.error('Error fetching cechy:', error);
-    return new Response('Failed to fetch cechy', { status: 500 });
+    console.error('Error fetching typy:', error);
+    return new Response('Failed to fetch typy', { status: 500 });
   }
 }
+
+
+ 

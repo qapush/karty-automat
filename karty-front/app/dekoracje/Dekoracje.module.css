@@ -1,0 +1,69 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px; /* Add some space below the title */
+}
+
+.list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.listItem {
+  background: #f4f4f4;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.noFeatures {
+  text-align: center;
+  color: #888;
+}
+
+.formContainer {
+  margin-top: 30px; /* Increased space above the form */
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.label {
+  display: block; /* Ensure labels take the full width */
+  margin-bottom: 5px; /* Space below the label */
+  font-weight: bold; /* Optional: make labels bold */
+}
+
+/* Define local styles for inputs and textareas */
+.inputField,
+.textAreaField {
+  width: 100%; /* Full width for input fields */
+  padding: 10px; /* Padding for inputs */
+  margin-bottom: 15px; /* Space below each input field */
+  border: 1px solid #ccc; /* Border for inputs */
+  border-radius: 4px; /* Rounded corners */
+  box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #218838;
+}
