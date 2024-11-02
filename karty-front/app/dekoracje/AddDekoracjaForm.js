@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import styles from "./Dekoracje.module.css"; // Ensure to import the styles
+import styles from "./AddDekoracja.module.css"; // Ensure to import the styles
 
 const AddDekoracjaForm = () => {
   const [tytul, setTytul] = useState("");
@@ -11,8 +11,8 @@ const AddDekoracjaForm = () => {
   const [glebokosc, setGlebokosc] = useState("");
   const [moc, setMoc] = useState("");
   const [iloscLed, setIloscLed] = useState("");
-  const [id, setId] = useState('');
-  const [jezyk, setJezyk] = useState('pl'); // Default language set to Polish
+  const [id, setId] = useState("");
+  const [jezyk, setJezyk] = useState("pl"); // Default language set to Polish
 
   // State for fetching typy dekoracji, cechy, and przewagi
   const [typDekoracjiList, setTypDekoracjiList] = useState([]);
@@ -26,7 +26,6 @@ const AddDekoracjaForm = () => {
     // Fetch TypDekoracji, Przewagi, and Cechy
     const fetchData = async () => {
       try {
-
         const response = await fetch("/api/typy");
         const typyData = await response.json();
         const translatedTypy = typyData.map((typ) => ({
@@ -39,28 +38,31 @@ const AddDekoracjaForm = () => {
 
         setTypDekoracjiList(translatedTypy);
 
-        const przewagiResponse = await fetch('/api/przewagi');
+        const przewagiResponse = await fetch("/api/przewagi");
         const przewagiData = await przewagiResponse.json();
 
-        const translatedPrzewagi = przewagiData.map(przewaga => ({
+        const translatedPrzewagi = przewagiData.map((przewaga) => ({
           id: przewaga.id,
-          nazwa: przewaga.tlumaczenia.length > 0 ? przewaga.tlumaczenia[0].nazwa : 'Brak nazwy',
+          nazwa:
+            przewaga.tlumaczenia.length > 0
+              ? przewaga.tlumaczenia[0].nazwa
+              : "Brak nazwy",
         }));
 
         setPrzewagiList(translatedPrzewagi);
 
-        const cechyResponse = await fetch('/api/cechy');
+        const cechyResponse = await fetch("/api/cechy");
         const cechyData = await cechyResponse.json();
 
-
-        const translatedCechy = cechyData.map(cecha => ({
+        const translatedCechy = cechyData.map((cecha) => ({
           id: cecha.id,
-          nazwa: cecha.tlumaczenia.length > 0 ? cecha.tlumaczenia[0].nazwa : 'Brak nazwy',
+          nazwa:
+            cecha.tlumaczenia.length > 0
+              ? cecha.tlumaczenia[0].nazwa
+              : "Brak nazwy",
         }));
 
         setCechyList(translatedCechy);
-
-
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -73,7 +75,7 @@ const AddDekoracjaForm = () => {
     e.preventDefault();
 
     const newDekoracja = {
-      id, 
+      id,
       jezyk,
       tytul,
       typ_dekoracji: typDekoracji, // Only single selection for typ dekoracji
@@ -103,7 +105,7 @@ const AddDekoracjaForm = () => {
       console.log("Decoration added:", addedDekoracja);
 
       // Optionally reset the form or display a success message
-      setId('');
+      setId("");
       setTytul("");
       setTypDekoracji("");
       setSzerokosc("");
@@ -232,7 +234,7 @@ const AddDekoracjaForm = () => {
           Przewagi (Advantages):
           <select
             multiple
-            className={styles.inputField}
+            className={`${styles.inputField} ${styles.multiselectField}`}
             value={selectedPrzewagi}
             onChange={(e) => {
               const options = e.target.options;
@@ -252,47 +254,54 @@ const AddDekoracjaForm = () => {
               </option>
             ))}
           </select>
-          <p className={styles.label}>Wybierz 1-4 przewagi</p>
+          <p className={styles.helperText}>Wybierz 1-4 przewagi</p>{" "}
+          {/* Helper text for advantages */}
         </label>
       </div>
       <div>
-  <label className={styles.label}>
-    Cechy (Features):
-    <select
-      multiple
-      className={styles.inputField}
-      value={selectedCechy}
-      onChange={(e) => {
-        const options = e.target.options;
-        const value = [];
-        for (let i = 0; i < options.length; i++) {
-          if (options[i].selected) {
-            value.push(options[i].value);
-          }
-        }
-        // Limit the selection to a maximum of 3
-        if (value.length <= 3) {
-          setSelectedCechy(value);
-        } else {
-          alert('Możesz wybrać tylko 3 cechy.'); // Alert when more than 3 selected
-        }
-      }}
-      required
-    >
-      {cechyList.map((cecha) => (
-        <option key={cecha.id} value={cecha.id}>
-          {cecha.nazwa || 'Brak nazwy'} {/* Display name or fallback */}
-        </option>
-      ))}
-    </select>
-    <p className={styles.helperText}>Wybierz 1-3 cechy (Select 1-3 features)</p>
-  </label>
-  <select style={{margin: 50}}value={jezyk} onChange={(e) => setJezyk(e.target.value)}>
+        <label className={styles.label}>
+          Cechy (Features):
+          <select
+            multiple
+            className={styles.inputField}
+            value={selectedCechy}
+            onChange={(e) => {
+              const options = e.target.options;
+              const value = [];
+              for (let i = 0; i < options.length; i++) {
+                if (options[i].selected) {
+                  value.push(options[i].value);
+                }
+              }
+              // Limit the selection to a maximum of 3
+              if (value.length <= 3) {
+                setSelectedCechy(value);
+              } else {
+                alert("Możesz wybrać tylko 3 cechy."); // Alert when more than 3 selected
+              }
+            }}
+            required
+          >
+            {cechyList.map((cecha) => (
+              <option key={cecha.id} value={cecha.id}>
+                {cecha.nazwa || "Brak nazwy"} {/* Display name or fallback */}
+              </option>
+            ))}
+          </select>
+          <p className={styles.helperText}>
+            Wybierz 1-3 cechy (Select 1-3 features)
+          </p>
+        </label>
+        <select
+          style={{ margin: 50 }}
+          value={jezyk}
+          onChange={(e) => setJezyk(e.target.value)}
+        >
           <option value="pl">Polski</option>
           <option value="en">English</option>
           {/* Add more language options as needed */}
-      </select>
-</div>
+        </select>
+      </div>
 
       <button type="submit" className={styles.button}>
         Add Dekoracja
