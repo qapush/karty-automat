@@ -4,6 +4,8 @@ import styles from './TypyPage.module.css'; // Importing the styles
 
 const prisma = new PrismaClient();
 
+export const dynamic = 'force-dynamic'
+
 // Fetch all features (Cechy) from the database
 async function fetchTypy() {
   return await prisma.typDekoracji.findMany({

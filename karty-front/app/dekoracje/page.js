@@ -2,6 +2,8 @@ import styles from './Dekoracje.module.css'; // Importing the CSS module
 import AddDekoracjaForm from './AddDekoracjaForm';
 import { fetchDecorations } from '../../lib/fetchDecorations'; // Adjust the import path as necessary
 
+export const dynamic = 'force-dynamic'
+
 export default async function DekoracjePage() {
   // Fetch decorations
   const dekoracjeResponse = await fetchDecorations();

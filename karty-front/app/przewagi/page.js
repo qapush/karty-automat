@@ -2,6 +2,8 @@ import { PrismaClient } from '@prisma/client';
 import AddPrzewagaForm from './AddPrzewagaForm';
 import styles from './PrzewagiPage.module.css'; // Importing the styles
 
+export const dynamic = 'force-dynamic'
+
 const prisma = new PrismaClient();
 
 // Fetch all features (Cechy) from the database
