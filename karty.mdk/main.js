@@ -92,7 +92,7 @@ goldenColor.rgb.green = 134;
 goldenColor.rgb.blue = 84;
 
 
-const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy }) => {
+const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
 
   // OPEN DOCUMENTS
  
@@ -214,6 +214,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy })
 
   await changePrevAreaWidth(widthLine, prevImage.boundsNoEffects.width);
   await selectLayer(widthText);
+  widthText.textItem.contents = szerokosc  + ' M';
   await alignAtoBhorizontal(widthText, previewalign);
   await selectLayer(widthLine);
   await alignAtoBhorizontal(widthLine, previewalign);
@@ -229,6 +230,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy })
 
   await changePrevAreaWidth(heightLine, prevImage.boundsNoEffects.height);
   await selectLayer(heightText);
+  heightText.textItem.contents = wysokosc  + ' M';
   await alignAtoBhorizontal(heightText, heightLine);
   await selectLayer(heightGroup);
   await heightGroup.rotate(-90, constants.AnchorPosition.TOPLEFT);
@@ -239,6 +241,8 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy })
   // DEPTH
 
   const depthGroup = await previewGroup.layers.getByName('depth');
+  const depthText = await depthGroup.layers.getByName('depth-text');
+  depthText.textItem.contents = glebokosc + ' M';
   await moveLayer(depthGroup.name, depthGroup.id, heightGroup.boundsNoEffects.right - depthGroup.boundsNoEffects.left - 15, heightGroup.boundsNoEffects.bottom - depthGroup.boundsNoEffects.bottom + 22);
 
   // ID
