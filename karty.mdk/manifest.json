@@ -103,7 +103,8 @@
     "network": {
       "domains": [
         "https://dekoracjebaz.byst.re",
-        "https://jspm.dev/@spectrum-web-components/bundle/elements.js"
+        "https://jspm.dev/@spectrum-web-components/bundle/elements.js",
+        "https://karty-automat.vercel.app/api/dekoracje/*"
       ]
     }
   },

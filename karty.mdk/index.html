@@ -1,46 +1,167 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="main.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <script
-    src="https://jspm.dev/@spectrum-web-components/bundle/elements.js"
-    type="module" async
-></script>
-  </head>
-  <style>
-    body {
-      color: white;
-      padding: 0 16px;
+
+<head>
+  <script src="main.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://jspm.dev/@spectrum-web-components/bundle/elements.js" type="module" async></script>
+</head>
+<style>
+  @media (prefers-color-scheme: dark),
+  (prefers-color-scheme: darkest) {
+    label {
+      color: #E0E0E0;
     }
-  </style>
-  <body>
-    <sp-heading>Karty graficzne</sp-heading>
-    <sp-textfield id="idField" placeholder="ID dekoracji" value="130044"></sp-textfield>
+  }
+
+
+
+  /* dialog styles */
+  :not(.xd) dialog {
+    width: 480px;
+    height: 240px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+
+  :not(.xd) dialog form {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+  }
+
+  :not(.xd) dialog form>* {
+    flex: 0 0 auto;
+    margin: 8px;
+  }
+
+  .xd dialog form sp-divider {
+    width: calc(100% - 16px);
+  }
+
+  dialog form sp-body {
+    flex: 1 1 auto;
+  }
+
+
+  .wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    display: flex;
+    padding: 12px;
+  }
+
+  .xd .wrapper {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* tabs */
+  .sp-tabs {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 2px solid #3E3E3E;
+  }
+
+  .sp-tab {
+    margin-right: 12px;
+  }
+
+  .sp-tab sp-label {
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .sp-tab:hover sp-label {
+    color: white;
+  }
+
+  .sp-tab.selected {
+    border-bottom: 2px solid white;
+    margin-bottom: -2px;
+  }
+
+  .sp-tab.selected sp-label {
+    color: white;
+  }
+
+  @media (prefers-color-scheme: light),
+  (prefers-color-scheme: lightest) {
+    .sp-tabs {
+      border-bottom: 2px solid #B8B8B8;
+    }
+
+    .sp-tab sp-label {
+      color: rgba(0, 0, 0, 0.66);
+    }
+
+    .sp-tab:hover sp-label {
+      color: black;
+    }
+
+    .sp-tab.selected {
+      border-bottom: 2px solid black;
+    }
+
+    .sp-tab.selected sp-label {
+      color: black;
+    }
+  }
+
+  .sp-tab-page {
+    display: none;
+    flex: 1 1 auto;
+    overflow: scroll;
+    padding: 12px 0;
+    flex-direction: column;
+  }
+
+  .sp-tab-page.visible {
+    display: flex;
+  }
+
+  .sp-tab-page>* {
+    flex: 0 0 auto;
+  }
+</style>
+<style>
+  body {
+    color: white;
+    padding: 0 16px;
+  }
+</style>
+
+<body>
+  <div class="sp-tabs">
+    <div class="sp-tab selected" id="sp-spectrum-typography-tab"><sp-label>Główna</sp-label></div>
+    <div class="sp-tab" id="sp-spectrum-widgets-tab"><sp-label>Ustawienia</sp-label></div>
+  </div>
+
+  <div class="sp-tab-page" id="sp-spectrum-typography-tab">
+    <sp-heading>Generuj kartę dla ID</sp-heading>
+    <sp-textfield id="idField" placeholder="ID dekoracji" value=""></sp-textfield>
     <sp-checkbox id="openAfterSave">Otwórz kartę po wygenerowaniu</sp-checkbox>
     <sp-button id="btnGenerate" variant="secondary">Generuj</sp-button>
-    <sp-divider></sp-divider>
-    <sp-heading size="XS">Litera dysku design</sp-heading>
-    <sp-textfield id="discLetter" value="Z"></sp-textfield>
-    <sp-accordion>
-      <sp-accordion-item label="Heading 1">
-          <div>Item 1</div>
-      </sp-accordion-item>
-      <sp-accordion-item disabled label="Heading 2">
-          <div>Item 2</div>
-      </sp-accordion-item>
-      <sp-accordion-item label="Heading 3">
-          <div>Item 3</div>
-      </sp-accordion-item>
-      <sp-accordion-item label="Heading 4">
-          <div>Item 4</div>
-      </sp-accordion-item>
-      <sp-accordion-item label="Heading 5">
-          <div>Item 5</div>
-      </sp-accordion-item>
-      <sp-accordion-item label="Heading 6">
-          <div>Item 6</div>
-      </sp-accordion-item>
-  </sp-accordion>
-  </body>
+  </div>
+
+  <div class="sp-tab-page" id="sp-spectrum-widgets-tab-page">
+    <sp-heading>Litera dysku design</sp-heading>
+    <sp-body id="designLetter"></sp-body>
+    <sp-textfield id="discLetter"></sp-textfield>
+    <br>
+    <sp-button id="btnChangeDesignLetter" variant="secondary">Ustaw</sp-button>
+  </div>
+
+
+</body>
+
 </html>

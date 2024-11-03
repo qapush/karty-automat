@@ -1,8 +1,46 @@
 const { entrypoints } = require("uxp");
 
+
+// PANEL 
+
+Array.from(document.querySelectorAll(".sp-tab")).forEach(theTab => {
+  theTab.onclick = () => {
+    localStorage.setItem("currentTab", theTab.getAttribute("id"));
+    Array.from(document.querySelectorAll(".sp-tab")).forEach(aTab => {
+      if (aTab.getAttribute("id") === theTab.getAttribute("id")) {
+        aTab.classList.add("selected");
+      } else {
+        aTab.classList.remove("selected");
+      }
+    });
+    Array.from(document.querySelectorAll(".sp-tab-page")).forEach(tabPage => {
+      if (tabPage.getAttribute("id").startsWith(theTab.getAttribute("id"))) {
+        tabPage.classList.add("visible");
+      } else {
+        tabPage.classList.remove("visible");
+      }
+    });
+  }
+});
+
+const designLetter = () => localStorage.getItem('designLetter') ?
+                      `Ustawiona teraz: ${localStorage.getItem('designLetter')}` :
+                      `Nie ustawiono, zmień poniżej`;
+
+document.getElementById('designLetter').innerText = designLetter();
+
+
+document.getElementById('btnChangeDesignLetter').addEventListener('click', () =>{
+  localStorage.setItem('designLetter', document.getElementById('discLetter').value);
+  document.getElementById('designLetter').innerText = designLetter();
+});
+
 showAlert = () => {
   alert("This is an alert message");
 }
+
+
+
 
 entrypoints.setup({
   plugin: async () => {
@@ -19,6 +57,11 @@ entrypoints.setup({
 
 
 
+
+
+
+
+
 const app = require('photoshop').app;
 const constants = require('photoshop').constants;
 const fs = require('uxp').storage.localFileSystem;
@@ -27,7 +70,7 @@ const db = require('./db');
 
 
 const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR } = config;
-const BASEURL = document.getElementById('discLetter').value + ':/';
+const BASEURL = localStorage.getItem('designLetter') + ':/';
 
 
 // UTILS
@@ -49,7 +92,7 @@ goldenColor.rgb.green = 134;
 goldenColor.rgb.blue = 84;
 
 
-const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, bg }) => {
+const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy }) => {
 
   // OPEN DOCUMENTS
  
@@ -212,15 +255,18 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, b
   // PRZEWAGI
 
   const cecha1 = templateDocument.layers.getByName('TEKSTY').layers.getByName('CECHY').layers.getByName('CECHA_1');
-  cecha1.textItem.contents = cechy[0];
+  cecha1.textItem.contents = cechy[0].replace(/\\r/g, '\r');
 
   if (cechy.length > 1) {
     let i = 2
     let cechaOffset = cecha1.bounds.right + 40;
     for (const element of cechy.slice(1)) {
+     
+      
       const cecha = await cecha1.duplicate();
       cecha.name = `CECHA_${i}`;
-      cecha.textItem.contents = element;
+  
+      cecha.textItem.contents = element.replace(/\\r/g, '\r');
       await selectLayer(cecha);
       await moveLayer(cecha.name, cecha.id, cechaOffset - cecha.bounds.left, 0);
       cechaOffset += cecha.boundsNoEffects.width + 40;
@@ -228,8 +274,8 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, b
   }
 
   // BG
-  if (templateDocument.layers.getByName('BGS').layers.getByName(bg)) {
-    const bgLayer = templateDocument.layers.getByName('BGS').layers.getByName(bg);
+  if (templateDocument.layers.getByName('BGS').layers.getByName(subtitle)) {
+    const bgLayer = templateDocument.layers.getByName('BGS').layers.getByName(subtitle);
     bgLayer.visible = true;
     templateDocument.layers.getByName('BGAREA').visible = false;
   }
@@ -237,9 +283,9 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, b
 
 
   // SAVE
-  console.log(`${document.getElementById('discLetter').value}:/${OUTPUT_DIR}/${id}.psd`);
+
   
-  const resultEntry = await fs.createEntryWithUrl(`${document.getElementById('discLetter').value}:/${OUTPUT_DIR}/${id}.psd`, { overwrite: true });
+  const resultEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${OUTPUT_DIR}/${id}.psd`, { overwrite: true });
   await templateDocument.saveAs.psd(resultEntry);
   await templateDocument.close('DONOTSAVECHANGES');
 
@@ -253,9 +299,8 @@ async function mainLoop() {
   if (document.getElementById('idField').value) {
 
     const id = document.getElementById('idField').value;
-    const data = await fetch('https://dekoracjebaz.byst.re');
-    const res = await data.json();
-    const element = res.filter(entry => entry.id === Number(id))[0];
+    const data = await fetch(`https://karty-automat.vercel.app/api/dekoracje/${id}`);
+    const element = await data.json();
  
     if(!element){
       alert('PM nie dodał jeszcze tego ID do bazy');

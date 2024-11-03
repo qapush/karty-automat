@@ -31,7 +31,7 @@ module.exports = async function (layerId, title) {
          ],
          to: {
             _obj: "textLayer",
-            textKey: title,
+            textKey: title.replace(/\\r/g, '\r'),
             warp: {
                _obj: "warp",
                warpStyle: {
