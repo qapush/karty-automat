@@ -269,13 +269,7 @@ async function mainLoop() {
     }
 
   } else {
-    for (const entry of db.slice(db.length - 1)) {
-      try {
-        await dowthModal(() => mainProcess(entry));
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    return;
   }
 
 }
