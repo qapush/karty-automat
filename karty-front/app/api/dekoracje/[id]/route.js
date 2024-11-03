@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export async function GET(request, { params }) {
   const { id } = await params;
-  console.log(id);
+
 
   try {
     // Fetch the dekoracja by ID
@@ -41,6 +41,9 @@ export async function GET(request, { params }) {
       cechy: dekoracja.cechy.map( i => {
         return i.cecha.tlumaczenia[0].nazwa
       }),
+      szerokosc: dekoracja.szerokosc,
+      wysokosc: dekoracja.wysokosc,
+      glebokosc: dekoracja.glebokosc
 
     };
 
