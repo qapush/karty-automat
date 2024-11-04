@@ -70,7 +70,7 @@ const db = require('./db');
 
 
 const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR } = config;
-const BASEURL = localStorage.getItem('designLetter') + ':/';
+
 
 
 // UTILS
@@ -93,7 +93,9 @@ goldenColor.rgb.blue = 84;
 
 
 const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
-
+  console.log('sss');
+  
+  const BASEURL = localStorage.getItem('designLetter') + ':/';
   // OPEN DOCUMENTS
  
   await openWithModal(BASEURL + TEMPLATE_URL);
@@ -137,6 +139,8 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   // TITLE    
 
   const titleLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('TYTUL');
+  console.log(title);
+  
   await changeTitle(titleLayer.id, title);
 
   // SUBTITLE
@@ -259,7 +263,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   // PRZEWAGI
 
   const cecha1 = templateDocument.layers.getByName('TEKSTY').layers.getByName('CECHY').layers.getByName('CECHA_1');
-  cecha1.textItem.contents = cechy[0].replace(/\\r/g, '\r');
+  cecha1.textItem.contents = cechy[0].replace(/\n/g, '\r');
 
   if (cechy.length > 1) {
     let i = 2
@@ -270,7 +274,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
       const cecha = await cecha1.duplicate();
       cecha.name = `CECHA_${i}`;
   
-      cecha.textItem.contents = element.replace(/\\r/g, '\r');
+      cecha.textItem.contents = element.replace(/\n/g, '\r');
       await selectLayer(cecha);
       await moveLayer(cecha.name, cecha.id, cechaOffset - cecha.bounds.left, 0);
       cechaOffset += cecha.boundsNoEffects.width + 40;

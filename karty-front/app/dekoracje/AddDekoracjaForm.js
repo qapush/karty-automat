@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import styles from "./AddDekoracja.module.css"; // Ensure to import the styles
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 const AddDekoracjaForm = () => {
   const [tytul, setTytul] = useState("");
@@ -118,6 +120,8 @@ const AddDekoracjaForm = () => {
     } catch (error) {
       console.error("Error:", error);
     }
+
+    redirect('/dekoracje')
   };
 
   return (
@@ -137,13 +141,8 @@ const AddDekoracjaForm = () => {
       <div>
         <label className={styles.label}>
           Tytuł (Title):
-          <input
-            type="text"
-            className={styles.inputField}
-            value={tytul}
-            onChange={(e) => setTytul(e.target.value)}
-            required
-          />
+          <textarea onChange={(e) => setTytul(e.target.value)} value={tytul} className={styles.inputField} required>
+          </textarea>
         </label>
       </div>
       <div>

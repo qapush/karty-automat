@@ -5,6 +5,8 @@ const {batchPlay} = require("photoshop").action;
 
 
 module.exports = async function (layerId, title) {
+   
+   
    await executeAsModal( async () => batchPlay( [
       {
           "_obj": "select",
@@ -31,7 +33,7 @@ module.exports = async function (layerId, title) {
          ],
          to: {
             _obj: "textLayer",
-            textKey: title.replace(/\\r/g, '\r'),
+            textKey: title.replace(/\n/g, '\r'),
             warp: {
                _obj: "warp",
                warpStyle: {

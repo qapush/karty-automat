@@ -27,8 +27,8 @@ export default async function CechyPage() {
       {cechy.length > 0 ? (
         <ul className={styles.list}>
           {cechy.map((cecha) => (
-            <li key={cecha.id} className={styles.listItem}>
-              {cecha.tlumaczenia[0]?.nazwa || 'No name available'}
+            <li key={cecha.id} className={styles.listItem} dangerouslySetInnerHTML={{__html: cecha.tlumaczenia[0]?.nazwa.replace(/\n/g, '<br/>') || 'No name available'}}>
+              
             </li>
           ))}
         </ul>

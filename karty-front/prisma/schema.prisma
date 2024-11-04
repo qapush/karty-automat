@@ -8,85 +8,86 @@ generator client {
 }
 
 
-model Dekoracja { // Decoration
-  id                Int                     @id                    // Manually inputted ID
-  szerokosc         Float                   // Width
-  wysokosc          Float                   // Height
-  glebokosc         Float                   // Depth
-  moc               Float                   // Power
-  ilosc_led         Int                     // LED Quantity
-  typ_dekoracji     TypDekoracji?          @relation(fields: [typ_dekoracji_id], references: [id])
-  typ_dekoracji_id  String?                 // Matching the type with DecorationType's UUID `id`
-  cechy             DekoracjaCechy[]       // Features
-  przewagi          DekoracjaPrzewagi[]    // Advantages
-  tlumaczenia       DekoracjaTlumaczenie[] // Translations for titles
+model Dekoracja {
+  id                Int                     @id
+  szerokosc         Float
+  wysokosc          Float
+  glebokosc         Float
+  moc               Float
+  ilosc_led         Int
+  typ_dekoracji     TypDekoracji?           @relation(fields: [typ_dekoracji_id], references: [id], onDelete: SetNull)
+  typ_dekoracji_id  String?
+  cechy             DekoracjaCechy[]        // Features
+  przewagi          DekoracjaPrzewagi[]     // Advantages
+  tlumaczenia       DekoracjaTlumaczenie[]  // Translations for titles
 }
 
-model DekoracjaTlumaczenie { // DecorationTranslation
-  id                String         @id @default(uuid()) // Auto-generated UUID
-  dekoracja        Dekoracja     @relation(fields: [dekoracja_id], references: [id])
+model DekoracjaTlumaczenie {
+  id                String         @id @default(uuid())
+  dekoracja         Dekoracja      @relation(fields: [dekoracja_id], references: [id], onDelete: Cascade)
   dekoracja_id      Int
-  tytul             String         // Title
-  kod_jezyka        String         // Language code
+  tytul             String
+  kod_jezyka        String
 }
 
-model TypDekoracji { // DecorationType
-  id                String                     @id @default(uuid()) // Auto-generated UUID
-  tlumaczenia       TypDekoracjiTlumaczenie[] // Translations
-  dekoracje        Dekoracja[]               // Decorations
+model TypDekoracji {
+  id                String                     @id @default(uuid())
+  tlumaczenia       TypDekoracjiTlumaczenie[]  // Translations
+  dekoracje         Dekoracja[]                // Decorations
 }
 
-model TypDekoracjiTlumaczenie { // DecorationTypeTranslation
-  id                 String          @id @default(uuid()) // Auto-generated UUID
-  typ_dekoracji     TypDekoracji    @relation(fields: [typ_dekoracji_id], references: [id])
-  typ_dekoracji_id  String
-  nazwa             String           // Name
-  kod_jezyka        String           // Language code
+model TypDekoracjiTlumaczenie {
+  id                 String          @id @default(uuid())
+  typ_dekoracji      TypDekoracji    @relation(fields: [typ_dekoracji_id], references: [id], onDelete: Cascade)
+  typ_dekoracji_id   String
+  nazwa              String
+  kod_jezyka         String
 }
 
-model Cechy { // Feature
-  id                String                     @id @default(uuid()) // Auto-generated UUID
-  tlumaczenia       CechyTlumaczenie[]        // Translations
-  dekoracje        DekoracjaCechy[]          // Decorations
+model Cechy {
+  id                String                     @id @default(uuid())
+  tlumaczenia       CechyTlumaczenie[]         // Translations
+  dekoracje         DekoracjaCechy[]           // Decorations
 }
 
-model CechyTlumaczenie { // FeatureTranslation
-  id                String          @id @default(uuid()) // Auto-generated UUID
-  cecha            Cechy           @relation(fields: [cecha_id], references: [id])
-  cecha_id         String
-  nazwa            String           // Name
-  kod_jezyka       String           // Language code
+model CechyTlumaczenie {
+  id                String          @id @default(uuid())
+  cecha             Cechy           @relation(fields: [cecha_id], references: [id], onDelete: Cascade)
+  cecha_id          String
+  nazwa             String
+  kod_jezyka        String
 }
 
-model Przewagi { // Advantage
-  id                String                     @id @default(uuid()) // Auto-generated UUID
-  tlumaczenia       PrzewagiTlumaczenie[]     // Translations
-  dekoracje        DekoracjaPrzewagi[]       // Decorations
+model Przewagi {
+  id                String                     @id @default(uuid())
+  tlumaczenia       PrzewagiTlumaczenie[]      // Translations
+  dekoracje         DekoracjaPrzewagi[]        // Decorations
 }
 
-model PrzewagiTlumaczenie { // AdvantageTranslation
-  id                String          @id @default(uuid()) // Auto-generated UUID
-  przewaga         Przewagi        @relation(fields: [przewaga_id], references: [id])
-  przewaga_id      String
-  nazwa            String           // Name
-  kod_jezyka       String           // Language code
+model PrzewagiTlumaczenie {
+  id                String          @id @default(uuid())
+  przewaga          Przewagi        @relation(fields: [przewaga_id], references: [id], onDelete: Cascade)
+  przewaga_id       String
+  nazwa             String
+  kod_jezyka        String
 }
 
 // Join tables for decoration-feature and decoration-advantage relationships
 
-model DekoracjaCechy { // DecorationFeature
-  id                String         @id @default(uuid()) // Auto-generated UUID
-  dekoracja        Dekoracja     @relation(fields: [dekoracja_id], references: [id])
+model DekoracjaCechy {
+  id                String         @id @default(uuid())
+  dekoracja         Dekoracja      @relation(fields: [dekoracja_id], references: [id], onDelete: Cascade)
   dekoracja_id      Int
-  cecha            Cechy         @relation(fields: [cecha_id], references: [id])
-  cecha_id         String
+  cecha             Cechy          @relation(fields: [cecha_id], references: [id], onDelete: Cascade)
+  cecha_id          String
 }
 
-model DekoracjaPrzewagi { // DecorationAdvantage
-  id                String         @id @default(uuid()) // Auto-generated UUID
-  dekoracja        Dekoracja     @relation(fields: [dekoracja_id], references: [id])
+model DekoracjaPrzewagi {
+  id                String         @id @default(uuid())
+  dekoracja         Dekoracja      @relation(fields: [dekoracja_id], references: [id], onDelete: Cascade)
   dekoracja_id      Int
-  przewaga         Przewagi      @relation(fields: [przewaga_id], references: [id])
-  przewaga_id      String
+  przewaga          Przewagi       @relation(fields: [przewaga_id], references: [id], onDelete: Cascade)
+  przewaga_id       String
 }
+
 

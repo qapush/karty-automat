@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import styles from './CechyPage.module.css'; // Ensure you have the correct styles if you need them
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 const AddCechaForm = () => {
   const [name, setName] = useState('');
@@ -9,7 +11,7 @@ const AddCechaForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       const response = await fetch('/api/cechy', {
         method: 'POST',
@@ -31,6 +33,7 @@ const AddCechaForm = () => {
     } catch (error) {
       console.error('Error:', error);
     }
+    redirect('/cechy');
   };
 
   return (
@@ -38,12 +41,10 @@ const AddCechaForm = () => {
       <div>
         <label className={styles.label}>
           Nazwa (Name):
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+          <textarea onChange={(e) => setName(e.target.value)}
+            required value={name}>
+            
+          </textarea>
         </label>
       </div>
       <div>

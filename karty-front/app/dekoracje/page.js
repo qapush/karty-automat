@@ -38,11 +38,14 @@ export default async function DekoracjePage() {
             {dekoracje.map((dekoracja) => (
               <tr key={dekoracja.id}>
                 <td>{dekoracja.id}</td>
-                <td>
-                  {dekoracja.tlumaczenia.length > 0
-                    ? dekoracja.tlumaczenia[0].tytul
-                    : "No title available"}
-                </td>
+                <td
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      dekoracja.tlumaczenia.length > 0
+                        ? dekoracja.tlumaczenia[0].tytul.replace(/\n/g, '<br />')
+                        : "No title available",
+                  }}
+                ></td>
                 <td>{dekoracja.typ_dekoracji.tlumaczenia[0].nazwa}</td>
                 <td>
                   {dekoracja.szerokosc} x {dekoracja.wysokosc} x{" "}
@@ -55,14 +58,15 @@ export default async function DekoracjePage() {
                   {dekoracja.cechy.length > 0 ? (
                     <ul>
                       {dekoracja.cechy.map((dekoracjaCecha) => (
-                        <li key={dekoracjaCecha.id}>
-                          {dekoracjaCecha.cecha.tlumaczenia.length > 0
-                            ? dekoracjaCecha.cecha.tlumaczenia[0].nazwa.replace(
-                                /\\r/g,
-                                " "
-                              ) // Replace literal "\r" with a space
-                            : "No feature name"}
-                        </li>
+                        <li key={dekoracjaCecha.id}
+                          dangerouslySetInnerHTML={{
+                            __html:
+                              dekoracjaCecha.cecha.tlumaczenia.length > 0
+                                ? dekoracjaCecha.cecha.tlumaczenia[0].nazwa.replace(/\n/g, '<br />')
+                                : "No feature name"
+                          }}
+                        ></li>
+
                       ))}
                     </ul>
                   ) : (
