@@ -1,8 +1,8 @@
-import styles from "./Dekoracje.module.css"; // Importing the CSS module
-import AddDekoracjaForm from "./AddDekoracjaForm";
-import { fetchDecorations } from "../../lib/fetchDecorations";
+import styles from './Dekoracje.module.css'; // Importing the CSS module
+import AddDekoracjaForm from './AddDekoracjaForm';
+import { fetchDecorations } from '../../lib/fetchDecorations';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export default async function DekoracjePage() {
   // Fetch decorations
@@ -10,7 +10,7 @@ export default async function DekoracjePage() {
 
   // Check if the response is okay
   if (!dekoracjeResponse.ok) {
-    console.error("Failed to fetch decorations");
+    console.error('Failed to fetch decorations');
     return <p className={styles.noFeatures}>Brak dekoracji do wyświetlenia.</p>;
   }
 
@@ -41,15 +41,13 @@ export default async function DekoracjePage() {
                 <td
                   dangerouslySetInnerHTML={{
                     __html:
-                      dekoracja.tlumaczenia.length > 0
-                        ? dekoracja.tlumaczenia[0].tytul.replace(/\n/g, '<br />')
-                        : "No title available",
-                  }}
-                ></td>
-                <td>{dekoracja.typ_dekoracji.tlumaczenia[0].nazwa}</td>
+                      dekoracja?.tlumaczenia.length > 0
+                        ? dekoracja?.tlumaczenia[0].tytul.replace(/\n/g, '<br />')
+                        : 'No title available',
+                  }}></td>
+                <td>{dekoracja.typ_dekoracji?.tlumaczenia[0].nazwa}</td>
                 <td>
-                  {dekoracja.szerokosc} x {dekoracja.wysokosc} x{" "}
-                  {dekoracja.glebokosc}
+                  {dekoracja.szerokosc} x {dekoracja.wysokosc} x {dekoracja.glebokosc}
                 </td>
                 <td>{dekoracja.moc}W</td>
                 <td>{dekoracja.ilosc_led}</td>
@@ -58,19 +56,21 @@ export default async function DekoracjePage() {
                   {dekoracja.cechy.length > 0 ? (
                     <ul>
                       {dekoracja.cechy.map((dekoracjaCecha) => (
-                        <li key={dekoracjaCecha.id}
+                        <li
+                          key={dekoracjaCecha.id}
                           dangerouslySetInnerHTML={{
                             __html:
-                              dekoracjaCecha.cecha.tlumaczenia.length > 0
-                                ? dekoracjaCecha.cecha.tlumaczenia[0].nazwa.replace(/\n/g, '<br />')
-                                : "No feature name"
-                          }}
-                        ></li>
-
+                              dekoracjaCecha.cecha?.tlumaczenia.length > 0
+                                ? dekoracjaCecha.cecha?.tlumaczenia[0].nazwa.replace(
+                                    /\n/g,
+                                    '<br />',
+                                  )
+                                : 'No feature name',
+                          }}></li>
                       ))}
                     </ul>
                   ) : (
-                    "No features"
+                    'No features'
                   )}
                 </td>
 
@@ -79,14 +79,14 @@ export default async function DekoracjePage() {
                     <ul>
                       {dekoracja.przewagi.map((dekoracjaPrzewaga) => (
                         <li key={dekoracjaPrzewaga.id}>
-                          {dekoracjaPrzewaga.przewaga.tlumaczenia.length > 0
-                            ? dekoracjaPrzewaga.przewaga.tlumaczenia[0].nazwa
-                            : "No advantage name"}
+                          {dekoracjaPrzewaga.przewaga?.tlumaczenia.length > 0
+                            ? dekoracjaPrzewaga.przewaga?.tlumaczenia[0].nazwa
+                            : 'No advantage name'}
                         </li>
                       ))}
                     </ul>
                   ) : (
-                    "No advantages"
+                    'No advantages'
                   )}
                 </td>
               </tr>

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "130001",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA",
+      "szerokosc": "0",
+      "wysokosc": "3.1",
+      "glebokosc": "0",
+      "led": "700",
+      "moc": "78.8"
+    }
+  },
+  {
+    "id": "130002",
+    "decorationData": {
+      "nazwa": "ORNAMENT ZE ŚNIEŻYNKĄ",
+      "szerokosc": "0",
+      "wysokosc": "2.2",
+      "glebokosc": "0",
+      "led": "700",
+      "moc": "58"
+    }
+  }
+]
