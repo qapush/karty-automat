@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import fs from 'fs/promises'; // Use promises API to handle async file reading
 
 const prisma = new PrismaClient();
 
@@ -39,35 +40,20 @@ async function addDekoracjaEntries(dekoracjaArray) {
   }
 }
 
-// Example data array
-const dekoracjaArray = [
-  {
-    id: '130001',
-    decorationData: {
-      nazwa: 'ŚNIEŻYNKA',
-      szerokosc: '0',
-      wysokosc: '3.1',
-      glebokosc: '0',
-      led: '700',
-      moc: '78.8',
-    },
-  },
-  {
-    id: '130002',
-    decorationData: {
-      nazwa: 'ORNAMENT ZE ŚNIEŻYNKĄ',
-      szerokosc: '0',
-      wysokosc: '2.2',
-      glebokosc: '0',
-      led: '700',
-      moc: '58',
-    },
-  },
-];
+async function main() {
+  try {
+    // Read and parse JSON data from the file
+    const data = await fs.readFile('./decoration_results.json', 'utf-8');
+    const dekoracjaArray = JSON.parse(data);
 
-// Run the function
-addDekoracjaEntries(dekoracjaArray)
-  .catch((error) => console.error('Error:', error))
-  .finally(async () => {
+    // Call the function with parsed data
+    await addDekoracjaEntries(dekoracjaArray);
+  } catch (error) {
+    console.error('Error reading or parsing decoration_results.json:', error);
+  } finally {
     await prisma.$disconnect();
-  });
+  }
+}
+
+// Run the main function
+main();
