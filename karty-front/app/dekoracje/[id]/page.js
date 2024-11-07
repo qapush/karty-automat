@@ -1,12 +1,10 @@
 "use client";
 
 import React, { useState, useEffect, use } from "react";
-import { useRouter } from "next/navigation";
 import styles from "./dekoracja.module.css";
 
 export default function EditDekoracjaPage(props) {
   const params = use(props.params);
-  const router = useRouter();
   const { id } = params; // Using props.params directly here
 
   const [dekoracja, setDekoracja] = useState(null);
@@ -129,7 +127,7 @@ export default function EditDekoracjaPage(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     // Prepare the form data to be in the expected format for the backend
     const updatedData = {
       title: formData.title,
@@ -161,10 +159,13 @@ export default function EditDekoracjaPage(props) {
       }
 
       // Redirect or show a success message
-      router.push("/dekoracje");
+      
     } catch (err) {
       setError(err.message);
     }
+    console.log('refresh');
+    location.reload();
+    
   };
 
   if (loading) return <p>Loading...</p>;

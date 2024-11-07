@@ -74,7 +74,7 @@ const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR } = config;
 
 
 // UTILS
-const dowthModal = require('./utils/doWithModal');
+const dowithModal = require('./utils/doWithModal');
 const openWithModal = require('./utils/openWithModal');
 const changeTitle = require('./utils/changeTitle');
 const moveLayer = require('./utils/moveLayer');
@@ -93,7 +93,6 @@ goldenColor.rgb.blue = 84;
 
 
 const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
-  console.log('sss');
   
   const BASEURL = localStorage.getItem('designLetter') + ':/';
   // OPEN DOCUMENTS
@@ -139,9 +138,9 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   // TITLE    
 
   const titleLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('TYTUL');
-  console.log(title);
   
-  await changeTitle(titleLayer.id, title);
+  
+  await changeTitle(titleLayer.id, title.tlumaczenia.filter( i => i.kod_jezyka === 'pl')[0].tytul.toLowerCase());
 
   // SUBTITLE
 
@@ -310,15 +309,16 @@ async function mainLoop() {
     const data = await fetch(`https://karty-automat.vercel.app/api/dekoracje/${id}`);
     const element = await data.json();
  
-    if(!element){
-      alert('PM nie dodał jeszcze tego ID do bazy');
+    if(element.error){
+      alert(`ID ${id} nie znaleziono w bazie`);
       return;
     }
 
     try {
-      await dowthModal(() => mainProcess(element));
+      await dowithModal(() => mainProcess(element));
     } catch (error) {
       console.error(error);
+      alert(error)
     }
 
   } else {

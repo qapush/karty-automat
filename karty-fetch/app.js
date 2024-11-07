@@ -9,10 +9,10 @@ puppeteer.use(StealthPlugin());
 const baseUrl = 'http://192.168.1.5/stany/index.php';
 
 // Input file path
-const inputFilePath = path.join(__dirname, 'ids.txt');
+const inputFilePath = path.join(__dirname, 'ids_2.txt');
 
 // Output file path for JSON results
-const outputFilePath = path.join(__dirname, 'decoration_results.json');
+const outputFilePath = path.join(__dirname, 'decoration_results_2.json');
 
 // Read IDs from file
 const ids = fs

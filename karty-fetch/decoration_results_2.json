@@ -1,0 +1,1872 @@
+[
+  {
+    "id": "130253",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "3.1",
+      "glebokosc": "0",
+      "led": "700",
+      "moc": "73"
+    }
+  },
+  {
+    "id": "130282",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "1.25",
+      "glebokosc": "0",
+      "led": "1820",
+      "moc": "149"
+    }
+  },
+  {
+    "id": "183068",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA SFERA",
+      "szerokosc": "0.9",
+      "wysokosc": "0",
+      "glebokosc": "0.9",
+      "led": "400",
+      "moc": "13"
+    }
+  },
+  {
+    "id": "138097",
+    "decorationData": {
+      "nazwa": "GWIAZDA KWIATEK",
+      "szerokosc": "2",
+      "wysokosc": "0",
+      "glebokosc": "2",
+      "led": "910",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "130254",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "3.22",
+      "glebokosc": "0",
+      "led": "870",
+      "moc": "65"
+    }
+  },
+  {
+    "id": "130285",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA PRZESTRZENNA",
+      "szerokosc": "0",
+      "wysokosc": "4.3",
+      "glebokosc": "0",
+      "led": "3080",
+      "moc": "187"
+    }
+  },
+  {
+    "id": "145031",
+    "decorationData": {
+      "nazwa": "DRZEWO KRYSZTAŁ PODSTAWA SIEDZISKA-FWW-GD",
+      "szerokosc": "4.6",
+      "wysokosc": "4",
+      "glebokosc": "4.6",
+      "led": "5040",
+      "moc": "135"
+    }
+  },
+  {
+    "id": "130268",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "2.85",
+      "glebokosc": "0",
+      "led": "1510",
+      "moc": "118"
+    }
+  },
+  {
+    "id": "181154",
+    "decorationData": {
+      "nazwa": "MEDUZA 2,4M BEZ BOMBEK",
+      "szerokosc": "2.4",
+      "wysokosc": "1",
+      "glebokosc": "2.4",
+      "led": "1200",
+      "moc": "129"
+    }
+  },
+  {
+    "id": "183082",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA 1,2M",
+      "szerokosc": "1.2",
+      "wysokosc": "0",
+      "glebokosc": "1.2",
+      "led": "1200",
+      "moc": "96"
+    }
+  },
+  {
+    "id": "183085",
+    "decorationData": {
+      "nazwa": "GWIAZDA 220CM 3D HIPS + LED",
+      "szerokosc": "2.2",
+      "wysokosc": "2.2",
+      "glebokosc": "2.2",
+      "led": "2000",
+      "moc": "155"
+    }
+  },
+  {
+    "id": "181077",
+    "decorationData": {
+      "nazwa": "MEDUZA 2,4M BEZ BOMBEK ZŁOTY",
+      "szerokosc": "2.4",
+      "wysokosc": "0.5",
+      "glebokosc": "2.4",
+      "led": "1410",
+      "moc": "140"
+    }
+  },
+  {
+    "id": "136039",
+    "decorationData": {
+      "nazwa": "GWIAZDA",
+      "szerokosc": "1",
+      "wysokosc": "0",
+      "glebokosc": "1",
+      "led": "150",
+      "moc": "17.4"
+    }
+  },
+  {
+    "id": "136045",
+    "decorationData": {
+      "nazwa": "GWIAZDA",
+      "szerokosc": "0.64",
+      "wysokosc": "0",
+      "glebokosc": "0.64",
+      "led": "90",
+      "moc": "11"
+    }
+  },
+  {
+    "id": "181153",
+    "decorationData": {
+      "nazwa": "ŁAŃCUCH Z OBRĘCZY",
+      "szerokosc": "0",
+      "wysokosc": "4.3",
+      "glebokosc": "0",
+      "led": "1200",
+      "moc": "65"
+    }
+  },
+  {
+    "id": "183102",
+    "decorationData": {
+      "nazwa": "OBRYS PIERNIK CHOINKA 1,85M",
+      "szerokosc": "0",
+      "wysokosc": "1.9",
+      "glebokosc": "0",
+      "led": "730",
+      "moc": "62"
+    }
+  },
+  {
+    "id": "130261",
+    "decorationData": {
+      "nazwa": "DEK.LAT.FAŁA DUŻA BIAŁY LAKIER",
+      "szerokosc": "0",
+      "wysokosc": "3.64",
+      "glebokosc": "0",
+      "led": "390",
+      "moc": "30"
+    }
+  },
+  {
+    "id": "320180",
+    "decorationData": {
+      "nazwa": "FOTEL MIKOŁAJA CZER-ZŁOTY 160X100CM",
+      "szerokosc": "0",
+      "wysokosc": "1.6",
+      "glebokosc": "0",
+      "led": "0",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "130266",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "1.22",
+      "glebokosc": "0",
+      "led": "580",
+      "moc": "49"
+    }
+  },
+  {
+    "id": "183105",
+    "decorationData": {
+      "nazwa": "PIERNIK WISZĄCY CHOINKA",
+      "szerokosc": "0",
+      "wysokosc": "1.75",
+      "glebokosc": "0",
+      "led": "0",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "130277",
+    "decorationData": {
+      "nazwa": "DEKORACJA LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "2.2",
+      "glebokosc": "0",
+      "led": "1630",
+      "moc": "132"
+    }
+  },
+  {
+    "id": "183114",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA 1,2M ZŁOTA MOT.",
+      "szerokosc": "1.2",
+      "wysokosc": "0",
+      "glebokosc": "1.2",
+      "led": "960",
+      "moc": "84"
+    }
+  },
+  {
+    "id": "136021",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA",
+      "szerokosc": "1.23",
+      "wysokosc": "0",
+      "glebokosc": "1.23",
+      "led": "450",
+      "moc": "54"
+    }
+  },
+  {
+    "id": "183113",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA 1M ZŁOTA MOT.",
+      "szerokosc": "1",
+      "wysokosc": "0",
+      "glebokosc": "1",
+      "led": "800",
+      "moc": "78"
+    }
+  },
+  {
+    "id": "181068",
+    "decorationData": {
+      "nazwa": "DIAMENT Z CHOINKĄ 180 DEKOROWANĄ",
+      "szerokosc": "0",
+      "wysokosc": "2.44",
+      "glebokosc": "0",
+      "led": "1220",
+      "moc": "105"
+    }
+  },
+  {
+    "id": "136028",
+    "decorationData": {
+      "nazwa": "GWIAZDA",
+      "szerokosc": "1.27",
+      "wysokosc": "0",
+      "glebokosc": "1.27",
+      "led": "330",
+      "moc": "36"
+    }
+  },
+  {
+    "id": "130279",
+    "decorationData": {
+      "nazwa": "DEKOR.LATATARNIOWA POŁOWKA",
+      "szerokosc": "0",
+      "wysokosc": "3.69",
+      "glebokosc": "0",
+      "led": "950",
+      "moc": "75"
+    }
+  },
+  {
+    "id": "150056",
+    "decorationData": {
+      "nazwa": "FIG. FOTEL 2,6M",
+      "szerokosc": "0",
+      "wysokosc": "2.6",
+      "glebokosc": "0",
+      "led": "2020",
+      "moc": "66"
+    }
+  },
+  {
+    "id": "132020",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0.8",
+      "wysokosc": "2.5",
+      "glebokosc": "0.8",
+      "led": "1000",
+      "moc": "37"
+    }
+  },
+  {
+    "id": "136066",
+    "decorationData": {
+      "nazwa": "DEK. WISZĄCA DIAMENT 5R",
+      "szerokosc": "0",
+      "wysokosc": "0.65",
+      "glebokosc": "0",
+      "led": "250",
+      "moc": "25"
+    }
+  },
+  {
+    "id": "183077",
+    "decorationData": {
+      "nazwa": "GWIAZDA 8R",
+      "szerokosc": "2.5",
+      "wysokosc": "0",
+      "glebokosc": "2.5",
+      "led": "960",
+      "moc": "94"
+    }
+  },
+  {
+    "id": "183070",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA MOT !!BEZ ZASILANIA!!",
+      "szerokosc": "0.4",
+      "wysokosc": "0.4",
+      "glebokosc": "0.4",
+      "led": "160",
+      "moc": "6"
+    }
+  },
+  {
+    "id": "136013",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA",
+      "szerokosc": "0.78",
+      "wysokosc": "0",
+      "glebokosc": "0.78",
+      "led": "270",
+      "moc": "32.4"
+    }
+  },
+  {
+    "id": "320172",
+    "decorationData": {
+      "nazwa": "FOTEL MIKOŁAJA ZŁOTY 140X130CM",
+      "szerokosc": "0",
+      "wysokosc": "1.44",
+      "glebokosc": "0",
+      "led": "0",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "130245",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "3.3",
+      "glebokosc": "0",
+      "led": "1390",
+      "moc": "145"
+    }
+  },
+  {
+    "id": "150058",
+    "decorationData": {
+      "nazwa": "FIG. GAŁĄŹ LEŚNA Z PODSTAWĄ DO SIADANIE",
+      "szerokosc": "0",
+      "wysokosc": "3.1",
+      "glebokosc": "0",
+      "led": "1360",
+      "moc": "42"
+    }
+  },
+  {
+    "id": "136068",
+    "decorationData": {
+      "nazwa": "FIG. DIAMENT 2D NA CHOINKĘ - BEZ ZASILANIA",
+      "szerokosc": "0",
+      "wysokosc": "0.53",
+      "glebokosc": "0",
+      "led": "69",
+      "moc": "3"
+    }
+  },
+  {
+    "id": "183121",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA MOT !!BEZ ZASILANIA!!",
+      "szerokosc": "1",
+      "wysokosc": "0",
+      "glebokosc": "1",
+      "led": "800",
+      "moc": "20"
+    }
+  },
+  {
+    "id": "340004",
+    "decorationData": {
+      "nazwa": "GÓRA LODOWA-ZABUDOWA DO KARAOKE",
+      "szerokosc": "0",
+      "wysokosc": "1.8",
+      "glebokosc": "0",
+      "led": "",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "136014",
+    "decorationData": {
+      "nazwa": "SNIEŻYNKA",
+      "szerokosc": "1.02",
+      "wysokosc": "0",
+      "glebokosc": "1.02",
+      "led": "450",
+      "moc": "50"
+    }
+  },
+  {
+    "id": "320181",
+    "decorationData": {
+      "nazwa": "PUFA CZERWONO-ZŁOTA",
+      "szerokosc": "0",
+      "wysokosc": "0.47",
+      "glebokosc": "0",
+      "led": "0",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "130267",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA - SU",
+      "szerokosc": "0",
+      "wysokosc": "2.9",
+      "glebokosc": "0",
+      "led": "410",
+      "moc": "16"
+    }
+  },
+  {
+    "id": "183104",
+    "decorationData": {
+      "nazwa": "OBRYS PIERNIK SERCE 1,6M",
+      "szerokosc": "0",
+      "wysokosc": "1.6",
+      "glebokosc": "0",
+      "led": "760",
+      "moc": "656"
+    }
+  },
+  {
+    "id": "136036",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA-Podwójny obrys",
+      "szerokosc": "1.23",
+      "wysokosc": "0",
+      "glebokosc": "1.23",
+      "led": "840",
+      "moc": "86.4"
+    }
+  },
+  {
+    "id": "183103",
+    "decorationData": {
+      "nazwa": "OBRYS PIERNIK GWIAZDA 1,75M",
+      "szerokosc": "1.75",
+      "wysokosc": "0",
+      "glebokosc": "1.75",
+      "led": "790",
+      "moc": "62"
+    }
+  },
+  {
+    "id": "143020",
+    "decorationData": {
+      "nazwa": "FONTANNA MODUŁOWA 3,3M LEWA - bez zasilania",
+      "szerokosc": "0",
+      "wysokosc": "3.3",
+      "glebokosc": "0",
+      "led": "920",
+      "moc": "43"
+    }
+  },
+  {
+    "id": "130260",
+    "decorationData": {
+      "nazwa": "DEKORACJA LATARNIOWA  POŁÓWKA",
+      "szerokosc": "0",
+      "wysokosc": "3.45",
+      "glebokosc": "0",
+      "led": "1110",
+      "moc": "90"
+    }
+  },
+  {
+    "id": "181076",
+    "decorationData": {
+      "nazwa": "ŻYRANDOL",
+      "szerokosc": "2",
+      "wysokosc": "4.5",
+      "glebokosc": "2",
+      "led": "2372",
+      "moc": "250"
+    }
+  },
+  {
+    "id": "136044",
+    "decorationData": {
+      "nazwa": "GWIAZDA",
+      "szerokosc": "0.29",
+      "wysokosc": "0",
+      "glebokosc": "0.29",
+      "led": "30",
+      "moc": "3.6"
+    }
+  },
+  {
+    "id": "136043",
+    "decorationData": {
+      "nazwa": "KOMETA",
+      "szerokosc": "0",
+      "wysokosc": "0.57",
+      "glebokosc": "0",
+      "led": "240",
+      "moc": "28"
+    }
+  },
+  {
+    "id": "181155",
+    "decorationData": {
+      "nazwa": "MEDUZA 2,4M BEZ BOMBEK",
+      "szerokosc": "2.4",
+      "wysokosc": "1",
+      "glebokosc": "2.4",
+      "led": "1410",
+      "moc": "129.6"
+    }
+  },
+  {
+    "id": "184059",
+    "decorationData": {
+      "nazwa": "PRZEWIESZKA 3M AŻUR",
+      "szerokosc": "0",
+      "wysokosc": "0.77",
+      "glebokosc": "0",
+      "led": "",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "183067",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA SFERA BEZ ZASILANIA",
+      "szerokosc": "0.9",
+      "wysokosc": "0",
+      "glebokosc": "0.9",
+      "led": "400",
+      "moc": "13.5"
+    }
+  },
+  {
+    "id": "140109",
+    "decorationData": {
+      "nazwa": "PERGOLA 2 PRZĘSŁA WILANÓW",
+      "szerokosc": "0",
+      "wysokosc": "3.05",
+      "glebokosc": "0",
+      "led": "4710",
+      "moc": "130"
+    }
+  },
+  {
+    "id": "130227",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "3.1",
+      "glebokosc": "0",
+      "led": "700",
+      "moc": "112"
+    }
+  },
+  {
+    "id": "138098",
+    "decorationData": {
+      "nazwa": "ELEWACJA",
+      "szerokosc": "0",
+      "wysokosc": "1.8",
+      "glebokosc": "0",
+      "led": "440",
+      "moc": "50"
+    }
+  },
+  {
+    "id": "149019",
+    "decorationData": {
+      "nazwa": "KARUZELA 4,7",
+      "szerokosc": "4.7",
+      "wysokosc": "5.6",
+      "glebokosc": "4.7",
+      "led": "12350",
+      "moc": "380"
+    }
+  },
+  {
+    "id": "136071",
+    "decorationData": {
+      "nazwa": "GWIAZDA MULTISTAR 5R BEZ ŚWIATŁA",
+      "szerokosc": "1.6",
+      "wysokosc": "0",
+      "glebokosc": "1.6",
+      "led": "",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "125025",
+    "decorationData": {
+      "nazwa": "TUNEL ALICJA - 33  MODUŁY",
+      "szerokosc": "0",
+      "wysokosc": "3.9",
+      "glebokosc": "0",
+      "led": "21780",
+      "moc": "825"
+    }
+  },
+  {
+    "id": "130255",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "1.8",
+      "glebokosc": "0",
+      "led": "330",
+      "moc": "31"
+    }
+  },
+  {
+    "id": "130252",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "3.1",
+      "glebokosc": "0",
+      "led": "520",
+      "moc": "43"
+    }
+  },
+  {
+    "id": "184062",
+    "decorationData": {
+      "nazwa": "DEK. WISZĄCA",
+      "szerokosc": "0",
+      "wysokosc": "1.23",
+      "glebokosc": "0",
+      "led": "340",
+      "moc": "40"
+    }
+  },
+  {
+    "id": "183069",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA 1,2M ZŁOTA SFERA",
+      "szerokosc": "1.2",
+      "wysokosc": "0",
+      "glebokosc": "1.2",
+      "led": "560",
+      "moc": "18"
+    }
+  },
+  {
+    "id": "180024",
+    "decorationData": {
+      "nazwa": "ZMROŻONA KOMETA",
+      "szerokosc": "1.9",
+      "wysokosc": "5.2",
+      "glebokosc": "1.9",
+      "led": "4440",
+      "moc": "275"
+    }
+  },
+  {
+    "id": "136069",
+    "decorationData": {
+      "nazwa": "FIG. DIAMENT 2D NA CHOINKĘ pod węża i bandoksal-mały - BEZ ZASILANIA",
+      "szerokosc": "0",
+      "wysokosc": "0.56",
+      "glebokosc": "0",
+      "led": "90",
+      "moc": "3"
+    }
+  },
+  {
+    "id": "183120",
+    "decorationData": {
+      "nazwa": "GWIAZDA 5R Z BOMBKAMI",
+      "szerokosc": "1.6",
+      "wysokosc": "1.6",
+      "glebokosc": "1.6",
+      "led": "1140",
+      "moc": "60"
+    }
+  },
+  {
+    "id": "136015",
+    "decorationData": {
+      "nazwa": "ŚNIEZYNKA",
+      "szerokosc": "1.25",
+      "wysokosc": "0",
+      "glebokosc": "1.25",
+      "led": "600",
+      "moc": "72"
+    }
+  },
+  {
+    "id": "113472",
+    "decorationData": {
+      "nazwa": "FOTORAMKA KLASYCZNA Z KOKARDĄ",
+      "szerokosc": "0",
+      "wysokosc": "2.5",
+      "glebokosc": "0",
+      "led": "3160",
+      "moc": "215"
+    }
+  },
+  {
+    "id": "320025",
+    "decorationData": {
+      "nazwa": "PUFA NIEBIESKA 45X50CM",
+      "szerokosc": "0",
+      "wysokosc": "0.45",
+      "glebokosc": "0",
+      "led": "0",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "320022",
+    "decorationData": {
+      "nazwa": "FOTEL MIKOŁAJA NIEBIESKI 140X130CM",
+      "szerokosc": "0",
+      "wysokosc": "1.44",
+      "glebokosc": "0",
+      "led": "0",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "132021",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA -MOT-36V",
+      "szerokosc": "0.8",
+      "wysokosc": "2.5",
+      "glebokosc": "0.8",
+      "led": "1000",
+      "moc": "55"
+    }
+  },
+  {
+    "id": "136067",
+    "decorationData": {
+      "nazwa": "FIG. GWIAZDA 8R0,46M",
+      "szerokosc": "0.45",
+      "wysokosc": "0",
+      "glebokosc": "0.45",
+      "led": "60",
+      "moc": "2"
+    }
+  },
+  {
+    "id": "130231",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "2",
+      "glebokosc": "0",
+      "led": "290",
+      "moc": "32"
+    }
+  },
+  {
+    "id": "130278",
+    "decorationData": {
+      "nazwa": "DEK.LATARNIOWA",
+      "szerokosc": "1.8",
+      "wysokosc": "4.1",
+      "glebokosc": "1.8",
+      "led": "1960",
+      "moc": "165"
+    }
+  },
+  {
+    "id": "136029",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA",
+      "szerokosc": "1",
+      "wysokosc": "1",
+      "glebokosc": "1",
+      "led": "390",
+      "moc": "45"
+    }
+  },
+  {
+    "id": "183095",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA 2M",
+      "szerokosc": "2",
+      "wysokosc": "0",
+      "glebokosc": "2",
+      "led": "2560",
+      "moc": "212"
+    }
+  },
+  {
+    "id": "181067",
+    "decorationData": {
+      "nazwa": "PRZEWIESZKA",
+      "szerokosc": "0",
+      "wysokosc": "6",
+      "glebokosc": "0",
+      "led": "821",
+      "moc": "90"
+    }
+  },
+  {
+    "id": "150065",
+    "decorationData": {
+      "nazwa": "DIAMENTOWY FOTOPUNKT",
+      "szerokosc": "0",
+      "wysokosc": "2.5",
+      "glebokosc": "0",
+      "led": "1960",
+      "moc": "92"
+    }
+  },
+  {
+    "id": "183112",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA 1M ZŁOTA MOT.",
+      "szerokosc": "1",
+      "wysokosc": "1",
+      "glebokosc": "1",
+      "led": "800",
+      "moc": "78"
+    }
+  },
+  {
+    "id": "136027",
+    "decorationData": {
+      "nazwa": "GWIAZDA",
+      "szerokosc": "0.6",
+      "wysokosc": "0",
+      "glebokosc": "0.6",
+      "led": "90",
+      "moc": "11"
+    }
+  },
+  {
+    "id": "202228",
+    "decorationData": {
+      "nazwa": "CHOINKA STOŻKOWA 8,8M Z BOMBEK",
+      "szerokosc": "3.3",
+      "wysokosc": "8",
+      "glebokosc": "3.3",
+      "led": "2160",
+      "moc": "97"
+    }
+  },
+  {
+    "id": "130271",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "1.64",
+      "wysokosc": "1.16",
+      "glebokosc": "1.64",
+      "led": "1540",
+      "moc": "131"
+    }
+  },
+  {
+    "id": "183115",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA 1,2M ZŁOTA MOT.",
+      "szerokosc": "1.2",
+      "wysokosc": "0",
+      "glebokosc": "1.2",
+      "led": "960",
+      "moc": "75"
+    }
+  },
+  {
+    "id": "136020",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA",
+      "szerokosc": "1.23",
+      "wysokosc": "0",
+      "glebokosc": "1.23",
+      "led": "420",
+      "moc": "43.2"
+    }
+  },
+  {
+    "id": "183124",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA MOT !!BEZ ZASILANIA!!",
+      "szerokosc": "0.8",
+      "wysokosc": "0",
+      "glebokosc": "0.8",
+      "led": "480",
+      "moc": "18"
+    }
+  },
+  {
+    "id": "134032",
+    "decorationData": {
+      "nazwa": "PRZEWIESZKA ZEWN",
+      "szerokosc": "0",
+      "wysokosc": "1.6",
+      "glebokosc": "0",
+      "led": "1440",
+      "moc": "145"
+    }
+  },
+  {
+    "id": "136011",
+    "decorationData": {
+      "nazwa": "FIG. GWIAZDA 0,21",
+      "szerokosc": "0.21",
+      "wysokosc": "0.21",
+      "glebokosc": "0.21",
+      "led": "30",
+      "moc": "3.6"
+    }
+  },
+  {
+    "id": "136016",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA",
+      "szerokosc": "1",
+      "wysokosc": "0",
+      "glebokosc": "1",
+      "led": "390",
+      "moc": "45.5"
+    }
+  },
+  {
+    "id": "150054",
+    "decorationData": {
+      "nazwa": "MONIDŁO CHOINKA BEZ NAPISU",
+      "szerokosc": "0",
+      "wysokosc": "2.28",
+      "glebokosc": "0",
+      "led": "1617",
+      "moc": "70"
+    }
+  },
+  {
+    "id": "320021",
+    "decorationData": {
+      "nazwa": "FOTEL MIKOŁAJA RÓŻOWY 140X130CM",
+      "szerokosc": "0",
+      "wysokosc": "1.44",
+      "glebokosc": "0",
+      "led": "0",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "136064",
+    "decorationData": {
+      "nazwa": "DEK. WISZĄCA DIAMENT ZŁOTY",
+      "szerokosc": "0",
+      "wysokosc": "0.7",
+      "glebokosc": "0",
+      "led": "90",
+      "moc": "12"
+    }
+  },
+  {
+    "id": "183075",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA BIAŁA 1M WYPLOT MOT.",
+      "szerokosc": "1",
+      "wysokosc": "0",
+      "glebokosc": "1",
+      "led": "800",
+      "moc": "78"
+    }
+  },
+  {
+    "id": "136018",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA",
+      "szerokosc": "2",
+      "wysokosc": "0",
+      "glebokosc": "2",
+      "led": "780",
+      "moc": "111.6"
+    }
+  },
+  {
+    "id": "183072",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA MOT !!BEZ ZASILANIA!!",
+      "szerokosc": "0.3",
+      "wysokosc": "0",
+      "glebokosc": "0.3",
+      "led": "120",
+      "moc": "5"
+    }
+  },
+  {
+    "id": "130235",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "2",
+      "glebokosc": "0",
+      "led": "540",
+      "moc": "48"
+    }
+  },
+  {
+    "id": "136063",
+    "decorationData": {
+      "nazwa": "FIG. DIAMENT 2D NA CHOINKĘ Z BANDOXALEM-duży - BEZ ZASILANIA",
+      "szerokosc": "0",
+      "wysokosc": "0.8",
+      "glebokosc": "0",
+      "led": "120",
+      "moc": "6.5"
+    }
+  },
+  {
+    "id": "130249",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "2.55",
+      "glebokosc": "0",
+      "led": "480",
+      "moc": "60"
+    }
+  },
+  {
+    "id": "136051",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA",
+      "szerokosc": "1.25",
+      "wysokosc": "0",
+      "glebokosc": "1.25",
+      "led": "570",
+      "moc": "72"
+    }
+  },
+  {
+    "id": "183118",
+    "decorationData": {
+      "nazwa": "KULA Z TRÓJKĄTÓW 1,6M ZŁOTA HIPS MIX BOM.",
+      "szerokosc": "1.6",
+      "wysokosc": "3",
+      "glebokosc": "1.6",
+      "led": "960",
+      "moc": "84"
+    }
+  },
+  {
+    "id": "160107",
+    "decorationData": {
+      "nazwa": "CHOINKA ŚWIETLNA 3D 12M",
+      "szerokosc": "0",
+      "wysokosc": "11.7",
+      "glebokosc": "0",
+      "led": "34220",
+      "moc": "610"
+    }
+  },
+  {
+    "id": "142055",
+    "decorationData": {
+      "nazwa": "BOMBKA 6M",
+      "szerokosc": "5.8",
+      "wysokosc": "6",
+      "glebokosc": "5.8",
+      "led": "",
+      "moc": "150"
+    }
+  },
+  {
+    "id": "183091",
+    "decorationData": {
+      "nazwa": "GWIAZDA 8R",
+      "szerokosc": "2.4",
+      "wysokosc": "0",
+      "glebokosc": "2.4",
+      "led": "1160",
+      "moc": "80"
+    }
+  },
+  {
+    "id": "130275",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA WYPLOT TRAD-KANDELABR",
+      "szerokosc": "1.4",
+      "wysokosc": "4.5",
+      "glebokosc": "1.4",
+      "led": "2440",
+      "moc": "84"
+    }
+  },
+  {
+    "id": "187008",
+    "decorationData": {
+      "nazwa": "PODSTAWA PODEST DO CHOINKI ZŁOTY WW",
+      "szerokosc": "0.7",
+      "wysokosc": "1",
+      "glebokosc": "0.7",
+      "led": "440",
+      "moc": "15"
+    }
+  },
+  {
+    "id": "183116",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA WYPLOT MOT.",
+      "szerokosc": "1.6",
+      "wysokosc": "0",
+      "glebokosc": "1.6",
+      "led": "1760",
+      "moc": "150"
+    }
+  },
+  {
+    "id": "184094",
+    "decorationData": {
+      "nazwa": "MEDUZA 1,6M BEZ BOMBEK",
+      "szerokosc": "1.6",
+      "wysokosc": "0.9",
+      "glebokosc": "1.6",
+      "led": "930",
+      "moc": "52.8"
+    }
+  },
+  {
+    "id": "183111",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA WYPLOT MOT.",
+      "szerokosc": "0.8",
+      "wysokosc": "0",
+      "glebokosc": "0.8",
+      "led": "480",
+      "moc": "25"
+    }
+  },
+  {
+    "id": "136024",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA",
+      "szerokosc": "2",
+      "wysokosc": "0",
+      "glebokosc": "2",
+      "led": "810",
+      "moc": "90"
+    }
+  },
+  {
+    "id": "183098",
+    "decorationData": {
+      "nazwa": "GWIAZDA 5R",
+      "szerokosc": "1.6",
+      "wysokosc": "0",
+      "glebokosc": "1.6",
+      "led": "980",
+      "moc": "86"
+    }
+  },
+  {
+    "id": "130272",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0.8",
+      "wysokosc": "1.4",
+      "glebokosc": "0.8",
+      "led": "540",
+      "moc": "50"
+    }
+  },
+  {
+    "id": "136058",
+    "decorationData": {
+      "nazwa": "FIG. DIAMENT 2D NA CHOINKĘ - BZ ZASILANIA",
+      "szerokosc": "0",
+      "wysokosc": "0.7",
+      "glebokosc": "0",
+      "led": "90",
+      "moc": "6.5"
+    }
+  },
+  {
+    "id": "136035",
+    "decorationData": {
+      "nazwa": "KOMETA",
+      "szerokosc": "0",
+      "wysokosc": "0.62",
+      "glebokosc": "0",
+      "led": "60",
+      "moc": "7"
+    }
+  },
+  {
+    "id": "136049",
+    "decorationData": {
+      "nazwa": "GWIAZDA",
+      "szerokosc": "0.8",
+      "wysokosc": "0",
+      "glebokosc": "0.8",
+      "led": "120",
+      "moc": "22"
+    }
+  },
+  {
+    "id": "138239",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA",
+      "szerokosc": "0.47",
+      "wysokosc": "0",
+      "glebokosc": "0.47",
+      "led": "120",
+      "moc": "11"
+    }
+  },
+  {
+    "id": "183107",
+    "decorationData": {
+      "nazwa": "PIERNIK WISZĄCY CIASTKOWA",
+      "szerokosc": "0",
+      "wysokosc": "1.85",
+      "glebokosc": "0",
+      "led": "0",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "183080",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA 0,8M",
+      "szerokosc": "0.8",
+      "wysokosc": "0",
+      "glebokosc": "0.8",
+      "led": "640",
+      "moc": "41.6"
+    }
+  },
+  {
+    "id": "183109",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA 0,8M",
+      "szerokosc": "0.8",
+      "wysokosc": "0",
+      "glebokosc": "0.8",
+      "led": "640",
+      "moc": "56"
+    }
+  },
+  {
+    "id": "181075",
+    "decorationData": {
+      "nazwa": "LATAJACY RENIFER 2",
+      "szerokosc": "0",
+      "wysokosc": "3.6",
+      "glebokosc": "0",
+      "led": "1240",
+      "moc": "103"
+    }
+  },
+  {
+    "id": "153046",
+    "decorationData": {
+      "nazwa": "STOŻEK SPIRALNY AŻUR DEKOR 2,05CM",
+      "szerokosc": "0.96",
+      "wysokosc": "2",
+      "glebokosc": "0.96",
+      "led": "440",
+      "moc": "42"
+    }
+  },
+  {
+    "id": "143018",
+    "decorationData": {
+      "nazwa": "FONTANNA MODUŁOWA 2,3M PRAWA",
+      "szerokosc": "0",
+      "wysokosc": "2.3",
+      "glebokosc": "0",
+      "led": "500",
+      "moc": "30"
+    }
+  },
+  {
+    "id": "136072",
+    "decorationData": {
+      "nazwa": "GWIAZDA 5R MULTISTAR BEZ ŚWIATŁA",
+      "szerokosc": "2.3",
+      "wysokosc": "0",
+      "glebokosc": "2.3",
+      "led": "",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "130289",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA BEZ BOMBEK",
+      "szerokosc": "1.25",
+      "wysokosc": "0.8",
+      "glebokosc": "1.25",
+      "led": "820",
+      "moc": "75"
+    }
+  },
+  {
+    "id": "130280",
+    "decorationData": {
+      "nazwa": "DEK.LATARNIOWIEC",
+      "szerokosc": "0",
+      "wysokosc": "3.64",
+      "glebokosc": "0",
+      "led": "2040",
+      "moc": "160"
+    }
+  },
+  {
+    "id": "138095",
+    "decorationData": {
+      "nazwa": "RENIFER PŁASKI",
+      "szerokosc": "0",
+      "wysokosc": "3",
+      "glebokosc": "0",
+      "led": "690",
+      "moc": "70"
+    }
+  },
+  {
+    "id": "180490",
+    "decorationData": {
+      "nazwa": "KULA BOMBKA ŚWIECA 3,2M GOLD",
+      "szerokosc": "3.4",
+      "wysokosc": "5.3",
+      "glebokosc": "3.4",
+      "led": "10080",
+      "moc": "750"
+    }
+  },
+  {
+    "id": "130256",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "2.2",
+      "glebokosc": "0",
+      "led": "1340",
+      "moc": "105"
+    }
+  },
+  {
+    "id": "183110",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA 1M BIAŁA",
+      "szerokosc": "1",
+      "wysokosc": "0",
+      "glebokosc": "1",
+      "led": "960",
+      "moc": "84"
+    }
+  },
+  {
+    "id": "136025",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA",
+      "szerokosc": "3",
+      "wysokosc": "0",
+      "glebokosc": "3",
+      "led": "1560",
+      "moc": "187.2"
+    }
+  },
+  {
+    "id": "183099",
+    "decorationData": {
+      "nazwa": "KWIAT POINSECJA PODWIESZANY 2,4m",
+      "szerokosc": "2",
+      "wysokosc": "2.4",
+      "glebokosc": "2",
+      "led": "1170",
+      "moc": "85"
+    }
+  },
+  {
+    "id": "183117",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA WYPLOT MOT.",
+      "szerokosc": "1.6",
+      "wysokosc": "0",
+      "glebokosc": "1.6",
+      "led": "1760",
+      "moc": "65"
+    }
+  },
+  {
+    "id": "136022",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA",
+      "szerokosc": "0.8",
+      "wysokosc": "0",
+      "glebokosc": "0.8",
+      "led": "360",
+      "moc": "43.2"
+    }
+  },
+  {
+    "id": "136050",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA",
+      "szerokosc": "1.03",
+      "wysokosc": "9.8",
+      "glebokosc": "1.03",
+      "led": "420",
+      "moc": "37"
+    }
+  },
+  {
+    "id": "183119",
+    "decorationData": {
+      "nazwa": "OBRYS CIASTKOWA PIERNIK 1,6",
+      "szerokosc": "0",
+      "wysokosc": "1.6",
+      "glebokosc": "0",
+      "led": "1050",
+      "moc": "84"
+    }
+  },
+  {
+    "id": "187007",
+    "decorationData": {
+      "nazwa": "PODSTAWA PODEST DO CHOINKI ZŁOTY FWW",
+      "szerokosc": "0.7",
+      "wysokosc": "1",
+      "glebokosc": "0.7",
+      "led": "440",
+      "moc": "15"
+    }
+  },
+  {
+    "id": "160106",
+    "decorationData": {
+      "nazwa": "CHOINKA ŁACINA 12M",
+      "szerokosc": "6.7",
+      "wysokosc": "11.7",
+      "glebokosc": "6.7",
+      "led": "34550",
+      "moc": "1200"
+    }
+  },
+  {
+    "id": "183090",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA 0,8M",
+      "szerokosc": "0.8",
+      "wysokosc": "0",
+      "glebokosc": "0.8",
+      "led": "480",
+      "moc": "50"
+    }
+  },
+  {
+    "id": "130201",
+    "decorationData": {
+      "nazwa": "DEK LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "3.3",
+      "glebokosc": "0",
+      "led": "1753",
+      "moc": "130"
+    }
+  },
+  {
+    "id": "130234",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "3.1",
+      "glebokosc": "0",
+      "led": "700",
+      "moc": "59"
+    }
+  },
+  {
+    "id": "195159",
+    "decorationData": {
+      "nazwa": "MIKOŁAJ NIERUCHOMY CZERWONY DO SPADOCHRONU",
+      "szerokosc": "0",
+      "wysokosc": "1.25",
+      "glebokosc": "0",
+      "led": "0",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "130248",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "3.1",
+      "glebokosc": "0",
+      "led": "808",
+      "moc": "78"
+    }
+  },
+  {
+    "id": "150055",
+    "decorationData": {
+      "nazwa": "MONIDŁO LOKOMOTYWA NA KRACIE",
+      "szerokosc": "0",
+      "wysokosc": "2.8",
+      "glebokosc": "0",
+      "led": "2550",
+      "moc": "85"
+    }
+  },
+  {
+    "id": "136065",
+    "decorationData": {
+      "nazwa": "DEKOR WISZĄCA DIAMENT5R",
+      "szerokosc": "0",
+      "wysokosc": "0.7",
+      "glebokosc": "0",
+      "led": "90",
+      "moc": "12"
+    }
+  },
+  {
+    "id": "136019",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA",
+      "szerokosc": "1.2",
+      "wysokosc": "0",
+      "glebokosc": "1.2",
+      "led": "360",
+      "moc": "43.2"
+    }
+  },
+  {
+    "id": "130233",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "3.1",
+      "glebokosc": "0",
+      "led": "700",
+      "moc": "75"
+    }
+  },
+  {
+    "id": "340007",
+    "decorationData": {
+      "nazwa": "BUDKA LEŚNA BEZ UZBROJENIA DO KARAOKE",
+      "szerokosc": "0",
+      "wysokosc": "2",
+      "glebokosc": "0",
+      "led": "",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "134034",
+    "decorationData": {
+      "nazwa": "PRZEWIESZKA ZEWN",
+      "szerokosc": "0",
+      "wysokosc": "1.2",
+      "glebokosc": "0",
+      "led": "1920",
+      "moc": "182"
+    }
+  },
+  {
+    "id": "136017",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA",
+      "szerokosc": "1.4",
+      "wysokosc": "0",
+      "glebokosc": "1.4",
+      "led": "600",
+      "moc": "88.4"
+    }
+  },
+  {
+    "id": "183125",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA SFERA BEZ ZASILANIA",
+      "szerokosc": "0.6",
+      "wysokosc": "0",
+      "glebokosc": "0.6",
+      "led": "240",
+      "moc": "9"
+    }
+  },
+  {
+    "id": "144071",
+    "decorationData": {
+      "nazwa": "MIŚ 3D-SU",
+      "szerokosc": "0",
+      "wysokosc": "3",
+      "glebokosc": "0",
+      "led": "2280",
+      "moc": "84"
+    }
+  },
+  {
+    "id": "138094",
+    "decorationData": {
+      "nazwa": "DEK ELEWACYJNA",
+      "szerokosc": "0",
+      "wysokosc": "1.93",
+      "glebokosc": "0",
+      "led": "710",
+      "moc": "45"
+    }
+  },
+  {
+    "id": "185009",
+    "decorationData": {
+      "nazwa": "PANEL SOPLE",
+      "szerokosc": "0",
+      "wysokosc": "0.9",
+      "glebokosc": "0",
+      "led": "180",
+      "moc": "10"
+    }
+  },
+  {
+    "id": "130281",
+    "decorationData": {
+      "nazwa": "DEKORACJA LAT",
+      "szerokosc": "0",
+      "wysokosc": "5",
+      "glebokosc": "0",
+      "led": "3200",
+      "moc": "215"
+    }
+  },
+  {
+    "id": "138093",
+    "decorationData": {
+      "nazwa": "OBRYS 2D CHOINKA 1,3",
+      "szerokosc": "0",
+      "wysokosc": "1.94",
+      "glebokosc": "0",
+      "led": "420",
+      "moc": "45"
+    }
+  },
+  {
+    "id": "180026",
+    "decorationData": {
+      "nazwa": "FROZEN SNOW - ŚNIEŻYNA ZŁOTA",
+      "szerokosc": "3",
+      "wysokosc": "0",
+      "glebokosc": "3",
+      "led": "1630",
+      "moc": "42"
+    }
+  },
+  {
+    "id": "143019",
+    "decorationData": {
+      "nazwa": "FONTANNA MODUŁOWA 3,3M PRAWA",
+      "szerokosc": "0",
+      "wysokosc": "3.3",
+      "glebokosc": "0",
+      "led": "920",
+      "moc": "44"
+    }
+  },
+  {
+    "id": "130259",
+    "decorationData": {
+      "nazwa": "DEKORACJA LATARNIOWA POŁÓWKA",
+      "szerokosc": "0",
+      "wysokosc": "2.6",
+      "glebokosc": "0",
+      "led": "660",
+      "moc": "60"
+    }
+  },
+  {
+    "id": "130288",
+    "decorationData": {
+      "nazwa": "KORONA Z DIAMENTÓW 3D",
+      "szerokosc": "1.8",
+      "wysokosc": "2.4",
+      "glebokosc": "1.8",
+      "led": "1210",
+      "moc": "88.5"
+    }
+  },
+  {
+    "id": "183086",
+    "decorationData": {
+      "nazwa": "GWIAZDA 5R",
+      "szerokosc": "1.5",
+      "wysokosc": "0",
+      "glebokosc": "1.5",
+      "led": "320",
+      "moc": "32"
+    }
+  },
+  {
+    "id": "136046",
+    "decorationData": {
+      "nazwa": "ŚNIEŻYNKA",
+      "szerokosc": "1.23",
+      "wysokosc": "0",
+      "glebokosc": "1.23",
+      "led": "450",
+      "moc": "59"
+    }
+  },
+  {
+    "id": "144103",
+    "decorationData": {
+      "nazwa": "KOŃ 2,6M",
+      "szerokosc": "0",
+      "wysokosc": "2.6",
+      "glebokosc": "0",
+      "led": "2730",
+      "moc": "71"
+    }
+  },
+  {
+    "id": "136041",
+    "decorationData": {
+      "nazwa": "FIG. ŚNIEŻYNKA 1,23M",
+      "szerokosc": "1.23",
+      "wysokosc": "1.23",
+      "glebokosc": "1.23",
+      "led": "480",
+      "moc": "57.6"
+    }
+  },
+  {
+    "id": "183081",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA 1M",
+      "szerokosc": "1",
+      "wysokosc": "0",
+      "glebokosc": "1",
+      "led": "960",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "183108",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA 1M ZŁOTA",
+      "szerokosc": "1",
+      "wysokosc": "0",
+      "glebokosc": "1",
+      "led": "960",
+      "moc": "84"
+    }
+  },
+  {
+    "id": "130265",
+    "decorationData": {
+      "nazwa": "DEK. LATARNIOWA",
+      "szerokosc": "0",
+      "wysokosc": "3.5",
+      "glebokosc": "0",
+      "led": "850",
+      "moc": "70"
+    }
+  },
+  {
+    "id": "136033",
+    "decorationData": {
+      "nazwa": "GWIAZDA",
+      "szerokosc": "0.29",
+      "wysokosc": "0",
+      "glebokosc": "0.29",
+      "led": "30",
+      "moc": "3.6"
+    }
+  },
+  {
+    "id": "183106",
+    "decorationData": {
+      "nazwa": "PIERNIK WISZĄCY SERCE",
+      "szerokosc": "0",
+      "wysokosc": "1.5",
+      "glebokosc": "0",
+      "led": "0",
+      "moc": "0"
+    }
+  },
+  {
+    "id": "149020",
+    "decorationData": {
+      "nazwa": "DOMEK 36V",
+      "szerokosc": "0",
+      "wysokosc": "5.1",
+      "glebokosc": "0",
+      "led": "24030",
+      "moc": "500"
+    }
+  },
+  {
+    "id": "136034",
+    "decorationData": {
+      "nazwa": "KOMETA",
+      "szerokosc": "0",
+      "wysokosc": "1.16",
+      "glebokosc": "0",
+      "led": "240",
+      "moc": "28"
+    }
+  },
+  {
+    "id": "183101",
+    "decorationData": {
+      "nazwa": "KULA SZPROSOWA WYPLOT MOT.",
+      "szerokosc": "0.6",
+      "wysokosc": "0.6",
+      "glebokosc": "0.6",
+      "led": "320",
+      "moc": "30.5"
+    }
+  },
+  {
+    "id": "130262",
+    "decorationData": {
+      "nazwa": "DEK.LATARNIOWA - POŁÓWKA",
+      "szerokosc": "0",
+      "wysokosc": "2.4",
+      "glebokosc": "0",
+      "led": "730",
+      "moc": "60"
+    }
+  }
+]
