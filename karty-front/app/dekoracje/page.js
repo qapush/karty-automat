@@ -1,6 +1,7 @@
 import styles from './Dekoracje.module.css'; // Importing the CSS module
 import AddDekoracjaForm from './AddDekoracjaForm';
 import { fetchDecorations } from '../../lib/fetchDecorations';
+import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
@@ -38,13 +39,16 @@ export default async function DekoracjePage() {
             {dekoracje.map((dekoracja) => (
               <tr key={dekoracja.id}>
                 <td>{dekoracja.id}</td>
-                <td
-                  dangerouslySetInnerHTML={{
+                <td>
+                  <Link href={`dekoracje/${dekoracja.id}`}>
+                    <span dangerouslySetInnerHTML={{
                     __html:
                       dekoracja?.tlumaczenia.length > 0
                         ? dekoracja?.tlumaczenia[0].tytul.replace(/\n/g, '<br />')
-                        : 'No title available',
-                  }}></td>
+                        : '',
+                  }}></span>
+                  </Link>
+                </td>
                 <td>{dekoracja.typ_dekoracji?.tlumaczenia[0].nazwa}</td>
                 <td>
                   {dekoracja.szerokosc} x {dekoracja.wysokosc} x {dekoracja.glebokosc}
