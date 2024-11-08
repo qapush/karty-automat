@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, use } from "react";
 import styles from "./dekoracja.module.css";
+import Iframe from "./Iframe";
 
 export default function EditDekoracjaPage(props) {
   const params = use(props.params);
@@ -163,8 +164,7 @@ export default function EditDekoracjaPage(props) {
     } catch (err) {
       setError(err.message);
     }
-    console.log('refresh');
-    location.reload();
+    setLoading(false);
     
   };
 
@@ -172,8 +172,10 @@ export default function EditDekoracjaPage(props) {
   if (error) return <p>Error: {error}</p>;
 
   return (
+    <>
     <div className={styles.container}>
-      <h1 className={styles.header}>Edit Dekoracja</h1>
+      <a className={styles.backlink} href="/dekoracje">← wszystkie dekoracje</a>
+      <h1 className={styles.header}>ID {id}</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
         <label className={styles.label}>
           Title:
@@ -186,7 +188,7 @@ export default function EditDekoracjaPage(props) {
           />
         </label>
         <label className={styles.label}>
-          Subtitle:
+          Rodzaj dekoracji:
           <select
             name="subtitle"
             value={formData.subtitle}
@@ -201,7 +203,7 @@ export default function EditDekoracjaPage(props) {
           </select>
         </label>
         <label className={styles.label}>
-          LED Count:
+          Ilość LED:
           <input
             type="number"
             name="led"
@@ -211,7 +213,7 @@ export default function EditDekoracjaPage(props) {
           />
         </label>
         <label className={styles.label}>
-          Power (W):
+          MOC:
           <input
             type="number"
             name="power"
@@ -221,7 +223,7 @@ export default function EditDekoracjaPage(props) {
           />
         </label>
         <label className={styles.label}>
-          Width:
+          SZEROKOŚĆ:
           <input
             type="number"
             name="szerokosc"
@@ -231,7 +233,7 @@ export default function EditDekoracjaPage(props) {
           />
         </label>
         <label className={styles.label}>
-          Height:
+          WYSOKOŚĆ:
           <input
             type="number"
             name="wysokosc"
@@ -241,7 +243,7 @@ export default function EditDekoracjaPage(props) {
           />
         </label>
         <label className={styles.label}>
-          Depth:
+          GŁĘBOKOŚĆ:
           <input
             type="number"
             name="glebokosc"
@@ -252,7 +254,7 @@ export default function EditDekoracjaPage(props) {
         </label>
 
         <label className={styles.label}>
-          Cechy (Features, max 3):
+          Cechy (max 3):
           <select
             multiple
             value={formData.cechy}
@@ -268,7 +270,7 @@ export default function EditDekoracjaPage(props) {
         </label>
 
         <label className={styles.label}>
-          Przewagi (Advantages, max 4):
+          Przewagi (max 4):
           <select
             multiple
             value={formData.przewagi}
@@ -288,5 +290,8 @@ export default function EditDekoracjaPage(props) {
         </button>
       </form>
     </div>
+    <Iframe id={id} />
+    </>
+    
   );
 }
