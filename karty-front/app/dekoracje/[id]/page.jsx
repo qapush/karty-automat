@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, use } from "react";
 import styles from "./dekoracja.module.css";
-import Iframe from "./Iframe";
 
 export default function EditDekoracjaPage(props) {
   const params = use(props.params);
@@ -290,7 +289,6 @@ export default function EditDekoracjaPage(props) {
         </button>
       </form>
     </div>
-    <Iframe id={id} />
     </>
     
   );

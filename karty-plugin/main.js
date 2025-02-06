@@ -95,6 +95,7 @@ goldenColor.rgb.blue = 84;
 const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
   
   const BASEURL = localStorage.getItem('designLetter') + ':/';
+  
   // OPEN DOCUMENTS
  
   await openWithModal(BASEURL + TEMPLATE_URL);
@@ -163,7 +164,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 
   for (const element of przewagi) {
     const przewagaLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').layers.getByName(element);
-    await moveLayer(element, przewagaLayer.id, subtitleLayer.boundsNoEffects.left, offset);
+    await moveLayer(element, przewagaLayer.id, subtitleLayer.boundsNoEffects.left, offset); 
     offset += przewagaLayer.boundsNoEffects.height + 13;
     przewagaLayer.visible = true;
   }
@@ -180,7 +181,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   prevImage.move(previewGroup, 'placeInside');
 
   if (VERTICAL) {
-    console.error('VERTICAL');
+    
     const PREVIEWIMAGESCALE = 120 / prevImage.bounds.height * 100;
     await selectLayer(prevImage);
     await prevImage.scale(PREVIEWIMAGESCALE, PREVIEWIMAGESCALE);
@@ -190,7 +191,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
     await alignAtoB(prevImage, previewalign);
 
   } else if (LONG) {
-    console.error('LONG');
+
 
     const PREVSCALE = (180) / prevImage.boundsNoEffects.width * 100;
     await selectLayer(prevImage);
@@ -199,7 +200,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
     await selectLayer(prevImage);
     await alignAtoB(prevImage, previewalign);
   } else {
-    console.error('SQUARE');
+
     const PREVSCALE = (105) / prevImage.boundsNoEffects.width * 100;
     await selectLayer(prevImage);
     await prevImage.scale(PREVSCALE, PREVSCALE);
@@ -262,6 +263,12 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   // PRZEWAGI
 
   const cecha1 = templateDocument.layers.getByName('TEKSTY').layers.getByName('CECHY').layers.getByName('CECHA_1');
+  
+  if(cechy.length === 0) {
+    templateDocument.closeWithoutSaving();
+    throw new Error('Nie ma cech');
+  }
+    
   cecha1.textItem.contents = cechy[0].replace(/\n/g, '\r');
 
   if (cechy.length > 1) {
