@@ -21,8 +21,20 @@
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
   }
+
+  .listItem button {
+    display: none;
+  }
+
   
+  .listItem:hover button {
+    display: block;
+    cursor: pointer;
+  }
+
   .noFeatures {
     text-align: center;
     color: #888;

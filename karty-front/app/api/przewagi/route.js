@@ -23,6 +23,20 @@ export async function POST(req) {
   }
 }
 
+export async function DELETE(req) {
+  const { id } = await req.json(); // Parse JSON from the request body
+  try {
+    const resp = await prisma.przewagi.delete({
+      where: { id },
+    });
+    
+    return new Response(null, { status: 204 });
+  } catch (error) {
+    console.error('Failed to delete new feature:', error);
+    return new Response(JSON.stringify({ error: 'Failed to delete new feature' }), { status: 404 });
+  }
+}
+
 export async function GET(req) {
   try {
     // Fetch advantages with their translations where language code is 'pl'

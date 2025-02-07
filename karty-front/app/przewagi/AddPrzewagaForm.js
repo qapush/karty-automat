@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'
 import styles from './PrzewagiPage.module.css'; // Importing the styles
 
 const AddCechaForm = () => {
+  const router = useRouter()
   const [name, setName] = useState('');
   const [language, setLanguage] = useState('pl'); // Default to Polish
 
@@ -28,6 +30,7 @@ const AddCechaForm = () => {
 
       // Optionally, reset the form or display success message
       setName('');
+      router.push('/przewagi')
     } catch (error) {
       console.error('Error:', error);
     }

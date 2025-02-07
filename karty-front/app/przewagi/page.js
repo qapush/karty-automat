@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import DeleteButton from '@/components/DeleteButton/DeleteButton';
 import AddPrzewagaForm from './AddPrzewagaForm';
 import styles from './PrzewagiPage.module.css'; // Importing the styles
 
@@ -16,11 +17,21 @@ async function fetchPrzewagi() {
 }
 
 export default async function PrzewagiPage() {
+
   const cechy = await fetchPrzewagi(); // Fetch cechy on the server side
+
+
 
   return (
     <div className={styles.container}>
+
+      
       <h1 className={styles.title}>Przewagi</h1>
+
+      {/* Client-side Component for Adding New Cechy */}
+      <div className={styles.formContainer}>
+        <AddPrzewagaForm />
+      </div>
 
       {/* Display the list of Cechy */}
       {cechy.length > 0 ? (
@@ -28,17 +39,16 @@ export default async function PrzewagiPage() {
           {cechy.map((przewaga) => (
             <li key={przewaga.id} className={styles.listItem}>
               {przewaga.tlumaczenia[0]?.nazwa || 'No name available'}
+              <DeleteButton id={przewaga.id} type={'przewagi'}/>
             </li>
-          ))}
+          )).reverse()}
+          
         </ul>
       ) : (
         <p className={styles.noFeatures}>Brak przewag do wyświetlenia. Dodaj nowe przewagi poniżej.</p> // Message when no features are available
       )}
 
-      {/* Client-side Component for Adding New Cechy */}
-      <div className={styles.formContainer}>
-        <AddPrzewagaForm />
-      </div>
+      
     </div>
   );
 }
