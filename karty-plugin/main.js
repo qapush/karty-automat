@@ -1,5 +1,5 @@
 const { entrypoints } = require("uxp");
-
+const {batchPlay} = require("photoshop").action;
 
 // PANEL 
 
@@ -150,8 +150,8 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
     fontSize: 22.92,
     fontName: 'Lato-Regular',
     position: {
-      x: titleLayer.boundsNoEffects.left + 3,
-      y: titleLayer.boundsNoEffects.bottom + 55
+      x: titleLayer.boundsNoEffects.left - 1,
+      y: titleLayer.boundsNoEffects.bottom + 56
     },
     textColor: goldenColor
   })
@@ -168,6 +168,12 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
     offset += przewagaLayer.boundsNoEffects.height + 13;
     przewagaLayer.visible = true;
   }
+
+  // CLEANUP PRZEWAGI
+
+  templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').layers.forEach( (i) => {
+    if(!i.visible) i.delete()
+  })
 
   // CREATE PREVIEW
 
@@ -294,6 +300,25 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
     templateDocument.layers.getByName('BGAREA').visible = false;
   }
 
+
+  // REMOVE MIARKI GROUP
+
+  templateDocument.layers.getByName('MIARKI').layers.forEach( i => i.delete());
+  templateDocument.layers.getByName('MIARKI').delete();
+
+
+  // COLLAPSE ALL GROUPS
+  await batchPlay(
+    [
+       // collapse current selected group
+          {
+            "_obj": "collapseAllGroupsEvent",
+            "_isCommand": true,
+            "_options": {
+              "dialogOptions": "dontDisplay"
+            }
+          }
+    ],{});
 
 
   // SAVE

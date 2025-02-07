@@ -258,7 +258,7 @@ export default function EditDekoracjaPage(props) {
             multiple
             value={formData.cechy}
             onChange={handleCechyChange}
-            className={styles.select}
+            className={`${styles.select} ${ styles.largeSelect}`}
           >
             {availableCechy.map((cecha) => (
               <option key={cecha.id} value={cecha.id}>
@@ -274,7 +274,7 @@ export default function EditDekoracjaPage(props) {
             multiple
             value={formData.przewagi}
             onChange={handlePrzewagiChange}
-            className={styles.select}
+            className={`${styles.select} ${ styles.largeSelect}`}
           >
             {availablePrzewagi.map((przewaga) => (
               <option key={przewaga.id} value={przewaga.id}>

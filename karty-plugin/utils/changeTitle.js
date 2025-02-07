@@ -156,23 +156,23 @@ module.exports = async function (layerId, title) {
                   textStyle: {
                      _obj: "textStyle",
                      styleSheetHasParent: true,
-                     fontPostScriptName: "Orbital-BoldItalic",
-                     fontName: "Orbital",
-                     fontStyleName: "Bold Italic",
+                     fontPostScriptName: "DMSerifText-Italic",
+                     fontName: "DM Serif Text",
+                     fontStyleName: "Italic",
                      fontScript: 0,
                      fontTechnology: 0,
                      fontAvailable: true,
                      size: {
-                        _unit: "pixelsUnit",
-                        _value: 201.19004821777344
+                        _unit: "pointsUnit",
+                        _value: 50
                      },
                      impliedFontSize: {
-                        _unit: "pixelsUnit",
-                        _value: 106.24999655300944
+                        _unit: "pointsUnit",
+                        _value: 50
                      },
                      horizontalScale: 100,
                      verticalScale: 100,
-                     syntheticBold: false,
+                     syntheticBold: false, 
                      syntheticItalic: false,
                      autoLeading: false,
                      leading: {
@@ -485,12 +485,12 @@ module.exports = async function (layerId, title) {
                      fontTechnology: 1,
                      fontAvailable: true,
                      size: {
-                        _unit: "pixelsUnit",
-                        _value: 201.19004821777344
+                        _unit: "pointsUnit",
+                        _value: 50
                      },
                      impliedFontSize: {
-                        _unit: "pixelsUnit",
-                        _value: 106.24999655300944
+                        _unit: "pointsUnit",
+                        _value: 50
                      },
                      horizontalScale: 100,
                      verticalScale: 100,
