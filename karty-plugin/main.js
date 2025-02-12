@@ -54,14 +54,6 @@ entrypoints.setup({
   }
 });
 
-
-
-
-
-
-
-
-
 const app = require('photoshop').app;
 const constants = require('photoshop').constants;
 const fs = require('uxp').storage.localFileSystem;
@@ -114,11 +106,11 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   await decorationDocument.layers.getByName(id.toString()).copy()
   await decorationDocument.close('DONOTSAVECHANGES')
   await templateDocument.paste()
-  await templateDocument.activeLayers[0].move(templateDocument.layers.getByName('TEKSTY'), constants.ElementPlacement.PLACEAFTER)
+  await templateDocument.activeLayers[0].move(templateDocument.layers.getByName('DEKORACJA'), constants.ElementPlacement.PLACEINSIDE)
 
   // RESIZE DECORATION
 
-  const decorationLayer = templateDocument.layers.getByName(id.toString());
+  const decorationLayer = templateDocument.layers.getByName('DEKORACJA').layers.getByName(id.toString());
   const VERTICAL = decorationLayer.boundsNoEffects.height > decorationLayer.boundsNoEffects.width;
   const LONG = decorationLayer.boundsNoEffects.width / decorationLayer.boundsNoEffects.height > 2;
   let scale = null;
@@ -134,7 +126,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 
   // ALIGN DECORATION
 
-  await alignAtoB(decorationLayer, templateDocument.layers.getByName('BGAREA'));
+  await alignAtoB(decorationLayer, templateDocument.layers.getByName('BGAREA')); 
 
   // TITLE    
 
@@ -294,11 +286,8 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   }
 
   // BG
-  if (templateDocument.layers.getByName('BGS').layers.getByName(subtitle)) {
-    const bgLayer = templateDocument.layers.getByName('BGS').layers.getByName(subtitle);
-    bgLayer.visible = true;
-    templateDocument.layers.getByName('BGAREA').visible = false;
-  }
+  templateDocument.layers.getByName('BGAREA').delete();
+
 
 
   // REMOVE MIARKI GROUP
