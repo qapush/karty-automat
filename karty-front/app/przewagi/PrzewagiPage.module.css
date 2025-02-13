@@ -65,3 +65,7 @@
   .label {
     display: bl
   }  
+
+  .icon {
+    max-height: 80px;
+  }

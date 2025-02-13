@@ -1,5 +1,5 @@
 import styles from './Dekoracje.module.css'; // Importing the CSS module
-import AddDekoracjaForm from './AddDekoracjaForm';
+import AddDekoracjaForm from '../../components/Dekoracja/AddDekoracjaForm';
 import { fetchDecorations } from '../../lib/fetchDecorations';
 import ListaDekoracji from './ListaDekoracji';
 

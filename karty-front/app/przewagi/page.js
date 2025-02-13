@@ -1,9 +1,9 @@
-import { PrismaClient } from '@prisma/client';
-import DeleteButton from '@/components/DeleteButton/DeleteButton';
-import AddPrzewagaForm from './AddPrzewagaForm';
-import styles from './PrzewagiPage.module.css'; // Importing the styles
+import { PrismaClient } from "@prisma/client";
+import DeleteButton from "@/components/DeleteButton/DeleteButton";
+import AddPrzewagaForm from "./AddPrzewagaForm";
+import styles from "./PrzewagiPage.module.css"; // Importing the styles
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 const prisma = new PrismaClient();
 
@@ -17,15 +17,10 @@ async function fetchPrzewagi() {
 }
 
 export default async function PrzewagiPage() {
-
   const cechy = await fetchPrzewagi(); // Fetch cechy on the server side
-
-
 
   return (
     <div className={styles.container}>
-
-      
       <h1 className={styles.title}>Przewagi</h1>
 
       {/* Client-side Component for Adding New Cechy */}
@@ -36,19 +31,27 @@ export default async function PrzewagiPage() {
       {/* Display the list of Cechy */}
       {cechy.length > 0 ? (
         <ul className={styles.list}>
-          {cechy.map((przewaga) => (
-            <li key={przewaga.id} className={styles.listItem}>
-              {przewaga.tlumaczenia[0]?.nazwa || 'No name available'}
-              <DeleteButton id={przewaga.id} type={'przewagi'}/>
-            </li>
-          )).reverse()}
-          
+          {cechy
+            .map((przewaga) => (
+              <li key={przewaga.id} className={styles.listItem}>
+                <div>
+                  <img
+                    className={styles.icon}
+                    src={`https://upvxroox3cbu7snu.public.blob.vercel-storage.com/${przewaga.tlumaczenia[0]?.nazwa}.png`}
+                    alt=""
+                  />
+                  {przewaga.tlumaczenia[0]?.nazwa || "No name available"}
+                </div>
+                <DeleteButton id={przewaga.id} type={"przewagi"} />
+              </li>
+            ))
+            .reverse()}
         </ul>
       ) : (
-        <p className={styles.noFeatures}>Brak przewag do wyświetlenia. Dodaj nowe przewagi poniżej.</p> // Message when no features are available
+        <p className={styles.noFeatures}>
+          Brak przewag do wyświetlenia. Dodaj nowe przewagi poniżej.
+        </p> // Message when no features are available
       )}
-
-      
     </div>
   );
 }
