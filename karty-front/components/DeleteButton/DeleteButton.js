@@ -22,7 +22,7 @@ export default function DeleteButton({id, type}){
               throw new Error('Failed to remove feature');
             }
     
-            router.push('/przewagi')
+            router.push(`/${type}`)
           } catch (error) {
             console.error('Error:', error);
           }

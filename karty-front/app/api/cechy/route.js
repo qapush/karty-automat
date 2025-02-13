@@ -23,6 +23,20 @@ export async function POST(req) {
   }
 }
 
+export async function DELETE(req) {
+  const { id } = await req.json(); // Parse JSON from the request body
+  try {
+    const resp = await prisma.cechy.delete({
+      where: { id },
+    });
+    
+    return new Response(null, { status: 204 });
+  } catch (error) {
+    console.error('Failed to delete new cecha:', error);
+    return new Response(JSON.stringify({ error: 'Failed to delete new cecha' }), { status: 404 });
+  }
+}
+
 export async function GET(req) {
   try {
     // Fetch features with their translations where language code is 'pl'

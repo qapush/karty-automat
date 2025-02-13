@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import AddCechaForm from './AddCechaForm';
 import styles from './CechyPage.module.css'; // Importing the styles
+import DeleteButton from '@/components/DeleteButton/DeleteButton';
 
 
 const prisma = new PrismaClient();
@@ -27,8 +28,9 @@ export default async function CechyPage() {
       {cechy.length > 0 ? (
         <ul className={styles.list}>
           {cechy.map((cecha) => (
-            <li key={cecha.id} className={styles.listItem} dangerouslySetInnerHTML={{__html: cecha.tlumaczenia[0]?.nazwa.replace(/\n/g, '<br/>') || 'No name available'}}>
-              
+            <li key={cecha.id} className={styles.listItem}>
+              <span dangerouslySetInnerHTML={{__html: cecha.tlumaczenia[0]?.nazwa.replace(/\n/g, '<br/>') || 'No name available'}}></span>
+              <DeleteButton id={cecha.id} type={"cechy"}/>
             </li>
           ))}
         </ul>

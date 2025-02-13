@@ -1,16 +1,11 @@
-import localFont from "next/font/local";
+import {Lato} from "next/font/google";
 import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+
+const lato = Lato({
+  weight: '400',
+  subsets: ['latin'],
+})
 
 export const metadata = {
   title: "Create Next App",
@@ -20,8 +15,28 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+      <body className={lato.className}>
+        <header>
+          <img
+            src="https://upvxroox3cbu7snu.public.blob.vercel-storage.com/logo.jpg"
+            alt="Logo"
+          />
+          <ul>
+            <li>
+              <a href="/dekoracje">dekoracje</a>
+            </li>
+            <li>
+              <a href="/cechy">cechy</a>
+            </li>
+            <li>
+              <a href="/przewagi">przewagi</a>
+            </li>
+            <li>
+              <a href="/typy">typy</a>
+            </li>
+          </ul>
+        </header>
+        <main>{children}</main>
       </body>
     </html>
   );
