@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { redirect } from "next/navigation";
 import styles from './TypyPage.module.css'; // Ensure you have the correct styles if you need them
 
 const AddCechaForm = () => {
@@ -27,10 +28,10 @@ const AddCechaForm = () => {
       console.log('Feature added:', newFeature);
 
       // Optionally, reset the form or display success message
-      setName('');
     } catch (error) {
       console.error('Error:', error);
     }
+    redirect('/typy');
   };
 
   return (

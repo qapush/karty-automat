@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import AddTypForm from './AddTypForm';
 import styles from './TypyPage.module.css'; // Importing the styles
+import DeleteButton from '@/components/DeleteButton/DeleteButton';
 
 const prisma = new PrismaClient();
 
@@ -28,6 +29,7 @@ export default async function TypyPage() {
           {cechy.map((typ) => (
             <li key={typ.id} className={styles.listItem}>
               {typ.tlumaczenia[0]?.nazwa || 'No name available'}
+              <DeleteButton id={typ.id} type={"typy"}/>
             </li>
           ))}
         </ul>

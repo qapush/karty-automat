@@ -23,6 +23,20 @@ export async function POST(req) {
   }
 }
 
+export async function DELETE(req) {
+  const { id } = await req.json(); // Parse JSON from the request body
+  try {
+    await prisma.typDekoracji.delete({
+      where: { id },
+    });
+    
+    return new Response(null, { status: 204 });
+  } catch (error) {
+    console.error('Failed to delete new typ:', error);
+    return new Response(JSON.stringify({ error: 'Failed to delete new typ' }), { status: 404 });
+  }
+}
+
 // app/api/typy/route.js
 
 
