@@ -1,5 +1,5 @@
 
-import styles from "./Dekoracja.module.css";
+import styles from "./dekoracja.module.css";
 import { dekoracjaData } from "@/utils/dekoracje";
 import DekoracjaForm from "@/components/Dekoracja/DekoracjaForm";
 
