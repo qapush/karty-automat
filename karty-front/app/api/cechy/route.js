@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
+import { cechyData } from '@/utils/cechy';
 
 export async function POST(req) {
   const { name, language } = await req.json(); // Parse JSON from the request body
@@ -40,14 +41,8 @@ export async function DELETE(req) {
 export async function GET(req) {
   try {
     // Fetch features with their translations where language code is 'pl'
-    const cechy = await prisma.cechy.findMany({
-      include: {
-        tlumaczenia: {
-          where: { kod_jezyka: 'pl' }, // Filter for Polish translations
-        },
-      },
-    });
-
+    const cechy = await cechyData();
+  
     return new Response(JSON.stringify(cechy), {
       status: 200,
       headers: {

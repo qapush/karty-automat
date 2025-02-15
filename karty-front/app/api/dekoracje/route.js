@@ -17,48 +17,82 @@ export async function GET(req) {
   return dekoracjeResponse; // This will return the decorations as a response
 }
 
-export async function POST(request) {
-    const { id, tytul, typ_dekoracji, szerokosc, wysokosc, glebokosc, moc, ilosc_led, jezyk, przewagi, cechy } = await request.json();
-  
-    try {
-      // Create the decoration first
-      const newDekoracja = await prisma.dekoracja.create({
-        data: {
-          id,
-          typ_dekoracji: {
-            connect: { id: typ_dekoracji }, // Connect the TypDekoracji by its ID
-          },
-          szerokosc,
-          wysokosc,
-          glebokosc,
-          moc,
-          ilosc_led,
-          // Create connections with selected cechy and przewagi
-          cechy: {
-            create: cechy.map((cechaId) => ({
-              cecha: { connect: { id: cechaId } }, // Connect each feature by ID
-            })),
-          },
-          przewagi: {
-            create: przewagi.map((przewagaId) => ({
-              przewaga: { connect: { id: przewagaId } }, // Connect each advantage by ID
-            })),
-          },
-        },
+export async function POST(req) {
+  try {
+    const requestData = await req.json();
+    const id = requestData.id;
+    const title = requestData.title;
+    const typ = requestData.typ; // id typu dekoracji z TypDekoracji
+    const cechy = requestData.cechy; // array of id cech z Cechy
+    const przewagi = requestData.przewagi; // array of przewagi cech z Przewagi
+    const led = requestData.led;
+    const power = requestData.power;
+    const szerokosc = requestData.szerokosc;
+    const wysokosc = requestData.wysokosc;
+    const glebokosc = requestData.glebokosc;
+    const locale = requestData.locale;
+
+    if (id) {
+      const existingDekoracja = await prisma.dekoracja.findUnique({
+        where: { id: parseInt(id) },
       });
-  
-      // Now create the translation for the decoration
-      const newTranslation = await prisma.dekoracjaTlumaczenie.create({
-        data: {
-          dekoracja_id: newDekoracja.id,
-          tytul,
-          kod_jezyka: jezyk,
-        },
-      });
-  
-      return new Response(JSON.stringify({ decoration: newDekoracja, translation: newTranslation }), { status: 201 });
-    } catch (error) {
-      console.error('Error creating decoration:', error);
-      return new Response('Failed to create decoration', { status: 500 });
+
+      if (existingDekoracja) {
+        return new Response(JSON.stringify({ error: "ID already taken" }), {
+          status: 400,
+        });
+      }
     }
+
+    // Create a new dekoracja
+    const newDekoracja = await prisma.dekoracja.create({
+      data: {
+        id: Number(id),
+        szerokosc: szerokosc,
+        wysokosc: wysokosc,
+        glebokosc: glebokosc,
+        moc: power,
+        ilosc_led: led,
+        typ_dekoracji: typ ? { connect: { id: typ } } : undefined,
+      },
+    });
+
+    // Create entries in the DekoracjaCechy table
+    if (cechy && cechy.length > 0) {
+      const cechyData = cechy.map((cechaId) => ({
+        dekoracja_id: newDekoracja.id,
+        cecha_id: cechaId,
+      }));
+      await prisma.dekoracjaCechy.createMany({
+        data: cechyData,
+      });
+    }
+
+    // Create entries in the DekoracjaPrzewagi table
+    if (przewagi && przewagi.length > 0) {
+      const przewagiData = przewagi.map((przewagaId) => ({
+        dekoracja_id: newDekoracja.id,
+        przewaga_id: przewagaId,
+      }));
+      await prisma.dekoracjaPrzewagi.createMany({
+        data: przewagiData,
+      });
+    }
+
+    // Create a new translation entry in the DekoracjaTlumaczenie table
+    await prisma.dekoracjaTlumaczenie.create({
+      data: {
+        dekoracja_id: newDekoracja.id,
+        kod_jezyka: locale,
+        tytul: title,
+      },
+    });
+
+    return new Response(JSON.stringify(newDekoracja), { status: 201 });
+  } catch (err) {
+    console.error("Error creating dekoracja:", err);
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 500,
+    });
   }
+}

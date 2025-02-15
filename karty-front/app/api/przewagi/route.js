@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
+
+import { przewagiData } from '@/utils/przewagi';
+
 
 export async function POST(req) {
   const { name, language } = await req.json(); // Parse JSON from the request body
@@ -40,13 +42,7 @@ export async function DELETE(req) {
 export async function GET(req) {
   try {
     // Fetch advantages with their translations where language code is 'pl'
-    const przewagi = await prisma.przewagi.findMany({
-      include: {
-        tlumaczenia: {
-          where: { kod_jezyka: 'pl' }, // Filter for Polish translations
-        },
-      },
-    });
+    const przewagi = await przewagiData();
 
     return new Response(JSON.stringify(przewagi), {
       status: 200,

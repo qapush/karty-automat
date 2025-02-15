@@ -1,6 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
-
 
 const prisma = new PrismaClient();
 
@@ -15,97 +14,107 @@ export async function GET(request, props) {
       include: {
         tlumaczenia: true, // Ensure this is included
         typ_dekoracji: {
-          include: { tlumaczenia: true }
+          include: { tlumaczenia: true },
         },
         cechy: {
-          include: { cecha: { include: { tlumaczenia: true } } }
+          include: { cecha: { include: { tlumaczenia: true } } },
         },
         przewagi: {
-          include: { przewaga: { include: { tlumaczenia: true } } }
-        }
-      }
+          include: { przewaga: { include: { tlumaczenia: true } } },
+        },
+      },
     });
 
     // If not found, return 404
     if (!dekoracja) {
-      return new Response(JSON.stringify({ error: 'Dekoracja not found' }), { status: 404 });
+      return new Response(JSON.stringify({ error: "Dekoracja not found" }), {
+        status: 404,
+      });
     }
 
     // Prepare a "clean" object that safely checks for optional fields
     const cleanDekoracja = {
       id: dekoracja.id,
-      title: {tlumaczenia: dekoracja.tlumaczenia || "Untitled"},
-      subtitle: dekoracja.typ_dekoracji?.tlumaczenia?.[0]?.nazwa || "No subtitle",
+      title: { tlumaczenia: dekoracja.tlumaczenia || "Untitled" },
+      subtitle:
+        dekoracja.typ_dekoracji?.tlumaczenia?.[0]?.nazwa || "No subtitle",
       led: dekoracja.ilosc_led || 0,
       power: dekoracja.moc || 0,
-      przewagi: dekoracja.przewagi?.map(i => i.przewaga?.tlumaczenia?.[0]?.nazwa || "Unnamed Advantage") || [],
-      cechy: dekoracja.cechy?.map(i => i.cecha?.tlumaczenia?.[0]?.nazwa || "Unnamed Feature") || [],
+      przewagi:
+        dekoracja.przewagi?.map(
+          (i) => i.przewaga?.tlumaczenia?.[0]?.nazwa || "Unnamed Advantage"
+        ) || [],
+      cechy:
+        dekoracja.cechy?.map(
+          (i) => i.cecha?.tlumaczenia?.[0]?.nazwa || "Unnamed Feature"
+        ) || [],
       szerokosc: dekoracja.szerokosc || 0,
       wysokosc: dekoracja.wysokosc || 0,
-      glebokosc: dekoracja.glebokosc || 0
+      glebokosc: dekoracja.glebokosc || 0,
     };
 
     // Return the clean data as JSON
     return new Response(JSON.stringify(cleanDekoracja), { status: 200 });
   } catch (error) {
     console.error(error);
-    return new Response(JSON.stringify({ error: 'Server error' }), { status: 500 });
+    return new Response(JSON.stringify({ error: "Server error" }), {
+      status: 500,
+    });
   }
 }
 
 
-// app/api/dekoracje/[id]/route.js
-
 export async function PUT(req, props) {
   const params = await props.params;
+
   try {
-    const { id } = params;
-    const {
+    const id = params.id; // id dekoracji z Dekoracja
+    const requestData = await req.json();
+
+    const title = requestData.title;
+    const typ = requestData.typ; // id typu dekoracji z TypDekoracji
+    const cechy = requestData.cechy; // array of id cech z Cechy
+    const przewagi = requestData.przewagi; // array of przewagi cech z Przewagi
+    const led = requestData.led;
+    const power = requestData.power;
+    const szerokosc = requestData.szerokosc;
+    const wysokosc = requestData.wysokosc;
+    const glebokosc = requestData.glebokosc;
+    const locale = requestData.locale;
+
+    console.log(
+      id,
       title,
-      subtitle_id,       // ID of TypDekoracji you want to connect
-      tlumaczenie_id,
+      typ,
+      cechy,
+      przewagi,
       led,
       power,
       szerokosc,
       wysokosc,
       glebokosc,
-      cechy,             // Array of Cechy IDs
-      przewagi,          // Array of Przewagi IDs
-    } = await req.json();
+      locale
+    );
 
-    if (!tlumaczenie_id) {
-      return new Response(JSON.stringify({ error: "Translation ID is required" }), { status: 400 });
-    }
+    // Найти существующую запись с переводом
 
-    // Check if the translation exists
-    const existingTranslation = await prisma.dekoracjaTlumaczenie.findUnique({
-      where: { id: tlumaczenie_id },
+    const tlumaczenie = await prisma.dekoracjaTlumaczenie.findFirst({
+      where: { 
+        kod_jezyka: locale, 
+        dekoracja_id: Number(id) 
+      }
     });
 
-    if (!existingTranslation) {
-      return new Response(JSON.stringify({ error: "Translation not found" }), { status: 404 });
-    }
-
-    // Ensure all dimensions are valid numbers before updating
-    const validSzerokosc = parseFloat(szerokosc) || 0;
-    const validGlebokosc = parseFloat(glebokosc) || 0;
-
-    // Update the translation in the DekoracjaTlumaczenie table
-    await prisma.dekoracjaTlumaczenie.update({
-      where: { id: tlumaczenie_id },
-      data: { tytul: title },
-    });
-
-    // Update the dekoracja fields
+    // Обновление основной таблицы Dekoracja
     const updatedDekoracja = await prisma.dekoracja.update({
-      where: { id: parseInt(id) },
+      where: { id: Number(id) },
       data: {
-        typ_dekoracji: { connect: { id: subtitle_id } },  // Use connect for relation field
-        ilosc_led: parseInt(led),
-        moc: parseInt(power),
-        szerokosc: validSzerokosc,
-        wysokosc: parseFloat(wysokosc),
-        glebokosc: validGlebokosc,
+        szerokosc: szerokosc,
+        wysokosc: wysokosc,
+        glebokosc: glebokosc,
+        moc: power,
+        ilosc_led: led,
+        typ_dekoracji: typ ? { connect: { id: typ } } : undefined,
       },
     });
 
@@ -143,20 +152,33 @@ export async function PUT(req, props) {
       });
     }
 
+    // Обновление названия в таблице DekoracjaTlumaczenie
+    if (tlumaczenie) {
+      await prisma.dekoracjaTlumaczenie.update({
+        where: { id: tlumaczenie.id },
+        data: {
+          tytul: title
+        },
+      });
+    } else {
+      // Если перевода нет, создаем новый
+      await prisma.dekoracjaTlumaczenie.create({
+        data: {
+          dekoracja_id: Number(id),
+          kod_jezyka: locale,
+          tytul: title
+        },
+      });
+    }
+
     return new Response(JSON.stringify(updatedDekoracja), { status: 200 });
   } catch (err) {
     console.error("Error updating dekoracja:", err);
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 500,
+    });
   }
 }
-
-
-
-
-
-
-
-
 
 
 

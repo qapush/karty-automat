@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { typyData } from '@/utils/typy';
 
 const prisma = new PrismaClient();
 
@@ -44,13 +45,7 @@ export async function DELETE(req) {
 export async function GET(req) {
   try {
     // Fetch decoration types with their translations where language code is 'pl'
-    const typy = await prisma.typDekoracji.findMany({
-      include: {
-        tlumaczenia: {
-          where: { kod_jezyka: 'pl' }, // Filter for Polish translations
-        },
-      },
-    });
+    const typy = await typyData();
 
     return new Response(JSON.stringify(typy), {
       status: 200,

@@ -1,8 +1,8 @@
 import styles from './Dekoracje.module.css'; // Importing the CSS module
-import AddDekoracjaForm from '../../components/Dekoracja/AddDekoracjaForm';
+
 import { fetchDecorations } from '../../lib/fetchDecorations';
 import ListaDekoracji from './ListaDekoracji';
-
+import DekoracjaForm from '@/components/Dekoracja/DekoracjaForm';
 export const dynamic = 'force-dynamic';
 
 export default async function DekoracjePage() {
@@ -20,8 +20,12 @@ export default async function DekoracjePage() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Dekoracje</h1>
+      <a href="#dodaj-dekoracje">Dodaj nową</a>
+      <br />
+      <br />
       <ListaDekoracji dekoracjeData={dekoracje}/>
-      <AddDekoracjaForm />
+      <h1 id='dodaj-dekoracje'>Dodaj dekoracje</h1>
+      <DekoracjaForm add />
     </div>
   );
 }
