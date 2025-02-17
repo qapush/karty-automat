@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { revalidatePath } from "next/cache";
 
 const prisma = new PrismaClient();
 
@@ -38,8 +39,8 @@ export async function POST(req) {
       });
 
       if (existingDekoracja) {
-        return new Response(JSON.stringify({ error: "ID already taken" }), {
-          status: 400,
+        return new Response(JSON.stringify({ error: "Dekoracja o takim ID już istnieje" }), {
+          status: 409,
         });
       }
     }
@@ -88,7 +89,11 @@ export async function POST(req) {
       },
     });
 
-    return new Response(JSON.stringify(newDekoracja), { status: 201 });
+    revalidatePath('/dekoracje');
+
+    return new Response(JSON.stringify({message: `Pomyślnie dodano ID ${id}`}), { status: 201 });
+
+    
   } catch (err) {
     console.error("Error creating dekoracja:", err);
     return new Response(JSON.stringify({ error: err.message }), {

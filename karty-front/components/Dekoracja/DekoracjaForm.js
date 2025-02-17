@@ -2,28 +2,32 @@
 
 import { useEffect, useState } from "react";
 import styles from "./DekoracjaForm.module.css"; // Ensure to import the styles
+import { ToastContainer, toast } from 'react-toastify';
+import { putPostDekoracja } from "@/utils/putpostDekoracja";
 
 const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
-  
+
   const locale = "pl";
 
   const [typy, setTypy] = useState([]);
   const [cechy, setCechy] = useState([]);
   const [przewagi, setPrzewagi] = useState([]);
 
-  const [formData, setFormData] = useState({
+  const initializeFormData = (data) => ({
     id,
-    title: dekoracjaData ? dekoracjaData.title : "",
-    typ: dekoracjaData ? dekoracjaData.typ.id : "",
-    cechy: dekoracjaData ? dekoracjaData.cechy.map(i => i.id) : [],
-    przewagi: dekoracjaData ? dekoracjaData.przewagi.map(i => i.id) : [],
-    led: dekoracjaData ? dekoracjaData.led : 0,
-    power: dekoracjaData ? dekoracjaData.power : 0,
-    szerokosc: dekoracjaData ? dekoracjaData.szerokosc : 0,
-    glebokosc: dekoracjaData ? dekoracjaData.glebokosc : 0,
-    wysokosc: dekoracjaData ? dekoracjaData.wysokosc : 0,
+    title: data?.title || "",
+    typ: data?.typ?.id || "",
+    cechy: data?.cechy?.map(i => i.id) || [],
+    przewagi: data?.przewagi?.map(i => i.id) || [],
+    led: data?.led || 0,
+    power: data?.power || 0,
+    szerokosc: data?.szerokosc || 0,
+    glebokosc: data?.glebokosc || 0,
+    wysokosc: data?.wysokosc || 0,
     locale
   });
+
+  const [formData, setFormData] = useState(initializeFormData(dekoracjaData));
 
   useEffect(() => {
     const getData = async () => {
@@ -39,7 +43,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
       const przewagiRes = await fetch("/api/przewagi");
       const przewagiData = await przewagiRes.json();
       setPrzewagi(przewagiData);
-    
+
     };
 
     getData();
@@ -47,35 +51,32 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
 
   // FORM
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
-    if(add) {
-      const res = await fetch("/api/dekoracje", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
- 
-
-      const result = await res.json();
-
-      alert(result.error || JSON.stringify(result));
-
-
-    } else {
-      const res = await fetch(`/api/dekoracje/${id}`, {
-        method: 'PUT',
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
+    const isFormUnchanged = JSON.stringify(formData) === JSON.stringify(initializeFormData(dekoracjaData));
+    if (isFormUnchanged) {
+      toast.info("Nie wprowadzono zmian do formularza");
+      return;
     }
+
+    toast.promise(() => putPostDekoracja(add, formData
+      ), {
+      pending: "Zapisywanie...",
+      success: {
+        render( {data} ) {
+          console.log(data);
+          
+          return data.message;
+        }
+      },
+      error: {
+        render( {data} ) {
+          return data.message;
+        }
+      }
+    })
 
 
   };
@@ -87,7 +88,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
       [e.target.name]: e.target.value
     }))
   };
- 
+
   const handleMultipleChange = (e) => {
     const selectedOptions = Array.from(e.target.selectedOptions).map((option) => option.value);
     setFormData((prev) => ({
@@ -95,17 +96,12 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
       [e.target.name]: selectedOptions,
     }));
   };
-  
 
 
-  
-  
-  
-  
   return (
     <>
       <form onSubmit={handleSubmit}>
-        { add && <label className={styles.label}>
+        {add && <label className={styles.label}>
           ID:
           <textarea
             required
@@ -118,7 +114,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
         <label className={styles.label}>
           Title:
           <textarea
-          required
+            required
             name="title"
             value={formData.title}
             onChange={handleChange}
@@ -130,7 +126,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
           Typ dekoracji:
           <select
             name="typ"
-            required  
+            required
             value={formData.typ}
             onChange={handleChange}
             className={styles.select}
@@ -151,7 +147,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
             required
             value={formData.cechy}
             onChange={handleMultipleChange}
-            className={`${styles.select} ${ styles.largeSelect}`}
+            className={`${styles.select} ${styles.largeSelect}`}
           >
             {cechy.map((cecha) => (
               <option key={cecha.id} value={cecha.id}>
@@ -168,7 +164,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
             name="przewagi"
             value={formData.przewagi}
             onChange={handleMultipleChange}
-            className={`${styles.select} ${ styles.largeSelect}`}
+            className={`${styles.select} ${styles.largeSelect}`}
           >
             {przewagi.map((przewaga) => (
               <option key={przewaga.id} value={przewaga.id}>
@@ -231,6 +227,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
           Save Changes
         </button>
       </form>
+      <ToastContainer />
     </>
 
 

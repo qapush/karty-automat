@@ -82,20 +82,6 @@ export async function PUT(req, props) {
     const glebokosc = requestData.glebokosc;
     const locale = requestData.locale;
 
-    console.log(
-      id,
-      title,
-      typ,
-      cechy,
-      przewagi,
-      led,
-      power,
-      szerokosc,
-      wysokosc,
-      glebokosc,
-      locale
-    );
-
     // Найти существующую запись с переводом
 
     const tlumaczenie = await prisma.dekoracjaTlumaczenie.findFirst({
@@ -171,7 +157,7 @@ export async function PUT(req, props) {
       });
     }
 
-    return new Response(JSON.stringify(updatedDekoracja), { status: 200 });
+    return new Response(JSON.stringify({message: `Pomyślnie zmieniono dane dla ID ${id}`}), { status: 200 });
   } catch (err) {
     console.error("Error updating dekoracja:", err);
     return new Response(JSON.stringify({ error: err.message }), {
