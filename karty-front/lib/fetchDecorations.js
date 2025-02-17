@@ -65,6 +65,7 @@ export async function fetchDecorations(languageCode = 'pl') {
         },
       },
     });
+    
 
     return new Response(JSON.stringify(decorations), { status: 200 });
   } catch (error) {

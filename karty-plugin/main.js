@@ -86,6 +86,7 @@ goldenColor.rgb.blue = 84;
 
 const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
   
+  
   const BASEURL = localStorage.getItem('designLetter') + ':/';
   
   // OPEN DOCUMENTS
@@ -287,6 +288,13 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 
   // BG
   templateDocument.layers.getByName('BGAREA').delete();
+  templateDocument.layers.getByName('BGS').layers.forEach( i => {
+    if(i.name !== subtitle) {
+      i.merge()
+      i.delete()
+    }
+  })
+  
 
 
 

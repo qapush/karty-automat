@@ -1,5 +1,4 @@
 import styles from './Dekoracje.module.css'; // Importing the CSS module
-
 import { fetchDecorations } from '../../lib/fetchDecorations';
 import ListaDekoracji from './ListaDekoracji';
 import DekoracjaForm from '@/components/Dekoracja/DekoracjaForm';
