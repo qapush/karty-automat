@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import styles from "./DekoracjaForm.module.css"; // Ensure to import the styles
 import { ToastContainer, toast } from 'react-toastify';
-import { putPostDekoracja } from "@/utils/putpostDekoracja";
+import { putPostDekoracja } from "@/utils/putPostDekoracja";
+
 
 const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
 
