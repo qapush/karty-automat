@@ -36,7 +36,7 @@ document.getElementById('btnChangeDesignLetter').addEventListener('click', () =>
 });
 
 showAlert = () => {
-  alert("This is an alert message");
+  alert("This is an alert message");   
 }
 
 
@@ -217,17 +217,19 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   
   await changePrevAreaWidth(widthLine, prevImage.boundsNoEffects.width);
   await selectLayer(widthText);
-  widthText.textItem.contents = szerokosc  + ' M';
   await alignAtoBhorizontal(widthText, previewalign);
   await selectLayer(widthLine);
   await alignAtoBhorizontal(widthLine, previewalign);
   await moveLayer(widthGroup.name, widthGroup.id, 0, previewalign.boundsNoEffects.bottom - widthGroup.boundsNoEffects.top + 10);
-
+  
   if(szerokosc != 0){
-    if(String(szerokosc).includes('.')) szerokosc = szerokosc.replace('.',',');
+    if(String(szerokosc).includes('.')) szerokosc = String(szerokosc).replace('.',',');
   } else {
     widthGroup.visible = false;
   }
+  
+  widthText.textItem.contents = szerokosc  + ' M';
+  
 
 
   // HEIGHT
@@ -238,32 +240,35 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 
   await changePrevAreaWidth(heightLine, prevImage.boundsNoEffects.height);
   await selectLayer(heightText);
-  heightText.textItem.contents = wysokosc  + ' M';
   await alignAtoBhorizontal(heightText, heightLine);
   await selectLayer(heightGroup);
   await heightGroup.rotate(-90, constants.AnchorPosition.TOPLEFT);
   await moveLayer(heightGroup.name, heightGroup.id, prevImage.boundsNoEffects.right - heightGroup.boundsNoEffects.left + 10, heightGroup.boundsNoEffects.height);
-
-
+  
+  
   if(wysokosc != 0){
-    if(String(wysokosc).includes('.')) wysokosc = wysokosc.replace('.',',');
+    if(String(wysokosc).includes('.')) wysokosc = String(wysokosc).replace('.',',');
   } else {
     heightGroup.visible = false;
   }
-
+  
+  heightText.textItem.contents = wysokosc  + ' M';
   // DEPTH
 
   const depthGroup = await previewGroup.layers.getByName('depth');
   const depthText = await depthGroup.layers.getByName('depth-text');
-  depthText.textItem.contents = glebokosc + ' M';
   await moveLayer(depthGroup.name, depthGroup.id, heightGroup.boundsNoEffects.right - depthGroup.boundsNoEffects.left - 15, heightGroup.boundsNoEffects.bottom - depthGroup.boundsNoEffects.bottom + 22);
-
+  
+  
+  
+  
   if(glebokosc != 0){
-    if(String(glebokosc).includes('.')) glebokosc = glebokosc.replace('.',',');
+    if(String(glebokosc).includes('.')) glebokosc = String(glebokosc).replace('.',',');
   } else {
     depthGroup.visible = false;
   }
-
+  
+  depthText.textItem.contents = glebokosc + ' M';
   // ID
 
   const idTextItem = templateDocument.layers.getByName('TEKSTY').layers.getByName('DANE TECH').layers.getByName('ID').textItem;
