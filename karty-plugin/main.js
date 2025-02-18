@@ -214,7 +214,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   const widthGroup = previewGroup.layers.getByName('width');
   const widthLine = widthGroup.layers.getByName('width-line');
   const widthText = widthGroup.layers.getByName('width-text');
-
+  
   await changePrevAreaWidth(widthLine, prevImage.boundsNoEffects.width);
   await selectLayer(widthText);
   widthText.textItem.contents = szerokosc  + ' M';
@@ -223,6 +223,11 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   await alignAtoBhorizontal(widthLine, previewalign);
   await moveLayer(widthGroup.name, widthGroup.id, 0, previewalign.boundsNoEffects.bottom - widthGroup.boundsNoEffects.top + 10);
 
+  if(szerokosc != 0){
+    if(String(szerokosc).includes('.')) szerokosc = szerokosc.replace('.',',');
+  } else {
+    widthGroup.visible = false;
+  }
 
 
   // HEIGHT
@@ -240,6 +245,11 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   await moveLayer(heightGroup.name, heightGroup.id, prevImage.boundsNoEffects.right - heightGroup.boundsNoEffects.left + 10, heightGroup.boundsNoEffects.height);
 
 
+  if(wysokosc != 0){
+    if(String(wysokosc).includes('.')) wysokosc = wysokosc.replace('.',',');
+  } else {
+    heightGroup.visible = false;
+  }
 
   // DEPTH
 
@@ -247,6 +257,12 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   const depthText = await depthGroup.layers.getByName('depth-text');
   depthText.textItem.contents = glebokosc + ' M';
   await moveLayer(depthGroup.name, depthGroup.id, heightGroup.boundsNoEffects.right - depthGroup.boundsNoEffects.left - 15, heightGroup.boundsNoEffects.bottom - depthGroup.boundsNoEffects.bottom + 22);
+
+  if(glebokosc != 0){
+    if(String(glebokosc).includes('.')) glebokosc = glebokosc.replace('.',',');
+  } else {
+    depthGroup.visible = false;
+  }
 
   // ID
 

@@ -109,6 +109,7 @@
     }
   },
   "featureFlags": {
-    "enableAlerts": true
+    "enableAlerts": true,
+    "enableSWCSupport": true
   }
 }
