@@ -31,7 +31,7 @@ export async function POST(req) {
     const szerokosc = requestData.szerokosc;
     const wysokosc = requestData.wysokosc;
     const glebokosc = requestData.glebokosc;
-    const locale = requestData.locale;
+    const locale = requestData.locale;    
 
     if (id) {
       const existingDekoracja = await prisma.dekoracja.findUnique({
@@ -49,11 +49,11 @@ export async function POST(req) {
     const newDekoracja = await prisma.dekoracja.create({
       data: {
         id: Number(id),
-        szerokosc: szerokosc,
-        wysokosc: wysokosc,
-        glebokosc: glebokosc,
-        moc: power,
-        ilosc_led: led,
+        szerokosc: Number(szerokosc),
+        wysokosc: Number(wysokosc),
+        glebokosc: Number(glebokosc),
+        moc: Number(power),
+        ilosc_led: Number(led),
         typ_dekoracji: typ ? { connect: { id: typ } } : undefined,
       },
     });
@@ -90,12 +90,12 @@ export async function POST(req) {
     });
 
     revalidatePath('/dekoracje');
-
-    return new Response(JSON.stringify({message: `Pomyślnie dodano ID ${id}`}), { status: 201 });
+    console.log(`Pomyślnie dodano ID ${id}`);
+    return new Response(JSON.stringify({message: `Pomyślnie dodano ID ${id}`, id}), { status: 201 });
 
     
   } catch (err) {
-    console.error("Error creating dekoracja:", err);
+    console.error("Error creating dekoracja:", err.message);
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
     });

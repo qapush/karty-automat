@@ -95,11 +95,11 @@ export async function PUT(req, props) {
     const updatedDekoracja = await prisma.dekoracja.update({
       where: { id: Number(id) },
       data: {
-        szerokosc: szerokosc,
-        wysokosc: wysokosc,
-        glebokosc: glebokosc,
-        moc: power,
-        ilosc_led: led,
+        szerokosc: Number(szerokosc),
+        wysokosc: Number(wysokosc),
+        glebokosc: Number(glebokosc),
+        moc: Number(power),
+        ilosc_led: Number(led),
         typ_dekoracji: typ ? { connect: { id: typ } } : undefined,
       },
     });
@@ -159,7 +159,7 @@ export async function PUT(req, props) {
 
     return new Response(JSON.stringify({message: `Pomyślnie zmieniono dane dla ID ${id}`}), { status: 200 });
   } catch (err) {
-    console.error("Error updating dekoracja:", err);
+    console.error("Error updating dekoracja:", err.message);
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
     });

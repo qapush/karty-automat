@@ -67,9 +67,14 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
       pending: "Zapisywanie...",
       success: {
         render( {data} ) {
-          console.log(data);
-          
-          return data.message;
+          return <div>
+            <h5>{data.message}</h5>
+            <div>
+              { add && data.id && <div style={{marginTop: 40}}>
+                  <a style={{color: 'red'}} href={`/dekoracje/${data.id}`}>Przejdź do dekoracji →</a>
+                </div>}
+            </div>
+          </div>;
         }
       },
       error: {
@@ -188,6 +193,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
           MOC:
           <input
             type="number"
+            step={0.1}
             name="power"
             value={formData.power}
             onChange={handleChange}
@@ -198,6 +204,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
           SZEROKOŚĆ:
           <input
             type="number"
+            step={0.1}
             name="szerokosc"
             value={formData.szerokosc}
             onChange={handleChange}
@@ -208,6 +215,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
           WYSOKOŚĆ:
           <input
             type="number"
+            step={0.1}
             name="wysokosc"
             value={formData.wysokosc}
             onChange={handleChange}
@@ -218,6 +226,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
           GŁĘBOKOŚĆ:
           <input
             type="number"
+            step={0.1}
             name="glebokosc"
             value={formData.glebokosc}
             onChange={handleChange}
