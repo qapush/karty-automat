@@ -63,22 +63,22 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
     }
 
     toast.promise(() => putPostDekoracja(add, formData
-      ), {
+    ), {
       pending: "Zapisywanie...",
       success: {
-        render( {data} ) {
+        render({ data }) {
           return <div>
             <h5>{data.message}</h5>
             <div>
-              { add && data.id && <div style={{marginTop: 40}}>
-                  <a style={{color: 'red'}} href={`/dekoracje/${data.id}`}>Przejdź do dekoracji →</a>
-                </div>}
+              {add && data.id && <div style={{ marginTop: 40 }}>
+                <a style={{ color: 'red' }} href={`/dekoracje/${data.id}`}>Przejdź do dekoracji →</a>
+              </div>}
             </div>
           </div>;
         }
       },
       error: {
-        render( {data} ) {
+        render({ data }) {
           return data.message;
         }
       }
@@ -145,6 +145,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
             ))}
           </select>
         </label>
+        {(formData.typ === "ee978b21-6056-432c-a8f8-6cda529985d8" || formData.typ === "3c18ed57-02f7-4853-94c4-14abf2eb246c") && <div style={{ padding: 10, borderRadius: 1, backgroundColor: "lightgreen", margin: "1rem 0"}}><span>Ten tyb dekoracji może byc tylko wewnętrzny</span></div>}
         <label className={styles.label}>
           Cechy (max 3):
           <select

@@ -65,6 +65,7 @@ const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR } = config;
 
 
 
+
 // UTILS
 const dowithModal = require('./utils/doWithModal');
 const openWithModal = require('./utils/openWithModal');
@@ -123,6 +124,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
     scale = 500 / decorationLayer.boundsNoEffects.width * 100;
     decorationLayer.scale(scale, scale);
   }
+
 
 
   // ALIGN DECORATION
@@ -309,14 +311,70 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 
   // BG
   templateDocument.layers.getByName('BGAREA').delete();
-  templateDocument.layers.getByName('BGS').layers.forEach( i => {
-    if(i.name !== subtitle) {
-      i.merge()
-      i.delete()
-    }
-  })
-  
 
+  const indoor = document.getElementById('indoor').checked;
+  const indoorOnly = () => {
+    switch(subtitle){
+      case "dekoracja podwieszana 2D":
+        return true;
+        break;
+      case "dekoracja podwieszana 3D":
+        return true;
+        break;
+      default:
+        return false;
+    }
+  }
+
+
+  if(!indoor && !indoorOnly()){
+    console.log('!indoor');
+    
+    templateDocument.layers.getByName('BGS').layers.getByName('ZEW').layers.forEach( i => {
+      if(i.name !== subtitle) {
+        i.merge()
+        i.delete()
+      }
+    })
+
+    templateDocument.layers.getByName('BGS').layers.getByName('WEW').merge();
+    templateDocument.layers.getByName('BGS').layers.getByName('WEW').delete();
+  } else if(indoorOnly()) {
+   
+     console.log('indoor only');
+    alert(`Dekoracje typu "${subtitle}" mogą być tylko indoor`)
+   
+    templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.forEach( i => {
+      if(i.name !== subtitle) {
+        i.merge()
+        i.delete()
+      }
+    })
+
+    templateDocument.layers.getByName('BGS').layers.getByName('ZEW').merge();
+    templateDocument.layers.getByName('BGS').layers.getByName('ZEW').delete();
+
+
+  } else {
+    
+      if(templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.getByName(subtitle)){
+        templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.forEach( i => {
+          if(i.name !== subtitle) {
+            i.merge()
+            i.delete()
+          }
+        })
+    
+        templateDocument.layers.getByName('BGS').layers.getByName('ZEW').merge();
+        templateDocument.layers.getByName('BGS').layers.getByName('ZEW').delete();
+      } else {
+        templateDocument.layers.getByName('BGS').layers.getByName('ZEW').merge();
+        templateDocument.layers.getByName('BGS').layers.getByName('ZEW').delete();
+        alert('Zostawiono backgroundy indoor, choć ta grupa dekoracji nie powinna być pokazywana na backgroundach indoor 👁️')
+      }
+
+  }
+  
 
 
   // REMOVE MIARKI GROUP
