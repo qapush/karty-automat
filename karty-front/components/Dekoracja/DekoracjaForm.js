@@ -145,7 +145,19 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
             ))}
           </select>
         </label>
-        {(formData.typ === "ee978b21-6056-432c-a8f8-6cda529985d8" || formData.typ === "3c18ed57-02f7-4853-94c4-14abf2eb246c") && <div style={{ padding: 10, borderRadius: 1, backgroundColor: "lightgreen", margin: "1rem 0"}}><span>Ten tyb dekoracji może byc tylko wewnętrzny</span></div>}
+        {/* TYKO WEW */}
+        {(formData.typ === "ee978b21-6056-432c-a8f8-6cda529985d8" 
+          || formData.typ === "3c18ed57-02f7-4853-94c4-14abf2eb246c") && <div style={{ padding: 10, borderRadius: 1, backgroundColor: "lightgreen", margin: "1rem 0" }}><span>Ten typ dekoracji może byc tylko wewnętrzny</span></div>}
+
+        {/* TYLKO ZEW */}
+
+        {(formData.typ === "97d0523e-7896-4b04-9996-be06c7cde94b" 
+          || formData.typ === "617fc7bb-3da3-41a3-985c-4cbbdc3011c3"
+          || formData.typ === "812385a0-341d-43bc-9232-6e855e32ff50"
+          || formData.typ === "31f5f61c-7f04-4e12-9103-b6bd104d033c"
+          || formData.typ === "a11617a0-b8f8-4a92-b616-7e47dbec0c5f"
+          || formData.typ === "51cc0396-1774-4646-af27-e6b74aa4757d") && <div style={{ padding: 10, borderRadius: 1, backgroundColor: "lightgreen", margin: "1rem 0" }}><span>Ten typ dekoracji może byc tylko zewnętrzny</span></div>}
+
         <label className={styles.label}>
           Cechy (max 3):
           <select

@@ -157,18 +157,21 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 
   // PRZEWAGI
 
+  const przewagi2 = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI2');
+  
   for (const element of przewagi) {
     const przewagaLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').layers.getByName(element);
     await moveLayer(element, przewagaLayer.id, subtitleLayer.boundsNoEffects.left, offset); 
     offset += przewagaLayer.boundsNoEffects.height + 13;
     przewagaLayer.visible = true;
+    przewagaLayer.move(przewagi2, constants.ElementPlacement.PLACEINSIDE);
   }
 
   // CLEANUP PRZEWAGI
 
-  templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').layers.forEach( (i) => {
-    if(!i.visible) i.delete()
-  })
+  templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').merge();
+  templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').delete();
+  przewagi2.name = 'PRZEWAGI';
 
   // CREATE PREVIEW
 
@@ -282,7 +285,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   ledMocTextItem.contents = `pkt. led: ${led}, MOC: ${power}W`;
 
 
-  // PRZEWAGI
+  // CECHY
 
   const cecha1 = templateDocument.layers.getByName('TEKSTY').layers.getByName('CECHY').layers.getByName('CECHA_1');
   
@@ -399,13 +402,15 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 
   // SAVE
 
-  
-  const resultEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${OUTPUT_DIR}/${id}.psd`, { overwrite: true });
+  const exportFileName = `${id}${document.getElementById('indoor').checked || indoorOnly() ? '_WEW' : ''}`;
+
+
+  const resultEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${OUTPUT_DIR}/${exportFileName}.psd`, { overwrite: true });
   await templateDocument.saveAs.psd(resultEntry);
   await templateDocument.close('DONOTSAVECHANGES');
 
   if (document.getElementById('openAfterSave').checked) {
-    await openWithModal(`${BASEURL + OUTPUT_DIR}/${id}.psd`);
+    await openWithModal(`${BASEURL + OUTPUT_DIR}/${exportFileName}.psd`);
   }
 }
 
