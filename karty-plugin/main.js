@@ -79,7 +79,7 @@ const SolidColor = require("photoshop").app.SolidColor;
 // const db = require('./db');
 
 
-const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR, TEMP_DIR, NOID_MAP } = config;
+const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR, TEMP_DIR, NOID_MAP, NOID_PREVIEW_DIR } = config;
 
 
 // UTILS
@@ -448,6 +448,25 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 
 
   const resultEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${OUTPUT_DIR}/${exportFileName}.psd`, { overwrite: true });
+  
+  if(noid){
+
+    function formatTimestamp() {
+      const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Miesiące są 0-indeksowane
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    return `${day}-${month}-${year}_${hours}-${minutes}-${seconds}`;
+  }
+
+
+    const previewEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${NOID_PREVIEW_DIR}/${localStorage.getItem('folderName')}_${formatTimestamp()}.jpg`, { overwrite: true });
+    await templateDocument.saveAs.jpg(previewEntry);
+  }
   await templateDocument.saveAs.psd(resultEntry);
   await templateDocument.close('DONOTSAVECHANGES');
 

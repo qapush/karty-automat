@@ -15,8 +15,8 @@
       "type": "panel",
       "id": "Karty",
       "minimumSize": {
-        "width": 230,
-        "height": 200
+        "width": 350,
+        "height": 450
       },
       "maximumSize": {
         "width": 2000,
