@@ -124,6 +124,7 @@
     <sp-heading>Generuj kartę dla ID</sp-heading>
     <sp-textfield id="idField" placeholder="ID dekoracji" value=""></sp-textfield>
     <sp-checkbox id="indoor">Karta indoor</sp-checkbox>
+    <sp-checkbox id="noid">Bez ID</sp-checkbox>
     <sp-checkbox id="openAfterSave" checked>Otwórz kartę po wygenerowaniu</sp-checkbox>
     <sp-button id="btnGenerate" variant="secondary">Generuj</sp-button>
   </div>
@@ -134,6 +135,12 @@
     <sp-textfield id="discLetter"></sp-textfield>
     <br>
     <sp-button id="btnChangeDesignLetter" variant="secondary">Ustaw</sp-button>
+
+    <sp-heading>Nazwa folderu dla kart bez id</sp-heading>
+    <sp-body id="tempFolderNameText"></sp-body>
+    <sp-textfield id="tempFolderName"></sp-textfield>
+    <br>
+    <sp-button id="btnChangeTempFolderName" variant="secondary">Ustaw</sp-button>
   </div>
 
 

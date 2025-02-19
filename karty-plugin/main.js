@@ -23,16 +23,34 @@ Array.from(document.querySelectorAll(".sp-tab")).forEach(theTab => {
   }
 });
 
+// SETTINGS DESIGNLETTER
+
 const designLetter = () => localStorage.getItem('designLetter') ?
                       `Ustawiona teraz: ${localStorage.getItem('designLetter')}` :
                       `Nie ustawiono, zmień poniżej`;
 
 document.getElementById('designLetter').innerText = designLetter();
 
-
+// SETTINGS DESIGNLETTER
 document.getElementById('btnChangeDesignLetter').addEventListener('click', () =>{
   localStorage.setItem('designLetter', document.getElementById('discLetter').value);
+  document.getElementById('discLetter').value = '';
   document.getElementById('designLetter').innerText = designLetter();
+});
+
+// SETTINGS FOLDER NAME
+
+const folderName = () => localStorage.getItem('folderName') ?
+                      `Ustawiona teraz: ${localStorage.getItem('folderName')}` :
+                      `Nie ustawiono, zmień poniżej`;
+
+document.getElementById('tempFolderNameText').innerText = folderName();
+
+
+document.getElementById('btnChangeTempFolderName').addEventListener('click', () =>{
+  localStorage.setItem('folderName', document.getElementById('tempFolderName').value);
+  document.getElementById('tempFolderNameText').innerText = folderName();
+  document.getElementById('tempFolderName').value = '';
 });
 
 showAlert = () => {
@@ -58,12 +76,10 @@ const app = require('photoshop').app;
 const constants = require('photoshop').constants;
 const fs = require('uxp').storage.localFileSystem;
 const SolidColor = require("photoshop").app.SolidColor;
-const db = require('./db');
+// const db = require('./db');
 
 
-const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR } = config;
-
-
+const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR, TEMP_DIR } = config;
 
 
 // UTILS
@@ -88,31 +104,50 @@ goldenColor.rgb.blue = 84;
 const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
   
   
+  
   const BASEURL = localStorage.getItem('designLetter') + ':/';
   
   // OPEN DOCUMENTS
  
   await openWithModal(BASEURL + TEMPLATE_URL);
-  await openWithModal(`${BASEURL}${SRC_DIR}/${id}.psd`);
+
+  console.log(`${BASEURL}${TEMP_DIR}/${localStorage.getItem('folderName')}/${localStorage.getItem('folderName')}.psd`);
   
+
   
+  if(document.getElementById('noid').checked){
+    await openWithModal(`${BASEURL}${TEMP_DIR}/${localStorage.getItem('folderName')}/${localStorage.getItem('folderName')}.psd`);
+  } else {
+    await openWithModal(`${BASEURL}${SRC_DIR}/${id}.psd`);
+  }
+  
+
 
   // GET DOCUMENTS AND LAYERS
 
   const templateDocument = await app.documents.getByName('szablon.psd');
-  const decorationDocument = await app.documents.getByName(`${id}.psd`);
+  let decorationDocument = undefined;
+  if(document.getElementById('noid').checked){
+    decorationDocument = await app.documents.getByName(`${localStorage.getItem('folderName')}.psd`);
+  } else {
+    decorationDocument = await app.documents.getByName(`${id}.psd`);
+  }
 
   // COPY DECORATION LAYER
 
 
-  await decorationDocument.layers.getByName(id.toString()).copy()
+  if(document.getElementById('noid').checked){
+    await decorationDocument.layers.getByName(localStorage.getItem('folderName').toString()).copy()
+  } else {
+    await decorationDocument.layers.getByName(id.toString()).copy()
+  }
   await decorationDocument.close('DONOTSAVECHANGES')
   await templateDocument.paste()
   await templateDocument.activeLayers[0].move(templateDocument.layers.getByName('DEKORACJA'), constants.ElementPlacement.PLACEINSIDE)
 
   // RESIZE DECORATION
 
-  const decorationLayer = templateDocument.layers.getByName('DEKORACJA').layers.getByName(id.toString());
+  const decorationLayer = document.getElementById('noid').checked ? templateDocument.layers.getByName('DEKORACJA').layers.getByName(localStorage.getItem('folderName').toString()) : templateDocument.layers.getByName('DEKORACJA').layers.getByName(id.toString());
   const VERTICAL = decorationLayer.boundsNoEffects.height > decorationLayer.boundsNoEffects.width;
   const LONG = decorationLayer.boundsNoEffects.width / decorationLayer.boundsNoEffects.height > 2;
   let scale = null;
@@ -274,10 +309,18 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   }
   
   depthText.textItem.contents = glebokosc + ' M';
+  
+  
   // ID
+  if(!document.getElementById('noid').checked){
+    const idTextItem = templateDocument.layers.getByName('TEKSTY').layers.getByName('DANE TECH').layers.getByName('ID').textItem;
+    idTextItem.contents = `ID: ${id}`;
+  } else {
+    templateDocument.layers.getByName('TEKSTY').layers.getByName('DANE TECH').visible = false;
+  }
+  
 
-  const idTextItem = templateDocument.layers.getByName('TEKSTY').layers.getByName('DANE TECH').layers.getByName('ID').textItem;
-  idTextItem.contents = `ID: ${id}`;
+  
 
   // LED MOC
 
@@ -291,19 +334,18 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   
   if(cechy.length === 0) {
     templateDocument.closeWithoutSaving();
-    throw new Error('Nie ma cech');
+    throw new Error('Nie ma cech - dekoracja powinna zawierać przynajmniej jedną cechę');
   }
     
   cecha1.textItem.contents = cechy[0].replace(/\n/g, '\r');
+  cecha1.name = cechy[0].replace(/\n/g, ' ');
 
   if (cechy.length > 1) {
     let i = 2
     let cechaOffset = cecha1.bounds.right + 40;
     for (const element of cechy.slice(1)) {
-     
-      
       const cecha = await cecha1.duplicate();
-      cecha.name = `CECHA_${i}`;
+      cecha.name = element.replace(/\n/g, ' ');
   
       cecha.textItem.contents = element.replace(/\n/g, '\r');
       await selectLayer(cecha);
@@ -402,7 +444,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 
   // SAVE
 
-  const exportFileName = `${id}${document.getElementById('indoor').checked || indoorOnly() ? '_WEW' : ''}`;
+  const exportFileName = `${document.getElementById('noid').checked ? localStorage.getItem('folderName') : id}${document.getElementById('indoor').checked || indoorOnly() ? '_WEW' : ''}`;
 
 
   const resultEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${OUTPUT_DIR}/${exportFileName}.psd`, { overwrite: true });
@@ -415,6 +457,21 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 }
 
 async function mainLoop() {
+  
+  
+  
+
+  if(!localStorage.getItem('designLetter')) {
+    alert('Nie masz ustawionej litery dysku w ustawieniach');
+    return;
+  }
+  
+
+  if( document.getElementById('noid').checked && !localStorage.getItem('folderName')) {
+    alert('Nie masz ustawionej nazwy folderu dla kart bez id');
+    return;
+  }
+
 
   if (document.getElementById('idField').value) {
 
