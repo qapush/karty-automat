@@ -282,7 +282,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   await selectLayer(heightText);
   await alignAtoBhorizontal(heightText, heightLine);
   await selectLayer(heightGroup);
-  await heightGroup.rotate(-90, constants.AnchorPosition.TOPLEFT);
+  await heightGroup.rotate(90, constants.AnchorPosition.TOPLEFT);
   await moveLayer(heightGroup.name, heightGroup.id, prevImage.boundsNoEffects.right - heightGroup.boundsNoEffects.left + 10, heightGroup.boundsNoEffects.height);
   
   
