@@ -79,7 +79,7 @@ const SolidColor = require("photoshop").app.SolidColor;
 // const db = require('./db');
 
 
-const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR, TEMP_DIR } = config;
+const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR, TEMP_DIR, NOID_MAP } = config;
 
 
 // UTILS
@@ -106,7 +106,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   
   
   const BASEURL = localStorage.getItem('designLetter') + ':/';
-  
+  const noid = document.getElementById('noid').checked;
   // OPEN DOCUMENTS
  
   await openWithModal(BASEURL + TEMPLATE_URL);
@@ -115,19 +115,19 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   
 
   
-  if(document.getElementById('noid').checked){
+  if(noid){
     await openWithModal(`${BASEURL}${TEMP_DIR}/${localStorage.getItem('folderName')}/${localStorage.getItem('folderName')}.psd`);
   } else {
     await openWithModal(`${BASEURL}${SRC_DIR}/${id}.psd`);
   }
   
-
+  
 
   // GET DOCUMENTS AND LAYERS
 
   const templateDocument = await app.documents.getByName('szablon.psd');
   let decorationDocument = undefined;
-  if(document.getElementById('noid').checked){
+  if(noid){
     decorationDocument = await app.documents.getByName(`${localStorage.getItem('folderName')}.psd`);
   } else {
     decorationDocument = await app.documents.getByName(`${id}.psd`);
@@ -136,7 +136,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   // COPY DECORATION LAYER
 
 
-  if(document.getElementById('noid').checked){
+  if(noid){
     await decorationDocument.layers.getByName(localStorage.getItem('folderName').toString()).copy()
   } else {
     await decorationDocument.layers.getByName(id.toString()).copy()
@@ -147,7 +147,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 
   // RESIZE DECORATION
 
-  const decorationLayer = document.getElementById('noid').checked ? templateDocument.layers.getByName('DEKORACJA').layers.getByName(localStorage.getItem('folderName').toString()) : templateDocument.layers.getByName('DEKORACJA').layers.getByName(id.toString());
+  const decorationLayer = noid ? templateDocument.layers.getByName('DEKORACJA').layers.getByName(localStorage.getItem('folderName').toString()) : templateDocument.layers.getByName('DEKORACJA').layers.getByName(id.toString());
   const VERTICAL = decorationLayer.boundsNoEffects.height > decorationLayer.boundsNoEffects.width;
   const LONG = decorationLayer.boundsNoEffects.width / decorationLayer.boundsNoEffects.height > 2;
   let scale = null;
@@ -312,7 +312,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   
   
   // ID
-  if(!document.getElementById('noid').checked){
+  if(!noid){
     const idTextItem = templateDocument.layers.getByName('TEKSTY').layers.getByName('DANE TECH').layers.getByName('ID').textItem;
     idTextItem.contents = `ID: ${id}`;
   } else {
@@ -444,7 +444,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 
   // SAVE
 
-  const exportFileName = `${document.getElementById('noid').checked ? localStorage.getItem('folderName') : id}${document.getElementById('indoor').checked || indoorOnly() ? '_WEW' : ''}`;
+  const exportFileName = `${noid ? localStorage.getItem('folderName') : id}${document.getElementById('indoor').checked || indoorOnly() ? '_WEW' : ''}`;
 
 
   const resultEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${OUTPUT_DIR}/${exportFileName}.psd`, { overwrite: true });
@@ -459,6 +459,9 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 async function mainLoop() {
   
   
+  const noid = document.getElementById('noid').checked;
+
+
   
 
   if(!localStorage.getItem('designLetter')) {
@@ -467,15 +470,23 @@ async function mainLoop() {
   }
   
 
-  if( document.getElementById('noid').checked && !localStorage.getItem('folderName')) {
+  
+
+  if( noid && !localStorage.getItem('folderName')) {
     alert('Nie masz ustawionej nazwy folderu dla kart bez id');
     return;
   }
 
 
-  if (document.getElementById('idField').value) {
 
-    const id = document.getElementById('idField').value;
+  if (document.getElementById('idField').value || document.getElementById('noid').checked) {
+
+    
+    console.log(NOID_MAP[localStorage.getItem('folderName')] );
+    
+    
+
+    const id = document.getElementById('noid').checked ? NOID_MAP[localStorage.getItem('folderName')] : document.getElementById('idField').value;
     const data = await fetch(`https://karty-automat.vercel.app/api/dekoracje/${id}`);
     const element = await data.json();
  
@@ -492,6 +503,7 @@ async function mainLoop() {
     }
 
   } else {
+    alert('Podaj ID')
     return;
   }
 

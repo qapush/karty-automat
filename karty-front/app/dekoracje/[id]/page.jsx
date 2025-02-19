@@ -2,6 +2,7 @@
 import styles from "./dekoracja.module.css";
 import { dekoracjaData } from "@/utils/dekoracje";
 import DekoracjaForm from "@/components/Dekoracja/DekoracjaForm";
+import { notFound } from "next/navigation";
 
 // import DekoracjaForm from "@/components/Dekoracja/DekoracjaForm";
 
@@ -14,7 +15,9 @@ export default async function EditDekoracjaPage({params}) {
   } catch (e) {
     console.log(e);
   }
-
+  
+  if(!dekoracja.id) notFound();
+  
   return (
     <>
     <div className={styles.container}>
