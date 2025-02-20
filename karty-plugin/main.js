@@ -110,10 +110,6 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   // OPEN DOCUMENTS
  
   await openWithModal(BASEURL + TEMPLATE_URL);
-
-  console.log(`${BASEURL}${TEMP_DIR}/${localStorage.getItem('folderName')}/${localStorage.getItem('folderName')}.psd`);
-  
-
   
   if(noid){
     await openWithModal(`${BASEURL}${TEMP_DIR}/${localStorage.getItem('folderName')}/${localStorage.getItem('folderName')}.psd`);
@@ -282,7 +278,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   await selectLayer(heightText);
   await alignAtoBhorizontal(heightText, heightLine);
   await selectLayer(heightGroup);
-  await heightGroup.rotate(90, constants.AnchorPosition.TOPLEFT);
+  await heightGroup.rotate(-90, constants.AnchorPosition.TOPLEFT);
   await moveLayer(heightGroup.name, heightGroup.id, prevImage.boundsNoEffects.right - heightGroup.boundsNoEffects.left + 10, heightGroup.boundsNoEffects.height);
   
   
@@ -293,6 +289,9 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   }
   
   heightText.textItem.contents = wysokosc  + ' M';
+  await selectLayer(heightText);
+  await heightText.rotate(180);
+
   // DEPTH
 
   const depthGroup = await previewGroup.layers.getByName('depth');
@@ -443,10 +442,6 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 
 
   // SAVE
-
-  const exportFileName = `${noid ? localStorage.getItem('folderName') : id}${document.getElementById('indoor').checked || indoorOnly() ? '_WEW' : ''}`;
-
-
   const resultEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${OUTPUT_DIR}/${exportFileName}.psd`, { overwrite: true });
   
   if(noid){
@@ -499,10 +494,6 @@ async function mainLoop() {
 
 
   if (document.getElementById('idField').value || document.getElementById('noid').checked) {
-
-    
-    console.log(NOID_MAP[localStorage.getItem('folderName')] );
-    
     
 
     const id = document.getElementById('noid').checked ? NOID_MAP[localStorage.getItem('folderName')] : document.getElementById('idField').value;
