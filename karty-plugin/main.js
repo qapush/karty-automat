@@ -176,7 +176,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
     fontSize: 22.92,
     fontName: 'Lato-Regular',
     position: {
-      x: titleLayer.boundsNoEffects.left - 1,
+      x: 53,
       y: titleLayer.boundsNoEffects.bottom + 56
     },
     textColor: goldenColor
@@ -185,6 +185,8 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
   subtitleLayer.name = "PODTYTUL";
 
   let offset = subtitleLayer.bounds.bottom + 13;
+
+
 
   // PRZEWAGI
 
@@ -464,6 +466,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
     const previewEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${NOID_PREVIEW_DIR}/${localStorage.getItem('folderName')}_${formatTimestamp()}.jpg`, { overwrite: true });
     await templateDocument.saveAs.jpg(previewEntry);
   }
+
   await templateDocument.saveAs.psd(resultEntry);
   await templateDocument.close('DONOTSAVECHANGES');
 
