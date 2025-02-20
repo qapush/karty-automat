@@ -442,6 +442,8 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 
 
   // SAVE
+  const exportFileName = `${noid ? localStorage.getItem('folderName') : id}${document.getElementById('indoor').checked || indoorOnly() ? '_WEW' : ''}`;
+
   const resultEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${OUTPUT_DIR}/${exportFileName}.psd`, { overwrite: true });
   
   if(noid){
