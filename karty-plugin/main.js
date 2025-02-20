@@ -33,7 +33,7 @@ document.getElementById('designLetter').innerText = designLetter();
 
 // SETTINGS DESIGNLETTER
 document.getElementById('btnChangeDesignLetter').addEventListener('click', () =>{
-  if(true ||document.getElementById('discLetter').value){
+  if(document.getElementById('discLetter').value){
     localStorage.setItem('designLetter', document.getElementById('discLetter').value);
     document.getElementById('discLetter').value = '';
     document.getElementById('designLetter').innerText = designLetter();
@@ -50,7 +50,7 @@ document.getElementById('tempFolderNameText').innerText = folderName();
 
 
 document.getElementById('btnChangeTempFolderName').addEventListener('click', () =>{
-  if(true || document.getElementById('tempFolderName').value){
+  if(document.getElementById('tempFolderName').value){
     localStorage.setItem('folderName', document.getElementById('tempFolderName').value);
     document.getElementById('tempFolderNameText').innerText = folderName();
     document.getElementById('tempFolderName').value = '';
