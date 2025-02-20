@@ -33,9 +33,11 @@ document.getElementById('designLetter').innerText = designLetter();
 
 // SETTINGS DESIGNLETTER
 document.getElementById('btnChangeDesignLetter').addEventListener('click', () =>{
-  localStorage.setItem('designLetter', document.getElementById('discLetter').value);
-  document.getElementById('discLetter').value = '';
-  document.getElementById('designLetter').innerText = designLetter();
+  if(true ||document.getElementById('discLetter').value){
+    localStorage.setItem('designLetter', document.getElementById('discLetter').value);
+    document.getElementById('discLetter').value = '';
+    document.getElementById('designLetter').innerText = designLetter();
+  }
 });
 
 // SETTINGS FOLDER NAME
@@ -48,9 +50,11 @@ document.getElementById('tempFolderNameText').innerText = folderName();
 
 
 document.getElementById('btnChangeTempFolderName').addEventListener('click', () =>{
-  localStorage.setItem('folderName', document.getElementById('tempFolderName').value);
-  document.getElementById('tempFolderNameText').innerText = folderName();
-  document.getElementById('tempFolderName').value = '';
+  if(true || document.getElementById('tempFolderName').value){
+    localStorage.setItem('folderName', document.getElementById('tempFolderName').value);
+    document.getElementById('tempFolderNameText').innerText = folderName();
+    document.getElementById('tempFolderName').value = '';
+  }
 });
 
 showAlert = () => {
@@ -480,22 +484,26 @@ async function mainLoop() {
   
   const noid = document.getElementById('noid').checked;
 
-
-  
-
   if(!localStorage.getItem('designLetter')) {
-    alert('Nie masz ustawionej litery dysku w ustawieniach');
-    return;
+    const designletterPrompt = window.prompt('Ustaw literę dysku design poniżej. Rowniez można ją zmienić w zakładce "ustawienia"');
+    localStorage.setItem('designLetter', designletterPrompt);
+    document.getElementById('designLetter').innerText = designLetter();
   }
   
 
-  
 
+  
+  
   if( noid && !localStorage.getItem('folderName')) {
-    alert('Nie masz ustawionej nazwy folderu dla kart bez id');
-    return;
-  }
 
+    const folderNamePrompt = window.prompt('Ustaw swoje inicjały poniżej. Rowniez można je zmienić w zakładce "ustawienia"');
+    localStorage.setItem('folderName', folderNamePrompt);
+    document.getElementById('tempFolderNameText').innerText = folderName();
+  }
+  
+
+  console.log(document.getElementById('idField').value || document.getElementById('noid').checked);
+  
 
 
   if (document.getElementById('idField').value || document.getElementById('noid').checked) {
@@ -511,7 +519,7 @@ async function mainLoop() {
     }
 
     try {
-      await dowithModal(() => mainProcess(element));
+      await dowithModal(() => mainProcess(element));  
     } catch (error) {
       console.error(error);
       alert(error)
