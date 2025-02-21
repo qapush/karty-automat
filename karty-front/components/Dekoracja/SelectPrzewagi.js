@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import styles from './SelectPrzewagi.module.css'
+import Image from 'next/image';
 
 export default function SelectPrzewagi({ selected, all, onChange }) {
     
@@ -55,6 +56,7 @@ export default function SelectPrzewagi({ selected, all, onChange }) {
 
 function PrzewagaItem(przewaga, handleClick) {
     return <div key={przewaga.id} className={styles.przewagaItem} onClick={() => handleClick(przewaga.id)}>
+        <Image width="50" height="50" src={`https://upvxroox3cbu7snu.public.blob.vercel-storage.com/${przewaga.tlumaczenia[0]?.nazwa}.png`} alt={przewaga.tlumaczenia[0]?.nazwa}/>
         <span>{przewaga.tlumaczenia[0].nazwa}</span>
     </div>
 }
