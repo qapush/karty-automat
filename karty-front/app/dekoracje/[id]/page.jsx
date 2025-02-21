@@ -21,7 +21,7 @@ export default async function EditDekoracjaPage({params}) {
   return (
     <>
     <div className={styles.container}>
-      <a className={styles.backlink} href="/dekoracje">← wszystkie dekoracje</a>
+      <a style={{textAlign: 'center', display: 'block'}} href="/dekoracje">← wszystkie dekoracje</a>
       <h1 className={styles.header}>ID {id}</h1>
       <DekoracjaForm dekoracjaData={dekoracja} id={id}/>
     </div>
