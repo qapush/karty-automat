@@ -82,13 +82,48 @@ header img {
 
 /* FORMS */
 
+
+
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 label {
+  font-weight: 600;
   margin: 1rem auto;
   display: block;
+  font-family: 'Lato', 'Lato Fallback';
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  box-sizing: border-box;
 }
 
 textarea {
   display: block;
   min-height: 100px;
   min-width: 200px;
+}
+
+.largeSelect {
+  min-height: 300px;
+}
+
+
+.button:hover {
+  background-color: #45a049;
+}
+
+.backlink {
+  display: block;
+  margin: 2rem auto;
+  width: fit-content;
 }

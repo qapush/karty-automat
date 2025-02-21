@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "./DekoracjaForm.module.css"; // Ensure to import the styles
 import { ToastContainer, toast } from 'react-toastify';
 import { putPostDekoracja } from "@/utils/putPostDekoracja";
+import SelectPrzewagi from "./SelectPrzewagi";
 
 
 const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
@@ -56,6 +57,8 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    
+
     const isFormUnchanged = JSON.stringify(formData) === JSON.stringify(initializeFormData(dekoracjaData));
     if (isFormUnchanged) {
       toast.info("Nie wprowadzono zmian do formularza");
@@ -103,11 +106,24 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
     }));
   };
 
+  const handleSelectPrzewagi = (selected) => {
+
+  console.log(selected);
+
+    setFormData((prev) => ({
+      ...prev,
+      przewagi: [...selected],
+    }));
+
+    
+    
+  }
+
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        {add && <label className={styles.label}>
+        {add && <label >
           ID:
           <input
             type="text"
@@ -118,7 +134,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
             className={styles.textarea}
           />
         </label>}
-        <label className={styles.label}>
+        <label >
           Title:
           <textarea
             required
@@ -129,7 +145,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
             rows={3}
           />
         </label>
-        <label className={styles.label}>
+        <label >
           Typ dekoracji:
           <select
             name="typ"
@@ -158,25 +174,9 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
           || formData.typ === "31f5f61c-7f04-4e12-9103-b6bd104d033c"
           || formData.typ === "a11617a0-b8f8-4a92-b616-7e47dbec0c5f"
           || formData.typ === "51cc0396-1774-4646-af27-e6b74aa4757d") && <div style={{ padding: 10, borderRadius: 1, backgroundColor: "lightgreen", margin: "1rem 0" }}><span>Ten typ dekoracji może byc tylko zewnętrzny</span></div>}
+  <SelectPrzewagi selected={formData.przewagi} all={przewagi} onChange={handleSelectPrzewagi}/>
 
-        <label className={styles.label}>
-          Przewagi (max 4):
-          <select
-            multiple
-            required
-            name="przewagi"
-            value={formData.przewagi}
-            onChange={handleMultipleChange}
-            className={`${styles.select} ${styles.largeSelect}`}
-          >
-            {przewagi.map((przewaga) => (
-              <option key={przewaga.id} value={przewaga.id}>
-                {przewaga.tlumaczenia.find((t) => t.kod_jezyka === "pl")?.nazwa}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className={styles.label}>
+        <label >
           Cechy (max 3):
           <select
             multiple
@@ -194,7 +194,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
           </select>
         </label>
 
-        <label className={styles.label}>
+        <label >
           Ilość LED:
           <input
             type="number"
@@ -204,7 +204,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
             className={styles.input}
           />
         </label>
-        <label className={styles.label}>
+        <label >
           MOC:
           <input
             type="number"
@@ -215,7 +215,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
             className={styles.input}
           />
         </label>
-        <label className={styles.label}>
+        <label >
           SZEROKOŚĆ:
           <input
             type="number"
@@ -226,7 +226,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
             className={styles.input}
           />
         </label>
-        <label className={styles.label}>
+        <label >
           WYSOKOŚĆ:
           <input
             type="number"
@@ -237,7 +237,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
             className={styles.input}
           />
         </label>
-        <label className={styles.label}>
+        <label >
           GŁĘBOKOŚĆ:
           <input
             type="number"
@@ -248,8 +248,8 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
             className={styles.input}
           />
         </label>
-        <button type="submit" className={styles.button}>
-          Save Changes
+        <button type="submit" className='btn'>
+          {add ? 'Dodaj dekorację' : 'Zapisz zmiany'}
         </button>
       </form>
       <ToastContainer />

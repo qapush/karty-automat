@@ -38,7 +38,7 @@ const AddCechaForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label className={styles.label}>
+        <label >
           Nowa cecha:
           <textarea onChange={(e) => setName(e.target.value)}
             required value={name}>

@@ -37,7 +37,7 @@ const AddCechaForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label className={styles.label}>
+        <label >
           Nazwa (Name):
           <input
             type="text"
@@ -48,7 +48,7 @@ const AddCechaForm = () => {
         </label>
       </div>
       <div>
-        <label className={styles.label}>
+        <label >
           Kod języka (Language Code):
           <input
             type="text"
