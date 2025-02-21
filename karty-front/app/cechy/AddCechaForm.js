@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import styles from './CechyPage.module.css'; // Ensure you have the correct styles if you need them
-import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 const AddCechaForm = () => {
@@ -40,25 +39,15 @@ const AddCechaForm = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <label className={styles.label}>
-          Nazwa (Name):
+          Nowa cecha:
           <textarea onChange={(e) => setName(e.target.value)}
             required value={name}>
-            
           </textarea>
         </label>
       </div>
       <div>
-        <label className={styles.label}>
-          Kod języka (Language Code):
-          <input
-            type="text"
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-            required
-          />
-        </label>
       </div>
-      <button type="submit" className={styles.button}>Add Cechy</button>
+      <button type="submit" className='btn'>Dodaj cechę</button>
     </form>
   );
 };

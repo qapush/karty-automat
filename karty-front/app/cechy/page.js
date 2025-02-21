@@ -21,8 +21,8 @@ export default async function CechyPage() {
   const cechy = await fetchCechy(); // Fetch cechy on the server side
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Cechy</h1>
+    <div>
+      <h1 className='page-title'>Cechy</h1>
 
       {/* Display the list of Cechy */}
       {cechy.length > 0 ? (

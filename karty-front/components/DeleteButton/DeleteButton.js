@@ -29,6 +29,6 @@ export default function DeleteButton({id, type}){
       }
 
     return(
-        <button onClick={handleDelete}>usuń</button>
+        <button className='btn m0' onClick={handleDelete}>usuń</button>
     )
 }

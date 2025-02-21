@@ -1,7 +1,13 @@
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
+  --main-color: #0a2faa;
+
+
+.m0 {
+  margin: 0 !important;
+}}
 
 
 
@@ -50,4 +56,39 @@ header li {
 
 header img {
   max-height: 80px;
+}
+
+/* PAGE */
+
+.page-title {
+  text-align: center;
+  margin: 2rem auto;
+}
+
+
+/* BTN */
+
+.btn {
+  display: block;
+  border: 0;
+  padding: 0.5rem 1rem;
+  background-color: var(--main-color);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: white;
+  cursor: pointer;
+  width: fit-content;
+}
+
+/* FORMS */
+
+label {
+  margin: 1rem auto;
+  display: block;
+}
+
+textarea {
+  display: block;
+  min-height: 100px;
+  min-width: 200px;
 }

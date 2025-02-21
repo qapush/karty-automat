@@ -26,20 +26,17 @@ export default function RootLayout({ children }) {
           </Link>
           <ul>
             <li>
-              <a href="/dekoracje">dekoracje</a>
+              <a href="/dekoracje">Wszystkie dekoracje</a>
             </li>
             <li>
-              <a href="/cechy">cechy</a>
+              <a href="/nowa">Dodaj nową</a>
             </li>
             <li>
-              <a href="/przewagi">przewagi</a>
-            </li>
-            <li>
-              <a href="/typy">typy</a>
+              <a href="/cechy">Cechy</a>
             </li>
           </ul>
         </header>
-        <main>{children}</main>
+        <main style={{padding: 20}}>{children}</main>
       </body>
     </html>
   );

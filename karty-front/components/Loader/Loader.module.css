@@ -1,0 +1,30 @@
+.wrapper {
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 1rem;
+    /* background-color: hsla(226, 89%, 35%, 0.2);; */
+    text-align: center;
+    margin: auto;
+    width: fit-content;
+}
+
+.loader {
+    max-width: 50px;
+    display: block;
+    margin: auto;
+    animation: 2s infinite rota;
+}
+
+@keyframes rota {
+    from {
+        transform: rotate(0deg)
+      }
+    
+    to {
+        transform: rotate(360deg)
+    }
+  }
+
+  .message {
+    margin-top: 1rem;
+  }
