@@ -2,11 +2,15 @@ import { PrismaClient } from '@prisma/client';
 import AddCechaForm from './AddCechaForm';
 import styles from './CechyPage.module.css'; // Importing the styles
 import DeleteButton from '@/components/DeleteButton/DeleteButton';
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 
 const prisma = new PrismaClient();
 
 export const dynamic = 'force-dynamic'
+
+
 
 // Fetch all features (Cechy) from the database
 async function fetchCechy() {
@@ -18,6 +22,11 @@ async function fetchCechy() {
 }
 
 export default async function CechyPage() {
+  const cookieStore = await cookies();
+
+  if (!cookieStore.get("initials")) {
+    redirect("/login");
+  }
   const cechy = await fetchCechy(); // Fetch cechy on the server side
 
   return (

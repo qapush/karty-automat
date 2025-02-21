@@ -1,10 +1,17 @@
 import ListaDekoracji from './ListaDekoracji';
-import DekoracjaForm from '@/components/Dekoracja/DekoracjaForm';
 import { Suspense } from 'react';
 import Loader from '@/components/Loader/Loader';
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
+
 export default async function DekoracjePage() {
 
+  const cookieStore = await cookies();
 
+  if (!cookieStore.get("initials")) {
+    redirect("/login");
+  }
 
 
   return (

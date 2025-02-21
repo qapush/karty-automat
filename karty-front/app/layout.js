@@ -1,6 +1,6 @@
 import { Lato } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
+import Header from "@/components/Header/Header";
 
 
 const lato = Lato({
@@ -14,28 +14,11 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
   return (
     <html lang="en">
       <body className={lato.className}>
-        <header>
-          <Link href="/">
-            <img
-              src="https://upvxroox3cbu7snu.public.blob.vercel-storage.com/logo.jpg"
-              alt="Logo"
-            />
-          </Link>
-          <ul>
-            <li>
-              <a href="/dekoracje">Wszystkie dekoracje</a>
-            </li>
-            <li>
-              <a href="/nowa">Dodaj nową</a>
-            </li>
-            <li>
-              <a href="/cechy">Cechy</a>
-            </li>
-          </ul>
-        </header>
+        <Header />
         <main style={{padding: 20}}>{children}</main>
       </body>
     </html>
