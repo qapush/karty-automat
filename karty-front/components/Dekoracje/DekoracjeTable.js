@@ -35,7 +35,7 @@ export default function DekoracjeTable({dekoracjeData}) {
                         <tr key={dekoracja.id}>
                             <td>{dekoracja.id}</td>
                             <td>
-                                <Link href={`dekoracje/${dekoracja.id}`}>
+                                <Link href={`dekoracje/${dekoracja.id}`} prefetch={false}>
                                     <span
                                         dangerouslySetInnerHTML={{
                                             __html:
