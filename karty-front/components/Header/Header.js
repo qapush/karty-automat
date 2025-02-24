@@ -1,9 +1,10 @@
 import { cookies } from "next/headers";
 
 import Link from "next/link";
-export default function Header(){
+
+export default async function Header(){
     
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     
     const loggedIn = cookieStore.get("initials");
     
@@ -25,7 +26,7 @@ export default function Header(){
         <a href="/cechy">Cechy</a>
       </li>
       <li>
-        <a href="/login">{ loggedIn ? cookieStore.get("initials").value : 'Zaloguj'}</a>
+        <a href="/login">{ loggedIn ? loggedIn.value : 'Zaloguj'}</a>
       </li>
     </ul>
   </header>

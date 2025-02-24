@@ -9,6 +9,7 @@ import SelectPrzewagi from "./SelectPrzewagi";
 
 const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
 
+  
   const locale = "pl";
 
   const [typy, setTypy] = useState([]);
@@ -108,7 +109,6 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
 
   const handleSelectPrzewagi = (selected) => {
 
-  console.log(selected);
 
     setFormData((prev) => ({
       ...prev,

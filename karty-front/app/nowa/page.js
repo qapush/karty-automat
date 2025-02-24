@@ -17,7 +17,7 @@ export default async function DekoracjePage() {
       <h1 className="page-title">Dodaj dekoracje</h1>
       <a
         style={{ textAlign: "center", display: "block" }}
-        href="./dekoracje/noid"
+        href="./nowa/noid"
       >
         dodaj dekorację bez ID
       </a>

@@ -1,5 +1,47 @@
+
 const { entrypoints } = require("uxp");
 const {batchPlay} = require("photoshop").action;
+
+entrypoints.setup({
+  plugin: async () => {
+    const config = require('./config.json');
+    window.config = config;
+  },
+  panels: {
+    Karty: {
+      show(node) { }
+    }
+  }
+});
+
+const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR, TEMP_DIR, NOID_MAP, NOID_PREVIEW_DIR } = config;
+const BASEURL = localStorage.getItem('designLetter') + ':/';
+
+
+const app = require('photoshop').app;
+const constants = require('photoshop').constants;
+const fs = require('uxp').storage.localFileSystem;
+const SolidColor = require("photoshop").app.SolidColor;
+// const db = require('./db');
+
+// UTILS
+const dowithModal = require('./utils/doWithModal');
+const openWithModal = require('./utils/openWithModal');
+const changeTitle = require('./utils/changeTitle');
+const moveLayer = require('./utils/moveLayer');
+const alignAtoB = require('./utils/alignAtoB');
+const alignAtoBhorizontal = require('./utils/alignAtoBhorizontal');
+const changePrevAreaHeight = require('./utils/changePrevAreaHeight');
+const changePrevAreaWidth = require('./utils/changePrevAreaWidth');
+const selectLayer = require('./utils/selectLayer');
+
+
+// COLORS
+const goldenColor = new SolidColor();
+goldenColor.rgb.red = 175;
+goldenColor.rgb.green = 134;
+goldenColor.rgb.blue = 84;
+
 
 // PANEL 
 
@@ -43,7 +85,7 @@ document.getElementById('btnChangeDesignLetter').addEventListener('click', () =>
 // SETTINGS FOLDER NAME
 
 const folderName = () => localStorage.getItem('folderName') ?
-                      `Ustawiona teraz: ${localStorage.getItem('folderName')}` :
+                      `Ustawione teraz: ${localStorage.getItem('folderName')}` :
                       `Nie ustawiono, zmień poniżej`;
 
 document.getElementById('tempFolderNameText').innerText = folderName();
@@ -57,6 +99,17 @@ document.getElementById('btnChangeTempFolderName').addEventListener('click', () 
   }
 });
 
+
+
+
+document.getElementById('btnNoIdPsd').addEventListener('click', async () =>{
+  if(localStorage.getItem('folderName')){
+    console.log('s');
+
+    await openWithModal(`${BASEURL}${TEMP_DIR}/${localStorage.getItem('folderName')}/${localStorage.getItem('folderName')}.psd`);
+  }
+});
+
 showAlert = () => {
   alert("This is an alert message");   
 }
@@ -64,52 +117,18 @@ showAlert = () => {
 
 
 
-entrypoints.setup({
-  plugin: async () => {
-    const config = require('./config.json');
-    window.config = config;
-  },
-  panels: {
-    Karty: {
-      show(node) { }
-    }
-  }
-});
-
-const app = require('photoshop').app;
-const constants = require('photoshop').constants;
-const fs = require('uxp').storage.localFileSystem;
-const SolidColor = require("photoshop").app.SolidColor;
-// const db = require('./db');
 
 
-const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR, TEMP_DIR, NOID_MAP, NOID_PREVIEW_DIR } = config;
 
 
-// UTILS
-const dowithModal = require('./utils/doWithModal');
-const openWithModal = require('./utils/openWithModal');
-const changeTitle = require('./utils/changeTitle');
-const moveLayer = require('./utils/moveLayer');
-const alignAtoB = require('./utils/alignAtoB');
-const alignAtoBhorizontal = require('./utils/alignAtoBhorizontal');
-const changePrevAreaHeight = require('./utils/changePrevAreaHeight');
-const changePrevAreaWidth = require('./utils/changePrevAreaWidth');
-const selectLayer = require('./utils/selectLayer');
 
-
-// COLORS
-const goldenColor = new SolidColor();
-goldenColor.rgb.red = 175;
-goldenColor.rgb.green = 134;
-goldenColor.rgb.blue = 84;
 
 
 const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
   
   
   
-  const BASEURL = localStorage.getItem('designLetter') + ':/';
+  
   const noid = document.getElementById('noid').checked;
   // OPEN DOCUMENTS
  
