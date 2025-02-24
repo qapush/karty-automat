@@ -14,8 +14,6 @@ entrypoints.setup({
   }
 });
 
-const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR, TEMP_DIR, NOID_MAP, NOID_PREVIEW_DIR } = config;
-const BASEURL = localStorage.getItem('designLetter') + ':/';
 
 
 const app = require('photoshop').app;
@@ -75,7 +73,7 @@ document.getElementById('designLetter').innerText = designLetter();
 
 // SETTINGS DESIGNLETTER
 document.getElementById('btnChangeDesignLetter').addEventListener('click', () =>{
-  if(document.getElementById('discLetter').value){
+  if( true || document.getElementById('discLetter').value){
     localStorage.setItem('designLetter', document.getElementById('discLetter').value);
     document.getElementById('discLetter').value = '';
     document.getElementById('designLetter').innerText = designLetter();
@@ -92,7 +90,7 @@ document.getElementById('tempFolderNameText').innerText = folderName();
 
 
 document.getElementById('btnChangeTempFolderName').addEventListener('click', () =>{
-  if(document.getElementById('tempFolderName').value){
+  if(true || document.getElementById('tempFolderName').value){
     localStorage.setItem('folderName', document.getElementById('tempFolderName').value);
     document.getElementById('tempFolderNameText').innerText = folderName();
     document.getElementById('tempFolderName').value = '';
@@ -100,23 +98,25 @@ document.getElementById('btnChangeTempFolderName').addEventListener('click', () 
 });
 
 
-
+// OPEN NO ID FILE
 
 document.getElementById('btnNoIdPsd').addEventListener('click', async () =>{
-  if(localStorage.getItem('folderName')){
-    console.log('s');
 
+  const {TEMP_DIR} = config;
+
+  const BASEURL = localStorage.getItem('designLetter') + ':/';
+
+  if( !localStorage.getItem('folderName')) {
+
+    const folderNamePrompt = window.prompt('Ustaw swoje inicjały poniżej. Rowniez można je zmienić w zakładce "ustawienia"');
+    localStorage.setItem('folderName', folderNamePrompt);
+    document.getElementById('tempFolderNameText').innerText = folderName();
+  }
+
+  if(localStorage.getItem('folderName')){
     await openWithModal(`${BASEURL}${TEMP_DIR}/${localStorage.getItem('folderName')}/${localStorage.getItem('folderName')}.psd`);
   }
 });
-
-showAlert = () => {
-  alert("This is an alert message");   
-}
-
-
-
-
 
 
 
@@ -127,7 +127,9 @@ showAlert = () => {
 const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
   
   
-  
+  const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR, TEMP_DIR, NOID_PREVIEW_DIR } = config;
+  const BASEURL = localStorage.getItem('designLetter') + ':/';
+
   
   const noid = document.getElementById('noid').checked;
   // OPEN DOCUMENTS
@@ -488,6 +490,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 
     const previewEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${NOID_PREVIEW_DIR}/${localStorage.getItem('folderName')}_${formatTimestamp()}.jpg`, { overwrite: true });
     await templateDocument.saveAs.jpg(previewEntry);
+
   }
 
   await templateDocument.saveAs.psd(resultEntry);
@@ -500,6 +503,7 @@ const mainProcess = async ({ id, przewagi, title, subtitle, led, power, cechy, s
 
 async function mainLoop() {
   
+  const { NOID_MAP } = config;
   
   const noid = document.getElementById('noid').checked;
 
