@@ -22,36 +22,36 @@ goldenColor.rgb.blue = 84;
 module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
 
 
-  const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR } = config;
+  const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR, TEMP_DIR, NOID_PREVIEW_DIR } = config;
   const BASEURL = localStorage.getItem('designLetter') + ':/';
-
 
   // OPEN DOCUMENTS
 
   await openWithModal(BASEURL + TEMPLATE_URL);
 
-    await openWithModal(`${BASEURL}${SRC_DIR}/${id}.psd`);
 
+  await openWithModal(`${BASEURL}${TEMP_DIR}/${localStorage.getItem('folderName')}/${localStorage.getItem('folderName')}.psd`);
 
 
 
   // GET DOCUMENTS AND LAYERS
 
   const templateDocument = await app.documents.getByName('szablon.psd');
-  let decorationDocument = await app.documents.getByName(`${id}.psd`);;
+  const decorationDocument = await app.documents.getByName(`${localStorage.getItem('folderName')}.psd`);
 
 
   // COPY DECORATION LAYER
 
 
-  await decorationDocument.layers.getByName(id.toString()).copy()
+
+  await decorationDocument.layers.getByName(localStorage.getItem('folderName').toString()).copy()
   await decorationDocument.close('DONOTSAVECHANGES')
   await templateDocument.paste()
   await templateDocument.activeLayers[0].move(templateDocument.layers.getByName('DEKORACJA'), constants.ElementPlacement.PLACEINSIDE)
 
   // RESIZE DECORATION
 
-  const decorationLayer = templateDocument.layers.getByName('DEKORACJA').layers.getByName(id.toString());
+  const decorationLayer = templateDocument.layers.getByName('DEKORACJA').layers.getByName(localStorage.getItem('folderName').toString());
   const VERTICAL = decorationLayer.boundsNoEffects.height > decorationLayer.boundsNoEffects.width;
   const LONG = decorationLayer.boundsNoEffects.width / decorationLayer.boundsNoEffects.height > 2;
   let scale = null;
@@ -222,9 +222,8 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
 
   // ID
 
-  const idTextItem = templateDocument.layers.getByName('TEKSTY').layers.getByName('DANE TECH').layers.getByName('ID').textItem;
-    idTextItem.contents = `ID: ${id}`;
-  
+  templateDocument.layers.getByName('TEKSTY').layers.getByName('DANE TECH').visible = false;
+
 
 
 
@@ -350,15 +349,43 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
 
 
   // SAVE
-  const exportFileName = `${id}${document.getElementById('indoor').checked || indoorOnly() ? '_WEW' : ''}`;
+  const exportFileName = `${localStorage.getItem('folderName')}${document.getElementById('indoor').checked || indoorOnly() ? '_WEW' : ''}`;
 
   const resultEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${OUTPUT_DIR}/${exportFileName}.psd`, { overwrite: true });
+
+  // Save jpeg snapshot
+
+  function formatTimestamp() {
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Miesiące są 0-indeksowane
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    return `${day}-${month}-${year}_${hours}-${minutes}-${seconds}`;
+  }
+
+
+  const previewEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${NOID_PREVIEW_DIR}/${localStorage.getItem('folderName')}_${formatTimestamp()}.jpg`, { overwrite: true });
+  await templateDocument.saveAs.jpg(previewEntry);
+
+
 
   await templateDocument.saveAs.psd(resultEntry);
   await templateDocument.close('DONOTSAVECHANGES');
 
-  if (document.getElementById('openAfterSave').checked) {
-    await openWithModal(`${BASEURL + OUTPUT_DIR}/${exportFileName}.psd`);
+  
+
+  if (document.getElementById('noid-openAfterSave').checked) {
+    console.log(`${BASEURL + OUTPUT_DIR}/${exportFileName}.psd`);
+    
+    try{
+      await openWithModal(`${BASEURL + OUTPUT_DIR}/${exportFileName}.psd`);
+    } catch(e) {
+      alert(e);
+    }
   }
 
 

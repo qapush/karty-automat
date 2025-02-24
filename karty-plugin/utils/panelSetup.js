@@ -76,6 +76,7 @@ module.exports = async () => {
 
         if (localStorage.getItem('folderName')) {
             await openWithModal(`${BASEURL}${TEMP_DIR}/${localStorage.getItem('folderName')}/${localStorage.getItem('folderName')}.psd`);
+            alert('Pamiętaj aby nazwać warstwę inicjałami :)')
         }
     });
 }

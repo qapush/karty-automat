@@ -13,47 +13,45 @@ entrypoints.setup({
 });
 
 const generateById = require('./tasks/generateById');
+const generateNoId = require('./tasks/generateNoId');
 const dowithModal = require('./utils/doWithModal');
 const panelSetup = require('./utils/panelSetup');
 
 panelSetup();
 
-async function mainLoop() {
-  
-  // Map users to noid decorations
-  const { NOID_MAP } = config;
-  const noid = document.getElementById('noid').checked;
+const folderName = () => localStorage.getItem('folderName') ?
+        `Ustawione teraz: ${localStorage.getItem('folderName')}` :
+        `Nie ustawiono, zmień poniżej`;
+        
+const designLetter = () => localStorage.getItem('designLetter') ?
+        `Ustawiona teraz: ${localStorage.getItem('designLetter')}` :
+        `Nie ustawiono, zmień poniżej`;
 
-  
+
+async function idLoop() {
+
+
   // Prompt user to set design drive letter
-  if(!localStorage.getItem('designLetter')) {
+  if (!localStorage.getItem('designLetter')) {
     const designletterPrompt = window.prompt('Ustaw literę dysku design poniżej. Rowniez można ją zmienić w zakładce "ustawienia"');
     localStorage.setItem('designLetter', designletterPrompt);
     document.getElementById('designLetter').innerText = designLetter();
   }
-  
 
-  // Prompt user to set inititals if creating noid karta
-  if( noid && !localStorage.getItem('folderName')) {
-    const folderNamePrompt = window.prompt('Ustaw swoje inicjały poniżej. Rowniez można je zmienić w zakładce "ustawienia"');
-    localStorage.setItem('folderName', folderNamePrompt);
-    document.getElementById('tempFolderNameText').innerText = folderName();
-  }
-  
-  // Create karta by ID or NOID
-  if (document.getElementById('idField').value || document.getElementById('noid').checked) {
-    
-    const id = document.getElementById('noid').checked ? NOID_MAP[localStorage.getItem('folderName')] : document.getElementById('idField').value;
+
+  // Generate karta by id
+  if (document.getElementById('idField').value) {
+    const id = document.getElementById('idField').value;
     const data = await fetch(`https://karty-automat.vercel.app/api/dekoracje/${id}`);
     const element = await data.json();
- 
-    if(element.error){
+
+    if (element.error) {
       alert(`ID ${id} nie znaleziono w bazie`);
       return;
     }
 
     try {
-      await dowithModal(() => generateById(element));  
+      await dowithModal(() => generateById(element));
     } catch (error) {
       console.error(error);
       alert(error)
@@ -67,5 +65,47 @@ async function mainLoop() {
 }
 
 
+async function noidLoop() {
 
-document.getElementById('btnGenerate').addEventListener('click', mainLoop);
+  // Map users to noid decorations
+  const { NOID_MAP } = config;
+
+  // Prompt user to set design drive letter
+  if (!localStorage.getItem('designLetter')) {
+    const designletterPrompt = window.prompt('Ustaw literę dysku design poniżej. Rowniez można ją zmienić w zakładce "ustawienia"');
+    localStorage.setItem('designLetter', designletterPrompt);
+    document.getElementById('designLetter').innerText = designLetter();
+  }
+
+
+  // Prompt user to set inititals if creating noid karta
+  if (!localStorage.getItem('folderName')) {
+    const folderNamePrompt = window.prompt('Ustaw swoje inicjały poniżej. Rowniez można je zmienić w zakładce "ustawienia"');
+    localStorage.setItem('folderName', folderNamePrompt);
+    document.getElementById('tempFolderNameText').innerText = folderName();
+  }
+
+  const id = NOID_MAP[localStorage.getItem('folderName')];
+  const data = await fetch(`https://karty-automat.vercel.app/api/dekoracje/${id}`);
+  const element = await data.json();
+
+  if (element.error) {  
+    alert(error);
+    return;
+  }
+
+  try {
+    await dowithModal(() => generateNoId(element));
+  } catch (error) {
+    console.error(error);
+    alert(error)
+  }
+
+
+}
+
+
+
+
+document.getElementById('btnGenerate').addEventListener('click', idLoop);
+document.getElementById('btnGenerateNoid').addEventListener('click', noidLoop);
