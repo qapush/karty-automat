@@ -1,6 +1,6 @@
 const {executeAsModal} = require("photoshop").core;
 const fs = require('uxp').storage.localFileSystem;
-
+const app = require('photoshop').app;
 
 module.exports = async function (localpath) {
     await executeAsModal( async () => {

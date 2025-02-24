@@ -116,23 +116,30 @@
 
 <body>
   <div class="sp-tabs" selected="1">
-    <div class="sp-tab selected" id="sp-spectrum-typography-tab"><sp-label>Główna</sp-label></div>
-    <div class="sp-tab" id="sp-spectrum-widgets-tab"><sp-label>Ustawienia</sp-label></div>
+    <div class="sp-tab selected" id="id-tab"><sp-label>Karta z ID</sp-label></div>
+    <div class="sp-tab" id="noid-tab"><sp-label>Karta bez ID</sp-label></div>
+    <div class="sp-tab" id="settings-tab"><sp-label>Ustawienia</sp-label></div>
   </div>
 
-  <div class="sp-tab-page" id="sp-spectrum-typography-tab">
+  <div class="sp-tab-page" id="id-tab">
     <sp-heading>Generuj kartę dla ID</sp-heading>
     <sp-textfield id="idField" placeholder="ID dekoracji" value=""></sp-textfield>
     <sp-checkbox id="indoor">Karta indoor</sp-checkbox>
-    <sp-checkbox id="noid">Bez ID</sp-checkbox>
     <sp-checkbox id="openAfterSave" checked>Otwórz kartę po wygenerowaniu</sp-checkbox>
     <sp-button id="btnGenerate" variant="main">Generuj</sp-button>
-    <hr style="margin: 2rem 0"/>
-    <sp-button id="btnNoIdPsd" variant="secondary">Otwórz plik dla karty bez ID</sp-button>
 
   </div>
 
-  <div class="sp-tab-page" id="sp-spectrum-widgets-tab-page">
+  <div class="sp-tab-page" id="noid-tab">
+    <sp-heading>Generuj kartę bez ID</sp-heading>
+    <sp-checkbox id="indoor">Karta indoor</sp-checkbox>
+    <sp-checkbox id="openAfterSave" checked>Otwórz kartę po wygenerowaniu</sp-checkbox>
+    <sp-button id="btnNoIdPsd" variant="secondary">Otwórz plik dla karty bez ID</sp-button>
+    <hr style="margin: 2rem 0"/>
+    <sp-button id="btnGenerateNoid" variant="main">Generuj</sp-button>
+  </div>
+
+  <div class="sp-tab-page" id="settings-tab-page">
     <sp-heading>Litera dysku design</sp-heading>
     <sp-body id="designLetter"></sp-body>
     <sp-textfield id="discLetter"></sp-textfield>
@@ -148,7 +155,7 @@
    
   </div>
 
-  <span style="opacity: 0.5; font-size: 0.5rem; position: absolute; bottom: 5px;">v1.1.50</span>
+  <span style="opacity: 0.5; font-size: 0.5rem; position: absolute; bottom: 5px;">v1.1.51</span>
 </body>
 
 </html>
