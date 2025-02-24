@@ -9,7 +9,8 @@ const usersToNoID = {
   CC: 69,
   PM: 41,
   ZM: 28,
-  JS: 11
+  JS: 11,
+  OM: 22
 }
 
 
