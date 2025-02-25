@@ -38,7 +38,7 @@ export default async function CechyPage() {
         <ul className={styles.list}>
           {cechy.map((cecha) => (
             <li key={cecha.id} className={styles.listItem}>
-              <span dangerouslySetInnerHTML={{__html: cecha.tlumaczenia[0]?.nazwa.replace(/\n/g, '<br/>') || 'No name available'}}></span>
+              <span dangerouslySetInnerHTML={{__html: cecha.tlumaczenia[0]?.nazwa.replace(/\n/g, '<br/>').toUpperCase() || 'No name available'}}></span>
               <DeleteButton id={cecha.id} type={"cechy"}/>
             </li>
           ))}
