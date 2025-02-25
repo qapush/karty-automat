@@ -188,7 +188,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
           >
             {cechy.map((cecha) => (
               <option key={cecha.id} value={cecha.id}>
-                {cecha.tlumaczenia[0].nazwa}
+                {String(cecha.tlumaczenia[0].nazwa).toUpperCase()}
               </option>
             ))}
           </select>

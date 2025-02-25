@@ -22,6 +22,19 @@
   min-height: 300px;
 }
 
+.largeSelect option {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.largeSelect option:hover {
+  background-color: var(--main-color);
+  color: white;
+}
+
+
+
+
 
 .button:hover {
   background-color: #45a049;
