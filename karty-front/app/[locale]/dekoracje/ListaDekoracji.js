@@ -1,4 +1,4 @@
-import { fetchDecorations } from '../../lib/fetchDecorations';
+import { fetchDecorations } from '@/lib/fetchDecorations';
 import DekoracjeTable from "@/components/Dekoracje/DekoracjeTable";
 
 export default async function ListaDekoracji() {

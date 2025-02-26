@@ -1,8 +1,14 @@
 import { cookies } from "next/headers";
 
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+import { getLocale } from "next-intl/server";
 
 export default async function Header(){
+
+    
+    const locale = await getLocale();
+    console.log(locale);
+    
     
     const cookieStore = await cookies();
     
@@ -17,16 +23,16 @@ export default async function Header(){
     </Link>
     <ul>
       <li>
-        <a href="/dekoracje">Wszystkie dekoracje</a>
+        <Link href="/dekoracje">Wszystkie dekoracje</Link>
       </li>
       <li>
-        <a href="/nowa">Dodaj nową</a>
+        <Link href="/nowa">Dodaj nową</Link>
       </li>
       <li>
-        <a href="/cechy">Cechy</a>
+        <Link href="/cechy">Cechy</Link>
       </li>
       <li>
-        <a href="/login">{ loggedIn ? loggedIn.value : 'Zaloguj'}</a>
+        <Link href="/login">{ loggedIn ? loggedIn.value : 'Zaloguj'}</Link>
       </li>
     </ul>
   </header>
