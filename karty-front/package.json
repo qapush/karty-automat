@@ -13,6 +13,7 @@
     "@prisma/client": "^5.21.1",
     "lottie-react": "^2.4.1",
     "next": "15.0.2",
+    "next-intl": "^3.26.5",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
     "react-toastify": "^11.0.3"
