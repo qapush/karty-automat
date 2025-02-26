@@ -37,7 +37,7 @@ export default async function PrzewagiPage() {
                 <div>
                   <img
                     className={styles.icon}
-                    src={`https://upvxroox3cbu7snu.public.blob.vercel-storage.com/${przewaga.tlumaczenia[0]?.nazwa}.png`}
+                    src={`https://upvxroox3cbu7snu.public.blob.vercel-storage.com/${przewaga.tlumaczenia[0]?.nazwa}.jpg`}
                     alt=""
                   />
                   {przewaga.tlumaczenia[0]?.nazwa || "No name available"}
