@@ -13,11 +13,7 @@ export const dekoracjaData = async (id) => {
       },
       typ_dekoracji: {
         select: {
-          tlumaczenia: {
-            where: {
-              kod_jezyka: "pl",
-            },
-          },
+          tlumaczenia: true,
           id: true
         },
       },
@@ -61,7 +57,7 @@ export const dekoracjaData = async (id) => {
   // Prepare a "clean" object that safely checks for optional fields
   const cleanDekoracja = {
     id: dekoracja.id,
-    title: dekoracja?.tlumaczenia[0]?.tytul || "Untitled" ,
+    title: dekoracja?.tlumaczenia || "Untitled" ,
     tlumaczenieId: dekoracja?.tlumaczenia[0].id,
     typ: dekoracja?.typ_dekoracji || "No subtitle",
     led: dekoracja.ilosc_led || 0,

@@ -1,13 +1,13 @@
 import { cookies } from "next/headers";
-
 import { Link } from "@/i18n/routing";
 import { getLocale } from "next-intl/server";
+import LangSwitcher from "./LangSwitcher";
 
 export default async function Header(){
 
     
     const locale = await getLocale();
-    console.log(locale);
+    
     
     
     const cookieStore = await cookies();
@@ -21,6 +21,7 @@ export default async function Header(){
         alt="Logo"
       />
     </Link>
+  {/* <LangSwitcher /> */}
     <ul>
       <li>
         <Link href="/dekoracje">Wszystkie dekoracje</Link>

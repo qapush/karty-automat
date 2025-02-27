@@ -5,20 +5,38 @@ import styles from "./DekoracjaForm.module.css"; // Ensure to import the styles
 import { ToastContainer, toast } from 'react-toastify';
 import { putPostDekoracja } from "@/utils/putPostDekoracja";
 import SelectPrzewagi from "./SelectPrzewagi";
+import { useLocale } from "next-intl";
+import NazwaTlumaczenie from "./NazwaTlumaczenie";
 
 
 const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
 
-  
-  const locale = "pl";
+
+  const locale = useLocale();
 
   const [typy, setTypy] = useState([]);
   const [cechy, setCechy] = useState([]);
   const [przewagi, setPrzewagi] = useState([]);
 
+  const getTitles = (data) => {
+    const res = {};
+
+    data.forEach(item => {
+      res[item.kod_jezyka] = {
+        title: item.tytul,
+        id: item.id
+      }
+    });
+    
+
+    return res;
+  }
+  
+  
+
   const initializeFormData = (data) => ({
     id,
-    title: data?.title || "",
+    titles: data?.title ? getTitles(data.title) : "",
     typ: data?.typ?.id || "",
     cechy: data?.cechy?.map(i => i.id) || [],
     przewagi: data?.przewagi?.map(i => i.id) || [],
@@ -31,6 +49,8 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
   });
 
   const [formData, setFormData] = useState(initializeFormData(dekoracjaData));
+
+
 
   useEffect(() => {
     const getData = async () => {
@@ -58,7 +78,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
+
 
     const isFormUnchanged = JSON.stringify(formData) === JSON.stringify(initializeFormData(dekoracjaData));
     if (isFormUnchanged) {
@@ -115,7 +135,24 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
       przewagi: [...selected],
     }));
 
-    
+
+
+  }
+
+  const handleTłumaczenieChange = (e) => {
+
+    const titleLocale = e.target.dataset.locale === 'pl' ? 'pl' : locale;
+
+    setFormData((prev) => ({
+      ...prev,
+      titles: {
+        ...prev.titles,
+        [titleLocale]: {
+          ...prev.titles[titleLocale],
+          title: e.target.value
+        }
+      }
+    }))
     
   }
 
@@ -134,17 +171,22 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
             className={styles.textarea}
           />
         </label>}
+       
         <label >
-          Title:
+          Nazwa PL:
           <textarea
             required
+            data-locale="pl"
             name="title"
-            value={formData.title}
-            onChange={handleChange}
+            value={formData.titles['pl'].title}
+            onChange={handleTłumaczenieChange
+              
+            }
             className={styles.textarea}
             rows={3}
           />
         </label>
+        {locale !== 'pl' && <NazwaTlumaczenie titles={formData.titles} locale={locale} handleTłumaczenieChange={handleTłumaczenieChange} />}
         <label >
           Typ dekoracji:
           <select
@@ -174,7 +216,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
           || formData.typ === "31f5f61c-7f04-4e12-9103-b6bd104d033c"
           || formData.typ === "a11617a0-b8f8-4a92-b616-7e47dbec0c5f"
           || formData.typ === "51cc0396-1774-4646-af27-e6b74aa4757d") && <div style={{ padding: 10, borderRadius: 1, backgroundColor: "lightgreen", margin: "1rem 0" }}><span>Ten typ dekoracji może byc tylko zewnętrzny</span></div>}
-  <SelectPrzewagi selected={formData.przewagi} all={przewagi} onChange={handleSelectPrzewagi}/>
+        <SelectPrzewagi selected={formData.przewagi} all={przewagi} onChange={handleSelectPrzewagi} />
 
         <label >
           Cechy (max 3):

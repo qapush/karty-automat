@@ -21,6 +21,8 @@ export default async function EditDekoracjaPage({params}) {
   let dekoracja = {};
   try {
     dekoracja = await dekoracjaData(id);
+    
+    
   } catch (e) {
     console.log(e);
   }
