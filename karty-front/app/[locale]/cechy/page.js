@@ -4,6 +4,7 @@ import styles from './CechyPage.module.css'; // Importing the styles
 import DeleteButton from '@/components/DeleteButton/DeleteButton';
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { log } from 'console';
 
 
 const prisma = new PrismaClient();
@@ -21,7 +22,9 @@ async function fetchCechy() {
   });
 }
 
-export default async function CechyPage() {
+export default async function CechyPage({params}) {
+  
+  const {locale} = await params;
   const cookieStore = await cookies();
 
   if (!cookieStore.get("initials")) {
@@ -29,6 +32,9 @@ export default async function CechyPage() {
   }
   const cechy = await fetchCechy(); // Fetch cechy on the server side
 
+  
+  
+  
   return (
     <div>
       <h1 className='page-title'>Cechy</h1>
@@ -38,7 +44,7 @@ export default async function CechyPage() {
         <ul className={styles.list}>
           {cechy.map((cecha) => (
             <li key={cecha.id} className={styles.listItem}>
-              <span dangerouslySetInnerHTML={{__html: cecha.tlumaczenia[0]?.nazwa.replace(/\n/g, '<br/>').toUpperCase() || 'No name available'}}></span>
+              <span dangerouslySetInnerHTML={{__html: cecha.tlumaczenia.filter( i => i.kod_jezyka === locale)[0]?.nazwa.replace(/\n/g, '<br/>').toUpperCase() || 'No name available'}}></span>
               <DeleteButton id={cecha.id} type={"cechy"}/>
             </li>
           ))}
