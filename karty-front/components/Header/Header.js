@@ -21,7 +21,7 @@ export default async function Header(){
         alt="Logo"
       />
     </Link>
-  {/* <LangSwitcher /> */}
+  <LangSwitcher />
     <ul>
       <li>
         <Link href="/dekoracje">Wszystkie dekoracje</Link>

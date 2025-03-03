@@ -12,6 +12,8 @@ import NazwaTlumaczenie from "./NazwaTlumaczenie";
 const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
 
 
+
+
   const locale = useLocale();
 
   const [typy, setTypy] = useState([]);
@@ -27,12 +29,12 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
         id: item.id
       }
     });
-    
+
 
     return res;
   }
-  
-  
+
+
 
   const initializeFormData = (data) => ({
     id,
@@ -153,7 +155,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
         }
       }
     }))
-    
+
   }
 
 
@@ -171,22 +173,25 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
             className={styles.textarea}
           />
         </label>}
-       
-        <label >
+        {locale !== 'pl' && <NazwaTlumaczenie titles={formData.titles} locale={locale} handleTłumaczenieChange={handleTłumaczenieChange} />}
+        {locale !== 'pl' && <div style={{marginBottom: '2rem'}}>
+          <h3>Polska nazwa: {formData?.titles['pl']?.title}</h3>
+          </div>}
+        {/* Polska nazwa */}
+        { locale === 'pl' && < label >
           Nazwa PL:
           <textarea
             required
             data-locale="pl"
             name="title"
-            value={formData.titles['pl'].title}
+            value={formData?.titles['pl']?.title}
             onChange={handleTłumaczenieChange
-              
+
             }
             className={styles.textarea}
             rows={3}
           />
-        </label>
-        {locale !== 'pl' && <NazwaTlumaczenie titles={formData.titles} locale={locale} handleTłumaczenieChange={handleTłumaczenieChange} />}
+        </label> }
         <label >
           Typ dekoracji:
           <select
@@ -228,7 +233,9 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
             onChange={handleMultipleChange}
             className={`${styles.select} ${styles.largeSelect}`}
           >
-            {cechy.map((cecha) => (
+            {cechy
+              .sort((a, b) => a.tlumaczenia[0].nazwa.localeCompare(b.tlumaczenia[0].nazwa))
+              .map((cecha) => (
               <option key={cecha.id} value={cecha.id}>
                 {String(cecha.tlumaczenia[0].nazwa).toUpperCase()}
               </option>

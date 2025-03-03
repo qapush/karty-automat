@@ -31,68 +31,72 @@ export default function DekoracjeTable({dekoracjeData}) {
                     </tr>
                 </thead>
                 <tbody>
-                    {dekoracje.map((dekoracja) => (
-                        <tr key={dekoracja.id}>
-                            <td>{dekoracja.id}</td>
-                            <td>
-                                <Link href={`dekoracje/${dekoracja.id}`} prefetch={false}>
-                                    <span
-                                        dangerouslySetInnerHTML={{
-                                            __html:
-                                                dekoracja?.tlumaczenia.length > 0
-                                                    ? dekoracja?.tlumaczenia[0].tytul.replace(/\n/g, "<br />")
-                                                    : "",
-                                        }}
-                                    ></span>
-                                </Link>
-                            </td>
-                            <td>{dekoracja.typ_dekoracji?.tlumaczenia[0].nazwa}</td>
-                            <td>
-                                {dekoracja.szerokosc} x {dekoracja.wysokosc} x {dekoracja.glebokosc}
-                            </td>
-                            <td>{dekoracja.moc}W</td>
-                            <td>{dekoracja.ilosc_led}</td>
+                    {dekoracje.map((dekoracja) => {
 
-                            <td>
-                                {dekoracja.cechy.length > 0 ? (
-                                    <ul>
-                                        {dekoracja.cechy.map((dekoracjaCecha) => (
-                                            <li
-                                                key={dekoracjaCecha.id}
-                                                dangerouslySetInnerHTML={{
-                                                    __html:
-                                                        dekoracjaCecha.cecha?.tlumaczenia.length > 0
-                                                            ? dekoracjaCecha.cecha?.tlumaczenia[0].nazwa.replace(
-                                                                /\n/g,
-                                                                "<br />"
-                                                            )
-                                                            : "No feature name",
-                                                }}
-                                            ></li>
-                                        ))}
-                                    </ul>
-                                ) : (
-                                    "Brak przypisanych cech"
-                                )}
-                            </td>
+                        const polishTitle = dekoracja?.tlumaczenia.filter( i => i.kod_jezyka === 'pl')[0]?.tytul;
+                        
+                        
+                        return <tr key={dekoracja.id}>
+                        <td>{dekoracja.id}</td>
+                        <td>
+                            <Link href={`dekoracje/${dekoracja.id}`} prefetch={false}>
+                                <span
+                                    dangerouslySetInnerHTML={{
+                                        __html:
+                                        polishTitle
+                                                ? polishTitle.replace(/\n/g, "<br />")
+                                                : "- brak nazwy PL -",
+                                    }}
+                                ></span>
+                            </Link>
+                        </td>
+                        <td>{dekoracja.typ_dekoracji?.tlumaczenia[0].nazwa}</td>
+                        <td>
+                            {dekoracja.szerokosc} x {dekoracja.wysokosc} x {dekoracja.glebokosc}
+                        </td>
+                        <td>{dekoracja.moc}W</td>
+                        <td>{dekoracja.ilosc_led}</td>
 
-                            <td>
-                                {dekoracja.przewagi.length > 0 ? (
-                                    <ul>
-                                        {dekoracja.przewagi.map((dekoracjaPrzewaga) => (
-                                            <li key={dekoracjaPrzewaga.id}>
-                                                {dekoracjaPrzewaga.przewaga?.tlumaczenia.length > 0
-                                                    ? dekoracjaPrzewaga.przewaga?.tlumaczenia[0].nazwa
-                                                    : "No advantage name"}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                ) : (
-                                    "Brak przypisanych przewag"
-                                )}
-                            </td>
-                        </tr>
-                    ))}
+                        <td>
+                            {dekoracja.cechy.length > 0 ? (
+                                <ul>
+                                    {dekoracja.cechy.map((dekoracjaCecha) => (
+                                        <li
+                                            key={dekoracjaCecha.id}
+                                            dangerouslySetInnerHTML={{
+                                                __html:
+                                                    dekoracjaCecha.cecha?.tlumaczenia.length > 0
+                                                        ? dekoracjaCecha.cecha?.tlumaczenia[0].nazwa.replace(
+                                                            /\n/g,
+                                                            "<br />"
+                                                        )
+                                                        : "No feature name",
+                                            }}
+                                        ></li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                "Brak przypisanych cech"
+                            )}
+                        </td>
+
+                        <td>
+                            {dekoracja.przewagi.length > 0 ? (
+                                <ul>
+                                    {dekoracja.przewagi.map((dekoracjaPrzewaga) => (
+                                        <li key={dekoracjaPrzewaga.id}>
+                                            {dekoracjaPrzewaga.przewaga?.tlumaczenia.length > 0
+                                                ? dekoracjaPrzewaga.przewaga?.tlumaczenia[0].nazwa
+                                                : "No advantage name"}
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                "Brak przypisanych przewag"
+                            )}
+                        </td>
+                    </tr>
+                    })}
                 </tbody>
             </table>
         ) : (

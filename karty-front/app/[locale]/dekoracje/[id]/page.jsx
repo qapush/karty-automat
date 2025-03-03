@@ -17,16 +17,17 @@ export default async function EditDekoracjaPage({params}) {
   }
 
   
-  const {id} = await params;
+  const {id, locale} = await params;
   let dekoracja = {};
   try {
-    dekoracja = await dekoracjaData(id);
-    
-    
+    dekoracja = await dekoracjaData(id, locale);  
   } catch (e) {
     console.log(e);
   }
   
+  console.log(dekoracja);
+  
+
   if(!dekoracja.id) notFound();
   
   return (

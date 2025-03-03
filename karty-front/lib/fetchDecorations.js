@@ -8,14 +8,7 @@ export async function fetchDecorations(languageCode = 'pl') {
     const decorations = await prisma.dekoracja.findMany({
       include: {
         // Include title translations filtered by language code
-        tlumaczenia: {
-          where: {
-            kod_jezyka: languageCode,
-          },
-          select: {
-            tytul: true,
-          },
-        },
+        tlumaczenia: true,
         // Include translated type name in the specified language
         typ_dekoracji: {
           include: {
