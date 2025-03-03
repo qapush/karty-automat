@@ -50,12 +50,13 @@ export const dekoracjaData = async (id, locale) => {
     return {};
   }
   
+  console.log(dekoracja);
+  
 
   // Prepare a "clean" object that safely checks for optional fields
   const cleanDekoracja = {
     id: dekoracja.id,
     title: dekoracja?.tlumaczenia || "Untitled" ,
-    tlumaczenieId: dekoracja?.tlumaczenia[0].id,
     typ: dekoracja?.typ_dekoracji || "No subtitle",
     led: dekoracja.ilosc_led || 0,
     power: dekoracja.moc || 0,
