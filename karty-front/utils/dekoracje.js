@@ -1,23 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 
-export const dekoracjaData = async (id) => {
+export const dekoracjaData = async (id, locale) => {
   const prisma = new PrismaClient();
 
   const dekoracja = await prisma.dekoracja.findUnique({
     where: { id: parseInt(id) },
     include: {
-      tlumaczenia: {
-        where: {
-          kod_jezyka: "pl",
-        },
-      },
+      tlumaczenia: true,
       typ_dekoracji: {
         select: {
-          tlumaczenia: {
-            where: {
-              kod_jezyka: "pl",
-            },
-          },
+          tlumaczenia: true,
           id: true
         },
       },
@@ -27,7 +19,7 @@ export const dekoracjaData = async (id) => {
           select: {
             id: true, // Keep if you need the Cechy ID
             tlumaczenia: {
-              where: { kod_jezyka: "pl" },
+              where: { kod_jezyka: locale },
               select: { nazwa: true, id: true },
             },
           },
@@ -39,7 +31,7 @@ export const dekoracjaData = async (id) => {
           przewaga: {
             include: {
               tlumaczenia: {
-                where: { kod_jezyka: "pl" },
+                where: { kod_jezyka: locale },
                 
               },
             },
@@ -57,12 +49,14 @@ export const dekoracjaData = async (id) => {
   if (!dekoracja) {
     return {};
   }
+  
+  console.log(dekoracja);
+  
 
   // Prepare a "clean" object that safely checks for optional fields
   const cleanDekoracja = {
     id: dekoracja.id,
-    title: dekoracja?.tlumaczenia[0]?.tytul || "Untitled" ,
-    tlumaczenieId: dekoracja?.tlumaczenia[0].id,
+    title: dekoracja?.tlumaczenia || "Untitled" ,
     typ: dekoracja?.typ_dekoracji || "No subtitle",
     led: dekoracja.ilosc_led || 0,
     power: dekoracja.moc || 0,
@@ -79,6 +73,8 @@ export const dekoracjaData = async (id) => {
     glebokosc: dekoracja.glebokosc || 0,
   };
 
+
+  
 
   return cleanDekoracja;
 };

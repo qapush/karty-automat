@@ -1,3 +1,5 @@
+@import url('@/css/helpers.css');
+
 
 :root {
   --background: #ffffff;
@@ -41,6 +43,16 @@ header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+}
+
+.lang a {
+  padding: 1rem;
+}
+
+.lang a:hover, .lang a.active {
+  background-color: var(--main-color);
+  color: white;
 }
 
 header ul {
@@ -83,8 +95,6 @@ header img {
 /* FORMS */
 
 
-
-
 .form {
   display: flex;
   flex-direction: column;
@@ -96,22 +106,21 @@ label {
   margin: 1rem auto;
   display: block;
   font-family: 'Lato', 'Lato Fallback';
+  background-color: lightgrey;
+  padding: 1rem;
+  font-size: 1.4rem;
 }
 
-.input,
-.select,
-.textarea {
+input,
+select,
+textarea {
   width: 100%;
   padding: 8px;
-  margin: 5px 0;
+  margin: 2rem 0 5px 0;
   box-sizing: border-box;
 }
 
-textarea {
-  display: block;
-  min-height: 100px;
-  min-width: 200px;
-}
+
 
 .largeSelect {
   min-height: 300px;

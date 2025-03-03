@@ -6,7 +6,15 @@ import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-// import DekoracjaForm from "@/components/Dekoracja/DekoracjaForm";
+
+export async function generateMetadata({ params, searchParams }, parent) {
+  // read route params
+  const { id } = await params
+
+  return {
+    title: `ID ${id}`,
+}
+}
 
 export default async function EditDekoracjaPage({params}) {
 
@@ -17,14 +25,16 @@ export default async function EditDekoracjaPage({params}) {
   }
 
   
-  const {id} = await params;
+  const {id, locale} = await params;
   let dekoracja = {};
   try {
-    dekoracja = await dekoracjaData(id);
+    dekoracja = await dekoracjaData(id, locale);  
   } catch (e) {
     console.log(e);
   }
   
+  
+
   if(!dekoracja.id) notFound();
   
   return (

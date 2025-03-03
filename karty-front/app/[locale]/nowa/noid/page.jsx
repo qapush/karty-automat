@@ -26,7 +26,7 @@ export default async function NoId({params}) {
   const initials = await cookieStore.get('initials');
   const dekoID = usersToNoID[initials.value];
   const data = await dekoracjaData(dekoID);
-  console.log(data);
+
   
 
   return (

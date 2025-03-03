@@ -70,8 +70,8 @@ export async function PUT(req, props) {
   try {
     const id = params.id; // id dekoracji z Dekoracja
     const requestData = await req.json();
-
-    const title = requestData.title;
+    const locale = requestData.locale;
+    const title = requestData.titles[locale].title;
     const typ = requestData.typ; // id typu dekoracji z TypDekoracji
     const cechy = requestData.cechy; // array of id cech z Cechy
     const przewagi = requestData.przewagi; // array of przewagi cech z Przewagi
@@ -80,7 +80,6 @@ export async function PUT(req, props) {
     const szerokosc = requestData.szerokosc;
     const wysokosc = requestData.wysokosc;
     const glebokosc = requestData.glebokosc;
-    const locale = requestData.locale;
 
     // Найти существующую запись с переводом
 

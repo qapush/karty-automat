@@ -22,7 +22,8 @@ export async function POST(req) {
   try {
     const requestData = await req.json();
     const id = requestData.id;
-    const title = requestData.title;
+    const locale = requestData.locale;    
+    const title = requestData.titles[locale].title;
     const typ = requestData.typ; // id typu dekoracji z TypDekoracji
     const cechy = requestData.cechy; // array of id cech z Cechy
     const przewagi = requestData.przewagi; // array of przewagi cech z Przewagi
@@ -31,7 +32,6 @@ export async function POST(req) {
     const szerokosc = requestData.szerokosc;
     const wysokosc = requestData.wysokosc;
     const glebokosc = requestData.glebokosc;
-    const locale = requestData.locale;    
 
     if (id) {
       const existingDekoracja = await prisma.dekoracja.findUnique({

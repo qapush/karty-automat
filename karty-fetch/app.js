@@ -81,7 +81,7 @@ async function fetchDataForId(browser, id) {
       href: anchor.getAttribute('href'),
     })),
   );
-  console.log(links);
+
 
   const targetLink = links.find((link) => link.text === id);
   if (!targetLink) {
