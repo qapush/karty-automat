@@ -16,17 +16,16 @@ export default function Cecha({ cecha, locale }) {
     );
     
     // Memoize the translation ID
-    const tlumaczenieId = translation?.id;
 
     const handleSave = useCallback(async () => {
         // Create and store the toast ID
         const toastId = toast.loading("Zapisywanie...");
         
         try {
-            const response = await fetch(`/api/cechy/${cecha}`, {
+            const response = await fetch(`/api/cechy/${cecha.id}`, {
                 method: 'PUT',
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ tlumaczenieId, nazwa: textareaValue, kod_jezyka: locale }),
+                body: JSON.stringify({ nazwa: textareaValue, kod_jezyka: locale }),
             });
 
             console.log(response.ok);
@@ -72,7 +71,7 @@ export default function Cecha({ cecha, locale }) {
 
             
         }
-    }, [cecha.id, tlumaczenieId, textareaValue, locale]);
+    }, [cecha.id, textareaValue, locale]);
 
     const toggleChangeMode = useCallback(() => {
         setChangeMode(prev => !prev);
@@ -101,7 +100,7 @@ export default function Cecha({ cecha, locale }) {
                 <div className={styles.cecha} onClick={toggleChangeMode}>
                     <p dangerouslySetInnerHTML={{ __html: textareaValue.replace(/\n/g, "<br/>").toUpperCase() }}></p>
                     <div className={styles.actions}>
-                        <DeleteButton id={cecha.id} />
+                        <DeleteButton id={cecha.id} type='cechy' />
                     </div>
                 </div>
             )}

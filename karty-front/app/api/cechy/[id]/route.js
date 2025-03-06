@@ -3,56 +3,63 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function PUT(req, { params }) {
-  
-  
   try {
-    const { id } = await params; 
+    const { id } = await params; // Extract the feature ID from URL params
     const body = await req.json(); // Parse request body
-    const { tlumaczenieId, nazwa, kod_jezyka } = body;
-    
-    console.log(id);// Extract translation ID from URL
-    console.log(tlumaczenieId, nazwa, kod_jezyka);
-    
+    const { nazwa, kod_jezyka } = body; // Extract name and language code
 
+    console.log("Feature ID:", id);
+    console.log("Updating/Creating translation:", nazwa, "Language:", kod_jezyka);
 
     // Ensure required fields are provided
-    if (!tlumaczenieId || !nazwa || !kod_jezyka) {
+    if (!id || !nazwa || !kod_jezyka) {
       return new Response(JSON.stringify({ error: "Missing fields" }), {
         status: 400,
       });
     }
+    console.log('hre1');
 
-    // Find the existing translation to check if it matches the requested language
-    const existingTranslation = await prisma.cechyTlumaczenie.findUnique({
-      where: { id: tlumaczenieId },
-    });
+    // Check if the translation already exists for this feature and language
+const existingTranslation = await prisma.cechyTlumaczenie.findFirst({
+  where: {
+    cecha_id: id,
+    kod_jezyka: kod_jezyka,
+  },
+});
 
-    if (!existingTranslation) {
-      return new Response(
-        JSON.stringify({ error: "Translation not found" }),
-        { status: 404 }
-      );
+
+    console.log('hre');
+    console.log(existingTranslation);
+        
+
+    let upsertedTranslation;
+
+    if (existingTranslation) {
+      // Update the existing translation if it exists
+      upsertedTranslation = await prisma.cechyTlumaczenie.updateMany({
+        where: { cecha_id: id, kod_jezyka },
+        data: {
+          nazwa, // Update name
+        },
+      });
+    } else {
+      // Create a new translation if it doesn't exist
+      upsertedTranslation = await prisma.cechyTlumaczenie.create({
+        data: {
+          cecha_id: id, // The feature ID
+          kod_jezyka, // The language code
+          nazwa, // The name of the feature (translated)
+        },
+      });
     }
 
-    // Ensure we are updating the correct translation for the locale
-    if (existingTranslation.kod_jezyka !== kod_jezyka) {
-      return new Response(
-        JSON.stringify({ error: "Translation ID does not match the language" }),
-        { status: 400 }
-      );
-    }
-
-    // Update the translation
-    const updatedTranslation = await prisma.cechyTlumaczenie.update({
-      where: { id: tlumaczenieId },
-      data: { nazwa },
-    });
-
-    return new Response(JSON.stringify(updatedTranslation), { status: 200 });
+    console.log(upsertedTranslation);
+    
+    return new Response(JSON.stringify(upsertedTranslation), { status: 200 });
   } catch (error) {
-    console.error("Error updating feature translation:", error);
+    console.error("Error updating/creating feature translation:", error);
     return new Response(
-      JSON.stringify({ error: "Failed to update feature translation" }),
+      JSON.stringify({ error: "Failed to update or create feature translation" }),
       { status: 500 }
     );
   }
