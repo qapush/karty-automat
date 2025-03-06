@@ -1,0 +1,11 @@
+.cecha {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cecha_change {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "csv-parser": "^3.2.0",
-    "deepl-node": "^1.16.0",
-    "together-ai": "^0.13.0"
-  }
-}

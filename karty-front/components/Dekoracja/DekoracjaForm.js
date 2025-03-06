@@ -88,8 +88,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
       return;
     }
 
-    toast.promise(() => putPostDekoracja(add, formData
-    ), {
+    toast.promise(() => putPostDekoracja(add, formData), {
       pending: "Zapisywanie...",
       success: {
         render({ data }) {
