@@ -28,10 +28,6 @@ const existingTranslation = await prisma.cechyTlumaczenie.findFirst({
 });
 
 
-    console.log('hre');
-    console.log(existingTranslation);
-        
-
     let upsertedTranslation;
 
     if (existingTranslation) {
