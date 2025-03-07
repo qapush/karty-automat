@@ -42,7 +42,7 @@ export async function GET(request, props) {
       power: dekoracja.moc || 0,
       przewagi:
         dekoracja.przewagi?.map(
-          (i) => i.przewaga?.tlumaczenia?.[0]?.nazwa || "Unnamed Advantage"
+          (i) => i.przewaga.slug
         ) || [],
       cechy:
         dekoracja.cechy?.map(

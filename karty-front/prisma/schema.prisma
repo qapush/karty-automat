@@ -60,8 +60,9 @@ model CechyTlumaczenie {
 
 model Przewagi {
   id                String                     @id @default(uuid())
-  tlumaczenia       PrzewagiTlumaczenie[]      // Translations
-  dekoracje         DekoracjaPrzewagi[]        // Decorations
+  slug              String?                    @unique
+  tlumaczenia       PrzewagiTlumaczenie[]      
+  dekoracje         DekoracjaPrzewagi[]        
 }
 
 model PrzewagiTlumaczenie {

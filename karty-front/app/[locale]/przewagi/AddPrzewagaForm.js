@@ -7,7 +7,7 @@ import styles from './PrzewagiPage.module.css'; // Importing the styles
 const AddCechaForm = () => {
   const router = useRouter()
   const [name, setName] = useState('');
-  const [language, setLanguage] = useState('pl'); // Default to Polish
+  const [slug, setSlug] = useState(''); // Default to Polish
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +40,7 @@ const AddCechaForm = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <label >
-          Nazwa (Name):
+          Przewaga
           <input
             type="text"
             value={name}
@@ -50,17 +50,17 @@ const AddCechaForm = () => {
         </label>
       </div>
       <div>
-        <label >
-          Kod języka (Language Code):
+      <label >
+          Slug
           <input
             type="text"
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
+            value={slug}
+            onChange={(e) => setSlug(e.target.value)}
             required
           />
         </label>
       </div>
-      <button type="submit" className={styles.button}>Add Cechy</button>
+      <button type="submit" className={styles.button}>Dodaj przewagę</button>
     </form>
   );
 };

@@ -16,8 +16,16 @@ async function fetchPrzewagi() {
   });
 }
 
+
+
+
 export default async function PrzewagiPage() {
-  const cechy = await fetchPrzewagi(); // Fetch cechy on the server side
+
+  const przewagi = await fetchPrzewagi(); // Fetch cechy on the server side
+
+  console.log(przewagi);
+  
+  
 
   return (
     <div className={styles.container}>
@@ -29,9 +37,9 @@ export default async function PrzewagiPage() {
       </div>
 
       {/* Display the list of Cechy */}
-      {cechy.length > 0 ? (
+      {przewagi.length > 0 ? (
         <ul className={styles.list}>
-          {cechy
+          {przewagi
             .map((przewaga) => (
               <li key={przewaga.id} className={styles.listItem}>
                 <div>
@@ -41,6 +49,7 @@ export default async function PrzewagiPage() {
                     alt=""
                   />
                   {przewaga.tlumaczenia[0]?.nazwa || "No name available"}
+                  <p>Slug: {przewaga.slug}</p>
                 </div>
                 <DeleteButton id={przewaga.id} type={"przewagi"} />
               </li>
