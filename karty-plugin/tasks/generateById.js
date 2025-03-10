@@ -23,11 +23,6 @@ goldenColor.rgb.blue = 84;
 module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
 
 
-  console.log(cechy);
-
-  return;
-  
-
   const { TEMPLATE_URL, OUTPUT_DIR } = config;
   const BASEURL = localStorage.getItem('designLetter') + ':/';
 
@@ -110,25 +105,36 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
 
   let offset = subtitleLayer.bounds.bottom + 13;
 
-
-
   // PRZEWAGI
 
   const przewagi2 = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI2');
 
+  // REMOVE OTHER LOCALES PRZEWAGI
+
+  for (const group of przewagaLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').layers) {
+    if(group.name !== locale.toUpperCase()) {
+      group.merge();
+      group.delete();
+    }
+  }
+  
+  
   for (const element of przewagi) {
-    const przewagaLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').layers.getByName(element);
-    await moveLayer(element, przewagaLayer.id, subtitleLayer.boundsNoEffects.left, offset);
+    const przewagaLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').layers.getByName(locale.toUpperCase()).layers.getByName(element);
+    await moveLayer(przewagaLayer.name, przewagaLayer.id, subtitleLayer.boundsNoEffects.left, offset);
     offset += przewagaLayer.boundsNoEffects.height + 13;
     przewagaLayer.visible = true;
     przewagaLayer.move(przewagi2, constants.ElementPlacement.PLACEINSIDE);
   }
-
+  
+  
   // CLEANUP PRZEWAGI
-
+  
   templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').merge();
   templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').delete();
   przewagi2.name = 'PRZEWAGI';
+  
+  return;
 
   // CREATE PREVIEW
 

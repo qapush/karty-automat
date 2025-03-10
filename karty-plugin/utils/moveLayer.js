@@ -3,6 +3,8 @@ const {batchPlay} = require("photoshop").action;
 
 
 module.exports = async function (layername, layerId, hoffset, voffset) {
+    
+
     const go = await executeAsModal( async () => await batchPlay(
         [
             {
