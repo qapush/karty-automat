@@ -50,7 +50,7 @@ export async function GET(request, props) {
         ) || [],
       cechy:
         dekoracja.cechy?.map(
-          (i) => i.cecha?.tlumaczenia?.locale?.nazwa || "Unnamed Feature"
+          (i) => i.cecha?.tlumaczenia?.find( i => i.kod_jezyka === locale)?.nazwa || "Unnamed Feature"
         ) || [],
       szerokosc: dekoracja.szerokosc || 0,
       wysokosc: dekoracja.wysokosc || 0,
