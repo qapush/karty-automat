@@ -42,7 +42,12 @@ async function idLoop() {
   // Generate karta by id
   if (document.getElementById('idField').value) {
     const id = document.getElementById('idField').value;
-    const data = await fetch(`https://karty-automat.vercel.app/api/dekoracje/${id}`);
+    const locale = document.getElementById('id-locale').value;
+    const data = await fetch(`https://karty-automat.vercel.app/api/dekoracje/${id}`, {
+      headers: {
+        'accept-language': locale,
+      }
+    });
     const element = await data.json();
 
     if (element.error) {

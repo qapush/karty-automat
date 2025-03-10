@@ -8,8 +8,6 @@ export async function PUT(req, { params }) {
     const body = await req.json(); // Parse request body
     const { nazwa, kod_jezyka } = body; // Extract name and language code
 
-    console.log("Feature ID:", id);
-    console.log("Updating/Creating translation:", nazwa, "Language:", kod_jezyka);
 
     // Ensure required fields are provided
     if (!id || !nazwa || !kod_jezyka) {
@@ -17,7 +15,6 @@ export async function PUT(req, { params }) {
         status: 400,
       });
     }
-    console.log('hre1');
 
     // Check if the translation already exists for this feature and language
 const existingTranslation = await prisma.cechyTlumaczenie.findFirst({

@@ -10,6 +10,7 @@ const alignAtoBhorizontal = require('../utils/alignAtoBhorizontal');
 const changePrevAreaHeight = require('../utils/changePrevAreaHeight');
 const changePrevAreaWidth = require('../utils/changePrevAreaWidth');
 const selectLayer = require('../utils/selectLayer');
+const { core } = require('photoshop');
 const SolidColor = require("photoshop").app.SolidColor;
 
 // COLORS
@@ -22,15 +23,30 @@ goldenColor.rgb.blue = 84;
 module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
 
 
-  const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR } = config;
+  console.log(cechy);
+
+  return;
+  
+
+  const { TEMPLATE_URL, OUTPUT_DIR } = config;
   const BASEURL = localStorage.getItem('designLetter') + ':/';
+
+  // LOCALE
+
+  const locale = document.getElementById('id-locale').value;
+
+  // CHODYRA PATCH
+
+  const SRC_DIR = localStorage.getItem('folderName') === 'CC' ?
+    '/PROJEKTY_2025/55_HYDE_PARK_WINTER_WONDERLAND/ASSETS/ID/' :
+    core.SRC_DIR;
 
 
   // OPEN DOCUMENTS
 
   await openWithModal(BASEURL + TEMPLATE_URL);
 
-    await openWithModal(`${BASEURL}${SRC_DIR}/${id}.psd`);
+  await openWithModal(`${BASEURL}${SRC_DIR}/${id}.psd`);
 
 
 
@@ -75,7 +91,7 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
   const titleLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('TYTUL');
 
 
-  await changeTitle(titleLayer.id, title.tlumaczenia.filter(i => i.kod_jezyka === 'pl')[0].tytul.toLowerCase());
+  await changeTitle(titleLayer.id, title.tlumaczenia.filter(i => i.kod_jezyka === locale )[0].tytul.toLowerCase());
 
   // SUBTITLE
 
@@ -223,8 +239,8 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
   // ID
 
   const idTextItem = templateDocument.layers.getByName('TEKSTY').layers.getByName('DANE TECH').layers.getByName('ID').textItem;
-    idTextItem.contents = `ID: ${id}`;
-  
+  idTextItem.contents = `ID: ${id}`;
+
 
 
 

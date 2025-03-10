@@ -127,7 +127,11 @@
     <sp-checkbox id="indoor">Karta indoor</sp-checkbox>
     <sp-checkbox id="openAfterSave" checked>Otwórz kartę po wygenerowaniu</sp-checkbox>
     <sp-button id="btnGenerate" variant="main">Generuj</sp-button>
-
+    <sp-radio-group id="id-locale">
+      <sp-label slot="label">Język:</sp-label>
+      <sp-radio name="pl" checked value="pl">PL</sp-radio>
+      <sp-radio name="en" value="en">EN</sp-radio>
+  </sp-radio-group>
   </div>
 
   <div class="sp-tab-page" id="noid-tab">

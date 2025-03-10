@@ -7,6 +7,7 @@ const prisma = new PrismaClient();
 import { fetchDecorations } from '@/lib/fetchDecorations'; // Adjust the import path as necessary
 
 export async function GET(req) {
+  
   const languageCode = req.headers.get('accept-language') || 'pl'; // Default to Polish if no language header
   const dekoracjeResponse = await fetchDecorations(languageCode);
 
