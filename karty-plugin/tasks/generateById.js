@@ -34,7 +34,7 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
 
   const SRC_DIR = localStorage.getItem('folderName') === 'CC' ?
     '/PROJEKTY_2025/55_HYDE_PARK_WINTER_WONDERLAND/ASSETS/ID/' :
-    core.SRC_DIR;
+    config.SRC_DIR;
 
 
   // OPEN DOCUMENTS
