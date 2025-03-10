@@ -43,11 +43,7 @@ async function idLoop() {
   if (document.getElementById('idField').value) {
     const id = document.getElementById('idField').value;
     const locale = document.getElementById('id-locale').value;
-    const data = await fetch(`https://karty-automat.vercel.app/api/dekoracje/${id}`, {
-      headers: {
-        'accept-language': locale,
-      }
-    });
+    const data = await fetch(`https://karty-automat.vercel.app/api/dekoracje/${id}?locale=${locale}`, {
     const element = await data.json();
 
     if (element.error) {

@@ -6,8 +6,7 @@ const prisma = new PrismaClient();
 export async function GET(request, props) {
 
   
-  console.log(request.headers);
-  console.log('sss');
+  const locale = request.nextUrl.searchParams.get('locale') || 'pl';
   
   const params = await props.params;
   const { id } = params;
@@ -51,7 +50,7 @@ export async function GET(request, props) {
         ) || [],
       cechy:
         dekoracja.cechy?.map(
-          (i) => i.cecha?.tlumaczenia?.[0]?.nazwa || "Unnamed Feature"
+          (i) => i.cecha?.tlumaczenia?.locale?.nazwa || "Unnamed Feature"
         ) || [],
       szerokosc: dekoracja.szerokosc || 0,
       wysokosc: dekoracja.wysokosc || 0,
