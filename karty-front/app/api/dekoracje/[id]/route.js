@@ -40,8 +40,8 @@ export async function GET(request, props) {
     const cleanDekoracja = {
       id: dekoracja.id,
       title: { tlumaczenia: dekoracja.tlumaczenia || "Untitled" },
-      subtitle:
-        dekoracja.typ_dekoracji?.tlumaczenia.find( i => i.kod_jezyka === locale)?.nazwa || "No subtitle",
+      subtitle: dekoracja.typ_dekoracji?.tlumaczenia.find( i => i.kod_jezyka === locale)?.nazwa || "No subtitle",
+      subtitle_pl: dekoracja.typ_dekoracji?.tlumaczenia.find( i => i.kod_jezyka === 'pl')?.nazwa || "No subtitle",
       led: dekoracja.ilosc_led || 0,
       power: dekoracja.moc || 0,
       przewagi:

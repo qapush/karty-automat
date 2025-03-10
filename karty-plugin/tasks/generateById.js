@@ -134,7 +134,6 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
   templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').delete();
   przewagi2.name = 'PRZEWAGI';
   
-  return;
 
   // CREATE PREVIEW
 
