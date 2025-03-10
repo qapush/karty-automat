@@ -62,6 +62,7 @@
     display: flex;
     flex-direction: row;
     border-bottom: 2px solid #3E3E3E;
+    cursor: pointer;
   }
 
   .sp-tab {
@@ -102,6 +103,16 @@
   .sp-tab-page>* {
     flex: 0 0 auto;
   }
+
+/* BUTTONS */
+
+sp-button {
+  cursor: pointer;
+}
+
+  #btnUpdate {
+    margin-top: 1rem;
+  }
 </style>
 <style>
   body {
@@ -123,6 +134,7 @@
     <sp-checkbox id="indoor">Karta indoor</sp-checkbox>
     <sp-checkbox id="openAfterSave" checked>Otwórz kartę po wygenerowaniu</sp-checkbox>
     <sp-button id="btnGenerate" variant="main">Generuj</sp-button>
+    <sp-button id="btnUpdate" variant="secondary">Update danych na karcie</sp-button>
     <sp-radio-group id="id-locale">
       <sp-label slot="label">Język:</sp-label>
       <sp-radio name="pl" checked value="pl">PL</sp-radio>
@@ -160,7 +172,7 @@
 
   </div>
 
-  <span style="opacity: 0.5; font-size: 0.5rem; position: absolute; bottom: 5px;">v1.1.6</span>
+  <span style="opacity: 0.5; font-size: 0.5rem; position: absolute; bottom: 5px;">v1.2</span>
 </body>
 
 </html>

@@ -14,6 +14,7 @@ entrypoints.setup({
 
 const generateById = require('./tasks/generateById');
 const generateNoId = require('./tasks/generateNoId');
+const updateById = require('./tasks/updateById');
 const dowithModal = require('./utils/doWithModal');
 const panelSetup = require('./utils/panelSetup');
 
@@ -107,7 +108,46 @@ async function noidLoop() {
 }
 
 
+async function updateByIdLoop() {
+
+
+  // Prompt user to set design drive letter
+  if (!localStorage.getItem('designLetter')) {
+    const designletterPrompt = window.prompt('Ustaw literę dysku design poniżej. Rowniez można ją zmienić w zakładce "ustawienia"');
+    localStorage.setItem('designLetter', designletterPrompt);
+    document.getElementById('designLetter').innerText = designLetter();
+  }
+
+
+  // Generate karta by id
+  if (document.getElementById('idField').value) {
+    const id = document.getElementById('idField').value;
+    const locale = document.getElementById('id-locale').value;
+    const data = await fetch(`https://karty-automat.vercel.app/api/dekoracje/${id}?locale=${locale}`);
+    const element = await data.json();
+
+    if (element.error) {
+      alert(`ID ${id} nie znaleziono w bazie`);
+      return;
+    }
+
+    try {
+      await dowithModal(() => updateById(element));
+    } catch (error) {
+      console.error(error);
+      alert(error)
+    }
+
+  } else {
+    alert('Podaj ID')
+    return;
+  }
+
+}
+
+
 
 
 document.getElementById('btnGenerate').addEventListener('click', idLoop);
 document.getElementById('btnGenerateNoid').addEventListener('click', noidLoop);
+document.getElementById('btnUpdate').addEventListener('click', updateByIdLoop);

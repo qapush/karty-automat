@@ -23,42 +23,55 @@ goldenColor.rgb.blue = 84;
 module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
 
 
-  const { TEMPLATE_URL, OUTPUT_DIR } = config;
+  const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR } = config;
   const BASEURL = localStorage.getItem('designLetter') + ':/';
 
   // LOCALE
 
   const locale = document.getElementById('id-locale').value;
 
-  // CHODYRA PATCH
-
-  const SRC_DIR = localStorage.getItem('folderName') === 'CC' ?
-    '/PROJEKTY_2025/55_HYDE_PARK_WINTER_WONDERLAND/ASSETS/ID/' :
-    config.SRC_DIR;
-
 
   // OPEN DOCUMENTS
 
+  
+  let fileNameToOpen = id;
+  
+  if(locale !== 'pl') fileNameToOpen += `_${locale.toUpperCase()}`;
+  
+  console.log(fileNameToOpen);
+  
+  await openWithModal(`${BASEURL}${OUTPUT_DIR}/${fileNameToOpen}.psd`);
+
+  
+
+
   await openWithModal(BASEURL + TEMPLATE_URL);
-
-  await openWithModal(`${BASEURL}${SRC_DIR}/${id}.psd`);
-
-
-
-
+  
+  
   // GET DOCUMENTS AND LAYERS
-
+  
   const templateDocument = await app.documents.getByName('szablon.psd');
-  let decorationDocument = await app.documents.getByName(`${id}.psd`);;
+  const decorationDocument = await app.documents.getByName(`${fileNameToOpen}.psd`);;
+
+  // REMOVE BG FROM TEMPLATE
+
+  templateDocument.layers.getByName('BGS').merge();
+  templateDocument.layers.getByName('BGS').delete();
 
 
-  // COPY DECORATION LAYER
+  // COPY DECORATION LAYER AND BG
 
 
-  await decorationDocument.layers.getByName(id.toString()).copy()
+  await decorationDocument.layers.getByName('DEKORACJA').layers.getByName(id.toString()).copy();
   await decorationDocument.close('DONOTSAVECHANGES')
   await templateDocument.paste()
-  await templateDocument.activeLayers[0].move(templateDocument.layers.getByName('DEKORACJA'), constants.ElementPlacement.PLACEINSIDE)
+  await templateDocument.activeLayers[0].move(templateDocument.layers.getByName('DEKORACJA'), constants.ElementPlacement.PLACEINSIDE);
+
+  await decorationDocument.layers.getByName('BGS').copy();
+  await templateDocument.paste();
+
+  return;
+
 
   // RESIZE DECORATION
 
@@ -382,6 +395,7 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
   // SAVE
   let exportFileName = `${id}${document.getElementById('indoor').checked || indoorOnly() ? '_WEW' : ''}`;
   if(locale !== 'pl') exportFileName += `_${locale.toUpperCase()}`;
+  
   const resultEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${OUTPUT_DIR}/${exportFileName}.psd`, { overwrite: true });
 
   await templateDocument.saveAs.psd(resultEntry);

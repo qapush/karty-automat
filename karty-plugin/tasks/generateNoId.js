@@ -367,8 +367,8 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
 
 
   // SAVE
-  const exportFileName = `${localStorage.getItem('folderName')}${document.getElementById('indoor').checked || indoorOnly() ? '_WEW' : ''}`;
-
+  let exportFileName = `${localStorage.getItem('folderName')}${document.getElementById('indoor').checked || indoorOnly() ? '_WEW' : ''}`;
+  if(locale !== 'pl') exportFileName += `_${locale.toUpperCase()}`;
   const resultEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${OUTPUT_DIR}/${exportFileName}.psd`, { overwrite: true });
 
   // Save jpeg snapshot

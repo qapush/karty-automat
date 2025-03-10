@@ -34,13 +34,13 @@ export default async function Header(){
       <li>
         <Link href="/nowa">Dodaj nową</Link>
       </li>
-    { cookieStore.get("initials").value === 'MQ' 
+    { cookieStore.get("initials")?.value === 'MQ' 
       && 
       <li>
         <Link href="/cechy">Cechy</Link>
       </li>
       }
-    { cookieStore.get("initials").value === 'MQ' 
+    { cookieStore.get("initials")?.value === 'MQ' 
       && 
       <li>
         <Link href="/przewagi">Przewagi</Link>
