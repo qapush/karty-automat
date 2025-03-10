@@ -19,11 +19,19 @@ goldenColor.rgb.green = 134;
 goldenColor.rgb.blue = 84;
 
 
-module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
+module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
 
 
-  const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR, TEMP_DIR, NOID_PREVIEW_DIR } = config;
+  const { TEMPLATE_URL, OUTPUT_DIR, TEMP_DIR, NOID_PREVIEW_DIR } = config;
   const BASEURL = localStorage.getItem('designLetter') + ':/';
+
+  const locale = document.getElementById('noid-locale').value;
+
+    // CHODYRA PATCH
+  
+    const SRC_DIR = localStorage.getItem('folderName') === 'CC' ?
+      '/PROJEKTY_2025/55_HYDE_PARK_WINTER_WONDERLAND/ASSETS/ID/' :
+      core.SRC_DIR;
 
   // OPEN DOCUMENTS
 
@@ -75,7 +83,7 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
   const titleLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('TYTUL');
 
 
-  await changeTitle(titleLayer.id, title.tlumaczenia.filter(i => i.kod_jezyka === 'pl')[0].tytul.toLowerCase());
+  await changeTitle(titleLayer.id, title.tlumaczenia.filter(i => i.kod_jezyka === locale)[0].tytul.toLowerCase());
 
   // SUBTITLE
 
@@ -100,19 +108,29 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
 
   const przewagi2 = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI2');
 
-  for (const element of przewagi) {
-    const przewagaLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').layers.getByName(element);
-    await moveLayer(element, przewagaLayer.id, subtitleLayer.boundsNoEffects.left, offset);
-    offset += przewagaLayer.boundsNoEffects.height + 13;
-    przewagaLayer.visible = true;
-    przewagaLayer.move(przewagi2, constants.ElementPlacement.PLACEINSIDE);
+   // REMOVE OTHER LOCALES PRZEWAGI
+
+   for (const group of przewagaLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').layers) {
+    if(group.name !== locale.toUpperCase()) {
+      group.merge();
+      group.delete();
+    }
   }
 
-  // CLEANUP PRZEWAGI
-
-  templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').merge();
-  templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').delete();
-  przewagi2.name = 'PRZEWAGI';
+  for (const element of przewagi) {
+      const przewagaLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').layers.getByName(locale.toUpperCase()).layers.getByName(element);
+      await moveLayer(przewagaLayer.name, przewagaLayer.id, subtitleLayer.boundsNoEffects.left, offset);
+      offset += przewagaLayer.boundsNoEffects.height + 13;
+      przewagaLayer.visible = true;
+      przewagaLayer.move(przewagi2, constants.ElementPlacement.PLACEINSIDE);
+    }
+    
+    
+    // CLEANUP PRZEWAGI
+    
+    templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').merge();
+    templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').delete();
+    przewagi2.name = 'PRZEWAGI';
 
   // CREATE PREVIEW
 
@@ -265,7 +283,7 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
 
   const indoor = document.getElementById('indoor').checked;
   const indoorOnly = () => {
-    switch (subtitle) {
+    switch (subtitle_pl) {
       case "dekoracja podwieszana 2D":
         return true;
         break;
@@ -282,7 +300,7 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
     console.log('!indoor');
 
     templateDocument.layers.getByName('BGS').layers.getByName('ZEW').layers.forEach(i => {
-      if (i.name !== subtitle) {
+      if (i.name !== subtitle_pl) {
         i.merge()
         i.delete()
       }
@@ -296,7 +314,7 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
     alert(`Dekoracje typu "${subtitle}" mogą być tylko indoor`)
 
     templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.forEach(i => {
-      if (i.name !== subtitle) {
+      if (i.name !== subtitle_pl) {
         i.merge()
         i.delete()
       }
@@ -310,7 +328,7 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
 
     if (templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.getByName(subtitle)) {
       templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.forEach(i => {
-        if (i.name !== subtitle) {
+        if (i.name !== subtitle_pl) {
           i.merge()
           i.delete()
         }

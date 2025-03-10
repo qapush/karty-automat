@@ -7,10 +7,6 @@
   <script src="https://jspm.dev/@spectrum-web-components/bundle/elements.js" type="module" async></script>
 </head>
 <style>
- 
-
-
-
   /* dialog styles */
   :not(.xd) dialog {
     width: 480px;
@@ -89,7 +85,7 @@
     color: white;
   }
 
- 
+
 
   .sp-tab-page {
     display: none;
@@ -131,7 +127,7 @@
       <sp-label slot="label">Język:</sp-label>
       <sp-radio name="pl" checked value="pl">PL</sp-radio>
       <sp-radio name="en" value="en">EN</sp-radio>
-  </sp-radio-group>
+    </sp-radio-group>
   </div>
 
   <div class="sp-tab-page" id="noid-tab">
@@ -139,7 +135,12 @@
     <sp-checkbox id="noid-indoor">Karta indoor</sp-checkbox>
     <sp-checkbox id="noid-openAfterSave" checked>Otwórz kartę po wygenerowaniu</sp-checkbox>
     <sp-button id="btnNoIdPsd" variant="secondary">Otwórz plik dla karty bez ID</sp-button>
-    <hr style="margin: 2rem 0"/>
+    <hr style="margin: 2rem 0" />
+    <sp-radio-group id="noid-locale">
+      <sp-label slot="label">Język:</sp-label>
+      <sp-radio name="pl" checked value="pl">PL</sp-radio>
+      <sp-radio name="en" value="en">EN</sp-radio>
+    </sp-radio-group>
     <sp-button id="btnGenerateNoid" variant="main">Generuj</sp-button>
   </div>
 
@@ -156,7 +157,7 @@
     <br>
     <sp-button id="btnChangeTempFolderName" variant="secondary">Ustaw</sp-button>
 
-   
+
   </div>
 
   <span style="opacity: 0.5; font-size: 0.5rem; position: absolute; bottom: 5px;">v1.1.6</span>

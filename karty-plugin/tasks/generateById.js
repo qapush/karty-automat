@@ -20,7 +20,7 @@ goldenColor.rgb.green = 134;
 goldenColor.rgb.blue = 84;
 
 
-module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
+module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
 
 
   const { TEMPLATE_URL, OUTPUT_DIR } = config;
@@ -253,7 +253,16 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
   // LED MOC
 
   const ledMocTextItem = templateDocument.layers.getByName('TEKSTY').layers.getByName('DANE TECH').layers.getByName('LED_MOC').textItem;
-  ledMocTextItem.contents = `pkt. led: ${led}, MOC: ${power}W`;
+  switch(locale){
+    case 'pl':
+      ledMocTextItem.contents = `pkt. led: ${led}, MOC: ${power}W`;
+      break;
+    case 'en':
+      ledMocTextItem.contents = `led pts.: ${led}, power: ${power}W`;
+      break;
+    default:
+      ledMocTextItem.contents = `pkt. led: ${led}, MOC: ${power}W`;
+  }
 
 
   // CECHY
@@ -287,7 +296,7 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
 
   const indoor = document.getElementById('indoor').checked;
   const indoorOnly = () => {
-    switch (subtitle) {
+    switch (subtitle_pl) {
       case "dekoracja podwieszana 2D":
         return true;
         break;
@@ -304,7 +313,7 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
     console.log('!indoor');
 
     templateDocument.layers.getByName('BGS').layers.getByName('ZEW').layers.forEach(i => {
-      if (i.name !== subtitle) {
+      if (i.name !== subtitle_pl) {
         i.merge()
         i.delete()
       }
@@ -315,10 +324,10 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
   } else if (indoorOnly()) {
 
     console.log('indoor only');
-    alert(`Dekoracje typu "${subtitle}" mogą być tylko indoor`)
+    alert(`Dekoracje typu "${subtitle_pl}" mogą być tylko indoor`)
 
     templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.forEach(i => {
-      if (i.name !== subtitle) {
+      if (i.name !== subtitle_pl) {
         i.merge()
         i.delete()
       }
@@ -330,9 +339,9 @@ module.exports = async ({ id, przewagi, title, subtitle, led, power, cechy, szer
 
   } else {
 
-    if (templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.getByName(subtitle)) {
+    if (templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.getByName(subtitle_pl)) {
       templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.forEach(i => {
-        if (i.name !== subtitle) {
+        if (i.name !== subtitle_pl) {
           i.merge()
           i.delete()
         }
