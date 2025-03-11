@@ -47,9 +47,6 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
   let fileNameToOpen = id;
 
   if(indoorOnly) fileNameToOpen += '_WEW';
-
-  console.log(fileNameToOpen);
-  console.log(id, przewagi, title, subtitle, subtitle_pl, led, power, cechy, szerokosc, wysokosc, glebokosc);
   
 
   await openWithModal(`${BASEURL}${OUTPUT_DIR}/${fileNameToOpen}.psd`);

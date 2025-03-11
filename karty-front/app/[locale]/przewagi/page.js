@@ -22,8 +22,6 @@ async function fetchPrzewagi() {
 export default async function PrzewagiPage() {
 
   const przewagi = await fetchPrzewagi(); // Fetch cechy on the server side
-
-  console.log(przewagi);
   
   
 

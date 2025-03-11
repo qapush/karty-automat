@@ -16,7 +16,6 @@ export default async function Header(){
     
     const loggedIn = cookieStore.get("initials");
 
-    console.log(cookieStore.get("initials"));
     
     
     return <header>
