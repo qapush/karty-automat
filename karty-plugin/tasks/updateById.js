@@ -5,12 +5,8 @@ const constants = require('photoshop').constants;
 const fs = require('uxp').storage.localFileSystem;
 const changeTitle = require('../utils/changeTitle');
 const moveLayer = require('../utils/moveLayer');
-const alignAtoB = require('../utils/alignAtoB');
-const alignAtoBhorizontal = require('../utils/alignAtoBhorizontal');
-const changePrevAreaHeight = require('../utils/changePrevAreaHeight');
-const changePrevAreaWidth = require('../utils/changePrevAreaWidth');
 const selectLayer = require('../utils/selectLayer');
-const { core } = require('photoshop');
+const pasteInPlace = require('../utils/pasteInPlace');
 const SolidColor = require("photoshop").app.SolidColor;
 
 // COLORS
@@ -22,7 +18,7 @@ goldenColor.rgb.blue = 84;
 
 module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
 
-
+  
   const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR } = config;
   const BASEURL = localStorage.getItem('designLetter') + ':/';
 
@@ -33,23 +29,39 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
 
   // OPEN DOCUMENTS
 
-  
+  const indoorOnly = () => {
+    switch (subtitle_pl) {
+      case "dekoracja podwieszana 2D":
+        return true;
+        break;
+      case "dekoracja podwieszana 3D":
+        return true;
+        break;
+      default:
+        return false;
+    }
+  }
+
+
+
   let fileNameToOpen = id;
-  
-  if(locale !== 'pl') fileNameToOpen += `_${locale.toUpperCase()}`;
-  
+
+  if(indoorOnly) fileNameToOpen += '_WEW';
+
   console.log(fileNameToOpen);
+  console.log(id, przewagi, title, subtitle, subtitle_pl, led, power, cechy, szerokosc, wysokosc, glebokosc);
   
+
   await openWithModal(`${BASEURL}${OUTPUT_DIR}/${fileNameToOpen}.psd`);
 
-  
+
 
 
   await openWithModal(BASEURL + TEMPLATE_URL);
-  
-  
+
+
   // GET DOCUMENTS AND LAYERS
-  
+
   const templateDocument = await app.documents.getByName('szablon.psd');
   const decorationDocument = await app.documents.getByName(`${fileNameToOpen}.psd`);;
 
@@ -57,49 +69,66 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
 
   templateDocument.layers.getByName('BGS').merge();
   templateDocument.layers.getByName('BGS').delete();
-
-
-  // COPY DECORATION LAYER AND BG
-
-
-  await decorationDocument.layers.getByName('DEKORACJA').layers.getByName(id.toString()).copy();
-  await decorationDocument.close('DONOTSAVECHANGES')
-  await templateDocument.paste()
-  await templateDocument.activeLayers[0].move(templateDocument.layers.getByName('DEKORACJA'), constants.ElementPlacement.PLACEINSIDE);
-
+  
+  
+  // COPY BG
+  
   await decorationDocument.layers.getByName('BGS').copy();
-  await templateDocument.paste();
+  await pasteInPlace();
+  await templateDocument.layers.getByName('BGS').move(templateDocument.layers.getByName('Layer 1'), 'placeBefore');
+  
+  // COPY DEKORACJE
+  
+  
+  await decorationDocument.layers.getByName('DEKORACJA').layers.getByName(id.toString()).copy();
+  await pasteInPlace();
+  await templateDocument.layers.getByName(id.toString()).move(templateDocument.layers.getByName('DEKORACJA'), constants.ElementPlacement.PLACEINSIDE);
 
-  return;
 
+  // COPY PREVIEW
 
-  // RESIZE DECORATION
+  await decorationDocument.layers.getByName('WYMIARY').copy();
+  await templateDocument.layers.getByName('WYMIARY').merge()
+  await templateDocument.layers.getByName('WYMIARY').delete()
+  await pasteInPlace();
+  await templateDocument.layers.getByName('WYMIARY').move(templateDocument.layers.getByName('DEKORACJA'), 'placeBefore');
+
+  
+  
+  
+  await decorationDocument.close('DONOTSAVECHANGES');
+
+  
+// INIT DECORATION LAYER
 
   const decorationLayer = templateDocument.layers.getByName('DEKORACJA').layers.getByName(id.toString());
-  const VERTICAL = decorationLayer.boundsNoEffects.height > decorationLayer.boundsNoEffects.width;
-  const LONG = decorationLayer.boundsNoEffects.width / decorationLayer.boundsNoEffects.height > 2;
-  let scale = null;
+  
+  // RESIZE DECORATION
 
-  if (VERTICAL) {
-    scale = 500 / decorationLayer.boundsNoEffects.height * 100;
-    decorationLayer.scale(scale, scale);
-  } else {
-    scale = 500 / decorationLayer.boundsNoEffects.width * 100;
-    decorationLayer.scale(scale, scale);
-  }
+  // const VERTICAL = decorationLayer.boundsNoEffects.height > decorationLayer.boundsNoEffects.width;
+  // const LONG = decorationLayer.boundsNoEffects.width / decorationLayer.boundsNoEffects.height > 2;
+  // let scale = null;
+
+  // if (VERTICAL) {
+  //   scale = 500 / decorationLayer.boundsNoEffects.height * 100;
+  //   decorationLayer.scale(scale, scale);
+  // } else {
+  //   scale = 500 / decorationLayer.boundsNoEffects.width * 100;
+  //   decorationLayer.scale(scale, scale);
+  // }
 
 
 
   // ALIGN DECORATION
 
-  await alignAtoB(decorationLayer, templateDocument.layers.getByName('BGAREA'));
+  // await alignAtoB(decorationLayer, templateDocument.layers.getByName('BGAREA'));
 
   // TITLE    
 
   const titleLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('TYTUL');
 
 
-  await changeTitle(titleLayer.id, title.tlumaczenia.filter(i => i.kod_jezyka === locale )[0].tytul.toLowerCase());
+  await changeTitle(titleLayer.id, title.tlumaczenia.filter(i => i.kod_jezyka === locale)[0].tytul.toLowerCase());
 
   // SUBTITLE
 
@@ -125,13 +154,13 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
   // REMOVE OTHER LOCALES PRZEWAGI
 
   for (const group of przewagaLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').layers) {
-    if(group.name !== locale.toUpperCase()) {
+    if (group.name !== locale.toUpperCase()) {
       group.merge();
       group.delete();
     }
   }
-  
-  
+
+
   for (const element of przewagi) {
     const przewagaLayer = templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').layers.getByName(locale.toUpperCase()).layers.getByName(element);
     await moveLayer(przewagaLayer.name, przewagaLayer.id, subtitleLayer.boundsNoEffects.left, offset);
@@ -139,119 +168,126 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
     przewagaLayer.visible = true;
     przewagaLayer.move(przewagi2, constants.ElementPlacement.PLACEINSIDE);
   }
-  
-  
+
+
   // CLEANUP PRZEWAGI
-  
+
   templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').merge();
   templateDocument.layers.getByName('TEKSTY').layers.getByName('PRZEWAGI').delete();
   przewagi2.name = 'PRZEWAGI';
-  
+
 
   // CREATE PREVIEW
 
   const previewGroup = templateDocument.layers.getByName('WYMIARY');
   const previewalign = previewGroup.layers.getByName('previewalign');
+  
+  
   // Move preview group to the bottom
-  await moveLayer(previewGroup.name, previewGroup.id, subtitleLayer.boundsNoEffects.left, offset);
+  
+  const verticalOffset = templateDocument.layers.getByName('Layer 1').boundsNoEffects.top - previewGroup.boundsNoEffects.top;
+
+  await moveLayer(previewGroup.name, previewGroup.id, 0, verticalOffset);
+  await moveLayer(previewGroup.name, previewGroup.id, 0, offset);
+  
   //  Create preview image by duplicate and scale it
-  const prevImage = await decorationLayer.duplicate();
-  prevImage.name = 'preview image';
-  prevImage.move(previewGroup, 'placeInside');
+  // const prevImage = await decorationLayer.duplicate();
+  // prevImage.name = 'preview image';
+  // prevImage.move(previewGroup, 'placeInside');
 
-  if (VERTICAL) {
+  // if (VERTICAL) {
 
-    const PREVIEWIMAGESCALE = 120 / prevImage.bounds.height * 100;
-    await selectLayer(prevImage);
-    await prevImage.scale(PREVIEWIMAGESCALE, PREVIEWIMAGESCALE);
-    await changePrevAreaHeight(previewalign, prevImage.bounds.height);
-    await changePrevAreaWidth(previewalign, prevImage.boundsNoEffects.width, 0);
-    await selectLayer(prevImage);
-    await alignAtoB(prevImage, previewalign);
+  //   const PREVIEWIMAGESCALE = 120 / prevImage.bounds.height * 100;
+  //   await selectLayer(prevImage);
+  //   await prevImage.scale(PREVIEWIMAGESCALE, PREVIEWIMAGESCALE);
+  //   await changePrevAreaHeight(previewalign, prevImage.bounds.height);
+  //   await changePrevAreaWidth(previewalign, prevImage.boundsNoEffects.width, 0);
+  //   await selectLayer(prevImage);
+  //   await alignAtoB(prevImage, previewalign);
 
-  } else if (LONG) {
-
-
-    const PREVSCALE = (180) / prevImage.boundsNoEffects.width * 100;
-    await selectLayer(prevImage);
-    await prevImage.scale(PREVSCALE, PREVSCALE);
-    await changePrevAreaHeight(previewalign, prevImage.boundsNoEffects.height);
-    await selectLayer(prevImage);
-    await alignAtoB(prevImage, previewalign);
-  } else {
-
-    const PREVSCALE = (105) / prevImage.boundsNoEffects.width * 100;
-    await selectLayer(prevImage);
-    await prevImage.scale(PREVSCALE, PREVSCALE);
-    await changePrevAreaHeight(previewalign, prevImage.boundsNoEffects.height);
-    await selectLayer(prevImage);
-    await alignAtoB(prevImage, previewalign);
-  }
-
-  previewalign.visible = false;
-
-  // WIDTH
-  const widthGroup = previewGroup.layers.getByName('width');
-  const widthLine = widthGroup.layers.getByName('width-line');
-  const widthText = widthGroup.layers.getByName('width-text');
-
-  await changePrevAreaWidth(widthLine, prevImage.boundsNoEffects.width);
-  await selectLayer(widthText);
-  await alignAtoBhorizontal(widthText, previewalign);
-  await selectLayer(widthLine);
-  await alignAtoBhorizontal(widthLine, previewalign);
-  await moveLayer(widthGroup.name, widthGroup.id, 0, previewalign.boundsNoEffects.bottom - widthGroup.boundsNoEffects.top + 10);
-
-  if (szerokosc != 0) {
-    if (String(szerokosc).includes('.')) szerokosc = String(szerokosc).replace('.', ',');
-  } else {
-    widthGroup.visible = false;
-  }
-
-  widthText.textItem.contents = szerokosc + ' M';
+  // } else if (LONG) {
 
 
+  //   const PREVSCALE = (180) / prevImage.boundsNoEffects.width * 100;
+  //   await selectLayer(prevImage);
+  //   await prevImage.scale(PREVSCALE, PREVSCALE);
+  //   await changePrevAreaHeight(previewalign, prevImage.boundsNoEffects.height);
+  //   await selectLayer(prevImage);
+  //   await alignAtoB(prevImage, previewalign);
+  // } else {
 
-  // HEIGHT
+  //   const PREVSCALE = (105) / prevImage.boundsNoEffects.width * 100;
+  //   await selectLayer(prevImage);
+  //   await prevImage.scale(PREVSCALE, PREVSCALE);
+  //   await changePrevAreaHeight(previewalign, prevImage.boundsNoEffects.height);
+  //   await selectLayer(prevImage);
+  //   await alignAtoB(prevImage, previewalign);
+  // }
 
-  const heightGroup = await previewGroup.layers.getByName('height');
-  const heightLine = await heightGroup.layers.getByName('height-line');
-  const heightText = await heightGroup.layers.getByName('height-text');
+  // previewalign.visible = false;
 
-  await changePrevAreaWidth(heightLine, prevImage.boundsNoEffects.height);
-  await selectLayer(heightText);
-  await alignAtoBhorizontal(heightText, heightLine);
-  await selectLayer(heightGroup);
-  await heightGroup.rotate(-90, constants.AnchorPosition.TOPLEFT);
-  await moveLayer(heightGroup.name, heightGroup.id, prevImage.boundsNoEffects.right - heightGroup.boundsNoEffects.left + 10, heightGroup.boundsNoEffects.height);
+  // // WIDTH
+  // const widthGroup = previewGroup.layers.getByName('width');
+  // const widthLine = widthGroup.layers.getByName('width-line');
+  // const widthText = widthGroup.layers.getByName('width-text');
 
+  // await changePrevAreaWidth(widthLine, prevImage.boundsNoEffects.width);
+  // await selectLayer(widthText);
+  // await alignAtoBhorizontal(widthText, previewalign);
+  // await selectLayer(widthLine);
+  // await alignAtoBhorizontal(widthLine, previewalign);
+  // await moveLayer(widthGroup.name, widthGroup.id, 0, previewalign.boundsNoEffects.bottom - widthGroup.boundsNoEffects.top + 10);
 
-  if (wysokosc != 0) {
-    if (String(wysokosc).includes('.')) wysokosc = String(wysokosc).replace('.', ',');
-  } else {
-    heightGroup.visible = false;
-  }
+  // if (szerokosc != 0) {
+  //   if (String(szerokosc).includes('.')) szerokosc = String(szerokosc).replace('.', ',');
+  // } else {
+  //   widthGroup.visible = false;
+  // }
 
-  heightText.textItem.contents = wysokosc + ' M';
-  await selectLayer(heightText);
-  await heightText.rotate(180);
-
-  // DEPTH
-
-  const depthGroup = await previewGroup.layers.getByName('depth');
-  const depthText = await depthGroup.layers.getByName('depth-text');
-  await moveLayer(depthGroup.name, depthGroup.id, heightGroup.boundsNoEffects.right - depthGroup.boundsNoEffects.left - 15, heightGroup.boundsNoEffects.bottom - depthGroup.boundsNoEffects.bottom + 22);
+  // widthText.textItem.contents = szerokosc + ' M';
 
 
 
+  // // HEIGHT
 
-  if (glebokosc != 0) {
-    if (String(glebokosc).includes('.')) glebokosc = String(glebokosc).replace('.', ',');
-  } else {
-    depthGroup.visible = false;
-  }
+  // const heightGroup = await previewGroup.layers.getByName('height');
+  // const heightLine = await heightGroup.layers.getByName('height-line');
+  // const heightText = await heightGroup.layers.getByName('height-text');
 
-  depthText.textItem.contents = glebokosc + ' M';
+  // await changePrevAreaWidth(heightLine, prevImage.boundsNoEffects.height);
+  // await selectLayer(heightText);
+  // await alignAtoBhorizontal(heightText, heightLine);
+  // await selectLayer(heightGroup);
+  // await heightGroup.rotate(-90, constants.AnchorPosition.TOPLEFT);
+  // await moveLayer(heightGroup.name, heightGroup.id, prevImage.boundsNoEffects.right - heightGroup.boundsNoEffects.left + 10, heightGroup.boundsNoEffects.height);
+
+
+  // if (wysokosc != 0) {
+  //   if (String(wysokosc).includes('.')) wysokosc = String(wysokosc).replace('.', ',');
+  // } else {
+  //   heightGroup.visible = false;
+  // }
+
+  // heightText.textItem.contents = wysokosc + ' M';
+  // await selectLayer(heightText);
+  // await heightText.rotate(180);
+
+  // // DEPTH
+
+  // const depthGroup = await previewGroup.layers.getByName('depth');
+  // const depthText = await depthGroup.layers.getByName('depth-text');
+  // await moveLayer(depthGroup.name, depthGroup.id, heightGroup.boundsNoEffects.right - depthGroup.boundsNoEffects.left - 15, heightGroup.boundsNoEffects.bottom - depthGroup.boundsNoEffects.bottom + 22);
+
+
+
+
+  // if (glebokosc != 0) {
+  //   if (String(glebokosc).includes('.')) glebokosc = String(glebokosc).replace('.', ',');
+  // } else {
+  //   depthGroup.visible = false;
+  // }
+
+  // depthText.textItem.contents = glebokosc + ' M';
 
 
   // ID
@@ -266,7 +302,7 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
   // LED MOC
 
   const ledMocTextItem = templateDocument.layers.getByName('TEKSTY').layers.getByName('DANE TECH').layers.getByName('LED_MOC').textItem;
-  switch(locale){
+  switch (locale) {
     case 'pl':
       ledMocTextItem.contents = `pkt. led: ${led}, MOC: ${power}W`;
       break;
@@ -308,67 +344,55 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
   templateDocument.layers.getByName('BGAREA').delete();
 
   const indoor = document.getElementById('indoor').checked;
-  const indoorOnly = () => {
-    switch (subtitle_pl) {
-      case "dekoracja podwieszana 2D":
-        return true;
-        break;
-      case "dekoracja podwieszana 3D":
-        return true;
-        break;
-      default:
-        return false;
-    }
-  }
+ 
+
+  // if (!indoor && !indoorOnly()) {
+  //   console.log('!indoor');
+
+  //   templateDocument.layers.getByName('BGS').layers.getByName('ZEW').layers.forEach(i => {
+  //     if (i.name !== subtitle_pl) {
+  //       i.merge()
+  //       i.delete()
+  //     }
+  //   })
+
+  //   templateDocument.layers.getByName('BGS').layers.getByName('WEW').merge();
+  //   templateDocument.layers.getByName('BGS').layers.getByName('WEW').delete();
+  // } else if (indoorOnly()) {
+
+  //   console.log('indoor only');
+  //   alert(`Dekoracje typu "${subtitle_pl}" mogą być tylko indoor`)
+
+  //   templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.forEach(i => {
+  //     if (i.name !== subtitle_pl) {
+  //       i.merge()
+  //       i.delete()
+  //     }
+  //   })
+
+  //   templateDocument.layers.getByName('BGS').layers.getByName('ZEW').merge();
+  //   templateDocument.layers.getByName('BGS').layers.getByName('ZEW').delete();
 
 
-  if (!indoor && !indoorOnly()) {
-    console.log('!indoor');
+  // } else {
 
-    templateDocument.layers.getByName('BGS').layers.getByName('ZEW').layers.forEach(i => {
-      if (i.name !== subtitle_pl) {
-        i.merge()
-        i.delete()
-      }
-    })
+  //   if (templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.getByName(subtitle_pl)) {
+  //     templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.forEach(i => {
+  //       if (i.name !== subtitle_pl) {
+  //         i.merge()
+  //         i.delete()
+  //       }
+  //     })
 
-    templateDocument.layers.getByName('BGS').layers.getByName('WEW').merge();
-    templateDocument.layers.getByName('BGS').layers.getByName('WEW').delete();
-  } else if (indoorOnly()) {
+  //     templateDocument.layers.getByName('BGS').layers.getByName('ZEW').merge();
+  //     templateDocument.layers.getByName('BGS').layers.getByName('ZEW').delete();
+  //   } else {
+  //     templateDocument.layers.getByName('BGS').layers.getByName('ZEW').merge();
+  //     templateDocument.layers.getByName('BGS').layers.getByName('ZEW').delete();
+  //     alert('Zostawiono backgroundy indoor, choć ta grupa dekoracji nie powinna być pokazywana na backgroundach indoor 👁️')
+  //   }
 
-    console.log('indoor only');
-    alert(`Dekoracje typu "${subtitle_pl}" mogą być tylko indoor`)
-
-    templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.forEach(i => {
-      if (i.name !== subtitle_pl) {
-        i.merge()
-        i.delete()
-      }
-    })
-
-    templateDocument.layers.getByName('BGS').layers.getByName('ZEW').merge();
-    templateDocument.layers.getByName('BGS').layers.getByName('ZEW').delete();
-
-
-  } else {
-
-    if (templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.getByName(subtitle_pl)) {
-      templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.forEach(i => {
-        if (i.name !== subtitle_pl) {
-          i.merge()
-          i.delete()
-        }
-      })
-
-      templateDocument.layers.getByName('BGS').layers.getByName('ZEW').merge();
-      templateDocument.layers.getByName('BGS').layers.getByName('ZEW').delete();
-    } else {
-      templateDocument.layers.getByName('BGS').layers.getByName('ZEW').merge();
-      templateDocument.layers.getByName('BGS').layers.getByName('ZEW').delete();
-      alert('Zostawiono backgroundy indoor, choć ta grupa dekoracji nie powinna być pokazywana na backgroundach indoor 👁️')
-    }
-
-  }
+  // }
 
 
 
@@ -394,8 +418,8 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
 
   // SAVE
   let exportFileName = `${id}${document.getElementById('indoor').checked || indoorOnly() ? '_WEW' : ''}`;
-  if(locale !== 'pl') exportFileName += `_${locale.toUpperCase()}`;
-  
+  if (locale !== 'pl') exportFileName += `_${locale.toUpperCase()}`;
+
   const resultEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${OUTPUT_DIR}/${exportFileName}.psd`, { overwrite: true });
 
   await templateDocument.saveAs.psd(resultEntry);

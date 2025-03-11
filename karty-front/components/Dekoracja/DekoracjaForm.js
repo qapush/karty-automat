@@ -7,6 +7,7 @@ import { putPostDekoracja } from "@/utils/putPostDekoracja";
 import SelectPrzewagi from "./SelectPrzewagi";
 import { useLocale } from "next-intl";
 import NazwaTlumaczenie from "./NazwaTlumaczenie";
+import SelectCechy from "./SelectCechy";
 
 
 const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
@@ -140,6 +141,18 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
 
   }
 
+  const handleSelectCechy = (selected) => {
+
+
+    setFormData((prev) => ({
+      ...prev,
+      cechy: [...selected],
+    }));
+
+
+
+  }
+
   const handleTłumaczenieChange = (e) => {
 
     const titleLocale = e.target.dataset.locale === 'pl' ? 'pl' : locale;
@@ -220,28 +233,9 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
           || formData.typ === "31f5f61c-7f04-4e12-9103-b6bd104d033c"
           || formData.typ === "a11617a0-b8f8-4a92-b616-7e47dbec0c5f"
           || formData.typ === "51cc0396-1774-4646-af27-e6b74aa4757d") && <div style={{ padding: 10, borderRadius: 1, backgroundColor: "lightgreen", margin: "1rem 0" }}><span>Ten typ dekoracji może byc tylko zewnętrzny</span></div>}
+        
         <SelectPrzewagi selected={formData.przewagi} all={przewagi} onChange={handleSelectPrzewagi} />
-
-        <label >
-          Cechy (max 3):
-          <select
-            multiple
-            name="cechy"
-            required
-            value={formData.cechy}
-            onChange={handleMultipleChange}
-            className={`${styles.select} ${styles.largeSelect}`}
-          >
-            {cechy
-              .sort((a, b) => a.tlumaczenia[0].nazwa.localeCompare(b.tlumaczenia[0].nazwa))
-              .map((cecha) => (
-              <option key={cecha.id} value={cecha.id}>
-                {String(cecha.tlumaczenia[0].nazwa).toUpperCase()}
-              </option>
-            ))}
-          </select>
-        </label>
-
+        <SelectCechy all={cechy} selected={formData.cechy} onChange={handleSelectCechy} />
         <label >
           Ilość LED:
           <input
