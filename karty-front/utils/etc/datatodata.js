@@ -43,7 +43,9 @@ async function addDekoracjaEntries(dekoracjaArray) {
 async function main() {
   try {
     // Read and parse JSON data from the file
-    const data = await fs.readFile('./decoration_results_2.json', 'utf-8');
+    const data = await fs.readFile('../../../karty-fetch/decoration_results.json', 'utf-8');
+    console.log(data);
+    
     const dekoracjaArray = JSON.parse(data);
 
     // Call the function with parsed data

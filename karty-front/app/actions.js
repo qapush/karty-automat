@@ -18,12 +18,14 @@ export const getTranslation = async (titles, locale) => {
     })
 
     if(!data.ok) {
+        
         const res = await data.json();
     }
     
-
+    
     if(data.ok) {
         const res = await data.json();
+        console.log(res);
         return res;
     }
 }

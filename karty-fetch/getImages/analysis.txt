@@ -1,0 +1,17 @@
+Total files in /images/: 137
+Total unique images in /images/: 137
+Total duplicate images in /images/: 0
+Total IDs in ids_images.txt: 139
+Total extra images in /images/ (not in ids_images.txt): 1
+Total missing images (in ids_images.txt but not in /images/): 3
+
+Duplicate images:
+None
+
+Extra images (not in ids_images.txt):
+.BridgeSort
+
+Missing images (in ids_images.txt but not in /images/):
+195481
+188127
+140128
