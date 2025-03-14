@@ -18,6 +18,11 @@ goldenColor.rgb.red = 175;
 goldenColor.rgb.green = 134;
 goldenColor.rgb.blue = 84;
 
+const noIdText = {
+  pl: 'Wizualizacja poglądowa – orientacyjne wymiary,\nbez pełnych rozwiązań technologicznych.',
+  en: 'Conceptual visualization – approximate dimensions,\nwithout full technical solutions.',
+}
+
 
 module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
 
@@ -88,19 +93,19 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
   // SUBTITLE
 
   const subtitleLayer = await templateDocument.createTextLayer({
-    contents: subtitle,
-    fontSize: 22.92,
+    contents: noIdText[locale].replace(/\n/g, '\r'),
+    fontSize:   20.83636363636364,
     fontName: 'Lato-Regular',
     position: {
       x: 53,
-      y: titleLayer.boundsNoEffects.bottom + 56
+      y: titleLayer.boundsNoEffects.bottom + 29
     },
     textColor: goldenColor
   })
 
   subtitleLayer.name = "PODTYTUL";
 
-  let offset = subtitleLayer.bounds.bottom + 13;
+  let offset = subtitleLayer.bounds.bottom + 17;
 
 
 

@@ -1,0 +1,106 @@
+import puppeteer from 'puppeteer-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
+import { setTimeout } from 'node:timers/promises';
+
+puppeteer.use(StealthPlugin());
+
+const baseUrl = 'http://localhost:20290';
+
+const userAgents = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0.2 Safari/605.1.15',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36',
+];
+
+function getRandomDelay(min = 1000, max = 2000) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+async function fetchDecorationData(page, url) {
+    await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
+
+    const extractText = async (selector) => {
+        const element = await page.$(selector);
+        return element ? (await page.evaluate((el) => el.textContent?.trim(), element)) : 'N/A';
+    };
+
+    return {
+        nazwa: await extractText('#wartosc_nazwa'),
+        szerokosc: (await extractText('#wartosc_srednica')) || (await extractText('#wartosc_szerokosc')) || '0',
+        wysokosc: await extractText('#wartosc_wysokosc'),
+        glebokosc: (await extractText('#wartosc_srednica')) || (await extractText('#wartosc_dlugosc')) || '0',
+        led: await extractText('#wartosc_i_led'),
+        moc: await extractText('#wartosc_moc'),
+    };
+}
+
+async function fetchDataForId(id) {
+    const browser = await puppeteer.launch({
+        headless: 'new', // Fix for server environments
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
+
+    const page = await browser.newPage();
+    const randomUserAgent = userAgents[Math.floor(Math.random() * userAgents.length)];
+    await page.setUserAgent(randomUserAgent);
+
+    const mainPageUrl = `${baseUrl}?s%5BIdProduktu%5D=${id}&m=134&d=ASC&sort=&listaGrup=000+-+OSWIETLENIE_ZEW_STRING`;
+
+    console.log(`Fetching data for ID ${id}`);
+
+    await page.goto(mainPageUrl, { waitUntil: 'networkidle2', timeout: 60000 });
+
+    try {
+        await page.waitForSelector('#widokZerowych', { timeout: 60000 });
+
+        const isChecked = await page.$eval('#widokZerowych', (checkbox) => checkbox.checked);
+
+        if (!isChecked) {
+            await page.click('#widokZerowych');
+            await setTimeout(getRandomDelay());
+        }
+
+        await setTimeout(getRandomDelay());
+
+        const links = await page.$$eval('a', (anchors) =>
+            anchors.map((anchor) => ({
+                text: anchor.textContent?.trim() || '',
+                href: anchor.getAttribute('href') || '',
+            }))
+        );
+
+        const targetLink = links.find((link) => link.text === id);
+        if (!targetLink) {
+            console.warn(`No link found for ID ${id}`);
+            await browser.close();
+            return null;
+        }
+
+        const fullUrl = `http://192.168.1.5/stany/${targetLink.href}`;
+        const decorationData = await fetchDecorationData(page, fullUrl);
+
+        await browser.close();
+        return { id, decorationData };
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        await browser.close();
+        return null;
+    }
+}
+
+export async function GET(req, { params }) {
+    try {
+        const { id } = params; // Correct extraction of ID
+        console.log(`Scraping data for ID: ${id}`);
+
+        const res = await fetchDataForId(id);
+        if (!res) {
+            return new Response(JSON.stringify({ success: false, message: 'No data found' }), { status: 404 });
+        }
+
+        return new Response(JSON.stringify({ success: true, data: res }), { status: 200 });
+    } catch (error) {
+        console.error('Error:', error);
+        return new Response(JSON.stringify({ success: false, error: error.message }), { status: 500 });
+    }
+}

@@ -42,11 +42,12 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
     }
   }
 
+  
 
 
   let fileNameToOpen = id;
 
-  if(indoorOnly) fileNameToOpen += '_WEW';
+  if(indoorOnly()) fileNameToOpen += '_WEW';
   
 
   await openWithModal(`${BASEURL}${OUTPUT_DIR}/${fileNameToOpen}.psd`);

@@ -16,6 +16,11 @@ const nextConfig = {
       ],
         minimumCacheTTL: 2678400 // 31 days,
     },
+    serverExternalPackages: [
+    "puppeteer-extra",
+    "puppeteer-extra-plugin-stealth",
+    "puppeteer-extra-plugin-recaptcha",
+    ],
 };
  
 export default withNextIntl(nextConfig);

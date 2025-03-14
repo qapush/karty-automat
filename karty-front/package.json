@@ -15,6 +15,10 @@
     "lottie-react": "^2.4.1",
     "next": "15.0.2",
     "next-intl": "^3.26.5",
+    "puppeteer": "^24.4.0",
+    "puppeteer-core": "^24.4.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
     "react-toastify": "^11.0.3"
