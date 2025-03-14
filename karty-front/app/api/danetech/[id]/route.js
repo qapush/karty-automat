@@ -7,8 +7,8 @@ import { setTimeout } from 'node:timers/promises';
 
 puppeteer.use(StealthPlugin());
 
-// const baseUrl = 'http://localhost:20290';
-const baseUrl = 'http://192.168.1.5/stany/index.php';
+const baseUrl = 'http://localhost:20290';
+// const baseUrl = 'http://192.168.1.5/stany/index.php';
 
 const userAgents = [
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
