@@ -26,6 +26,8 @@ const noIdText = {
 
 module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
 
+  
+
 
   const { TEMPLATE_URL, OUTPUT_DIR, TEMP_DIR, NOID_PREVIEW_DIR } = config;
   const BASEURL = localStorage.getItem('designLetter') + ':/';
@@ -286,15 +288,34 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
   // BG
   templateDocument.layers.getByName('BGAREA').delete();
 
-  const indoor = document.getElementById('indoor').checked;
+  const indoor = document.getElementById('noid-indoor').checked;
+
+  
   const indoorOnly = () => {
     switch (subtitle_pl) {
       case "dekoracja podwieszana 2D":
         return true;
-        break;
       case "dekoracja podwieszana 3D":
         return true;
-        break;
+      default:
+        return false;
+    }
+  }
+  
+  const outdoorOnly = () => {
+    switch (subtitle_pl) {
+      case "dekoracja latarniowa, podwieszana 2D":
+        return true;
+      case "dekoracja latarniowa, podwieszana 3D":
+        return true;
+      case "dekoracja latarniowa, stojąca 2D":
+        return true;
+      case "dekoracja latarniowa, stojąca 3D":
+        return true;
+      case "dekoracja uliczna, podwieszana 2D":
+        return true;
+      case "dekoracja uliczna, podwieszana 3D":
+        return true;
       default:
         return false;
     }
@@ -302,7 +323,8 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
 
 
   if (!indoor && !indoorOnly()) {
-    console.log('!indoor');
+   
+    console.log('Outdoor, not indoor only');
 
     templateDocument.layers.getByName('BGS').layers.getByName('ZEW').layers.forEach(i => {
       if (i.name !== subtitle_pl) {
@@ -313,9 +335,10 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
 
     templateDocument.layers.getByName('BGS').layers.getByName('WEW').merge();
     templateDocument.layers.getByName('BGS').layers.getByName('WEW').delete();
-  } else if (indoorOnly()) {
+  } else if (indoorOnly() && !indoor) {
 
     console.log('indoor only');
+    
     alert(`Dekoracje typu "${subtitle}" mogą być tylko indoor`)
 
     templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.forEach(i => {
@@ -331,7 +354,7 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
 
   } else {
 
-    if (templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.getByName(subtitle)) {
+    if (templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.getByName(subtitle_pl)) {
       templateDocument.layers.getByName('BGS').layers.getByName('WEW').layers.forEach(i => {
         if (i.name !== subtitle_pl) {
           i.merge()
@@ -372,7 +395,7 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
 
 
   // SAVE
-  let exportFileName = `${localStorage.getItem('folderName')}${document.getElementById('indoor').checked || indoorOnly() ? '_WEW' : ''}`;
+  let exportFileName = `${localStorage.getItem('folderName')}${indoor || indoorOnly() ? '_WEW' : ''}`;
   if(locale !== 'pl') exportFileName += `_${locale.toUpperCase()}`;
   const resultEntry = await fs.createEntryWithUrl(`${localStorage.getItem('designLetter')}:/${OUTPUT_DIR}/${exportFileName}.psd`, { overwrite: true });
 
