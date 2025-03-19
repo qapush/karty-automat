@@ -29,16 +29,16 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
   
 
 
-  const { TEMPLATE_URL, OUTPUT_DIR, TEMP_DIR, NOID_PREVIEW_DIR } = config;
+  const { TEMPLATE_URL, OUTPUT_DIR, TEMP_DIR, NOID_PREVIEW_DIR, SRC_DIR } = config;
   const BASEURL = localStorage.getItem('designLetter') + ':/';
 
   const locale = document.getElementById('noid-locale').value;
 
     // CHODYRA PATCH
   
-    const SRC_DIR = localStorage.getItem('folderName') === 'CC' ?
-      '/PROJEKTY_2025/55_HYDE_PARK_WINTER_WONDERLAND/ASSETS/ID/' :
-      config.SRC_DIR;
+    // const SRC_DIR = localStorage.getItem('folderName') === 'CC' ?
+    //   '/PROJEKTY_2025/55_HYDE_PARK_WINTER_WONDERLAND/ASSETS/ID/' :
+    //   config.SRC_DIR;
 
   // OPEN DOCUMENTS
 

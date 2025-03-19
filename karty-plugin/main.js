@@ -44,7 +44,9 @@ async function idLoop() {
   if (document.getElementById('idField').value) {
     const id = document.getElementById('idField').value;
     const locale = document.getElementById('id-locale').value;
-    const data = await fetch(`https://karty-automat.vercel.app/api/dekoracje/${id}?locale=${locale}`);
+
+    const data = await fetch(`http://ak.local:3000/api/dekoracje/${id}?locale=${locale}`);
+
     const element = await data.json();
 
     if (element.error) {
@@ -89,7 +91,7 @@ async function noidLoop() {
 
   const id = NOID_MAP[localStorage.getItem('folderName')];
   const locale = document.getElementById('noid-locale').value;
-  const data = await fetch(`https://karty-automat.vercel.app/api/dekoracje/${id}?locale=${locale}`);
+  const data = await fetch(`http://ak.local:3000/api/dekoracje/${id}?locale=${locale}`);
   const element = await data.json();
 
   if (element.error) {  
@@ -123,7 +125,7 @@ async function updateByIdLoop() {
   if (document.getElementById('idField').value) {
     const id = document.getElementById('idField').value;
     const locale = document.getElementById('id-locale').value;
-    const data = await fetch(`https://karty-automat.vercel.app/api/dekoracje/${id}?locale=${locale}`);
+    const data = await fetch(`http://ak.local:3000/api/dekoracje/${id}?locale=${locale}`);
     const element = await data.json();
 
     if (element.error) {

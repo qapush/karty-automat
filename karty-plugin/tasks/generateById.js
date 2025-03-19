@@ -23,7 +23,7 @@ goldenColor.rgb.blue = 84;
 module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power, cechy, szerokosc, wysokosc, glebokosc }) => {
 
 
-  const { TEMPLATE_URL, OUTPUT_DIR } = config;
+  const { TEMPLATE_URL, OUTPUT_DIR, SRC_DIR } = config;
   const BASEURL = localStorage.getItem('designLetter') + ':/';
 
   // LOCALE
@@ -32,9 +32,9 @@ module.exports = async ({ id, przewagi, title, subtitle, subtitle_pl, led, power
 
   // CHODYRA PATCH
 
-  const SRC_DIR = localStorage.getItem('folderName') === 'CC' ?
-    '/PROJEKTY_2025/55_HYDE_PARK_WINTER_WONDERLAND/ASSETS/ID/' :
-    config.SRC_DIR;
+  // const SRC_DIR = localStorage.getItem('folderName') === 'CC' ?
+  //   '/PROJEKTY_2025/55_HYDE_PARK_WINTER_WONDERLAND/ASSETS/ID/' :
+  //   config.SRC_DIR;
 
 
   // OPEN DOCUMENTS

@@ -8,6 +8,7 @@ import SelectPrzewagi from "./SelectPrzewagi";
 import { useLocale } from "next-intl";
 import NazwaTlumaczenie from "./NazwaTlumaczenie";
 import SelectCechy from "./SelectCechy";
+import { getTechData } from "@/app/actions";
 
 
 const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
@@ -20,6 +21,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
   const [typy, setTypy] = useState([]);
   const [cechy, setCechy] = useState([]);
   const [przewagi, setPrzewagi] = useState([]);
+  const [danetech, setDanetech] = useState('');
 
   const getTitles = (data) => {
     const res = {};
@@ -76,6 +78,21 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
   }, [dekoracjaData]);
 
   // FORM
+
+  const daneEnova = async () => {
+    console.log(formData.id);
+    
+   const res = await getTechData(formData.id);
+  
+   if(res.success) {
+     const data = res.data.decorationData;
+     console.log(data);
+     setDanetech(`MOC:${data.moc}, \nLED: ${data.led}, \nWYSOKOŚĆ: ${data.wysokosc}, \nSZEROKOŚĆ: ${data.szerokosc}, \nGŁĘBOKOŚĆ: ${data.glebokosc}`);
+   } else {
+     return 'Nie znaleziono danych w ENOVA';
+   }
+
+  }
 
 
   const handleSubmit = async (e) => {
@@ -236,6 +253,14 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
         
         <SelectPrzewagi selected={formData.przewagi} all={przewagi} onChange={handleSelectPrzewagi} />
         <SelectCechy all={cechy} selected={formData.cechy} onChange={handleSelectCechy} />
+        <div>
+        <button type="button" className='btn' onClick={daneEnova}>
+          Dane tech z ENOVA 🔍
+        </button>
+        <div>
+          { danetech ? <pre>{danetech}</pre> : null }
+        </div>
+        </div>
         <label >
           Ilość LED:
           <input

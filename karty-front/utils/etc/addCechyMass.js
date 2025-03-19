@@ -47,7 +47,7 @@ const features = [
     "Blacha\nperforowana"
   ];
   
-  const endpoint = 'https://karty-automat.vercel.app/api/cechy';
+  const endpoint = 'http://ak.local:3000/api/dekoracje/cechy';
   
   // Function to post each feature
   const postFeature = async (feature) => {
