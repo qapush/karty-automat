@@ -6,7 +6,7 @@ export default async function LogsPage() {
 
     return (
         <div>
-            <h1 className='page-title'>Errors</h1>
+            <h1 className='page-title'>Errors list</h1>
             <pre> 
                 {errorsData}
             </pre>
