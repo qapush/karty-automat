@@ -1,7 +1,11 @@
 'use server';
 
+// GET TECH DATA FROM ENOVA
+
 import axios from 'axios';
 import * as cheerio from 'cheerio';
+import fs from 'fs';
+import path from 'path';
 
 const baseUrl = 'http://192.168.1.5/stany';
 
@@ -71,6 +75,9 @@ export async function getTechData (id) {
     }
 }
 
+
+// DEEPL TRANSLATION
+
 export const getTranslation = async (titles, locale) => {
 
     const deepKey = process.env.DEEPL_KEY;
@@ -99,4 +106,37 @@ export const getTranslation = async (titles, locale) => {
         console.log(res);
         return res;
     }
+}
+
+
+// LOGS
+
+export async function logs() {
+  // Path to the PM2 log file
+  const logFilePath = path.resolve(process.env.HOME, '.pm2', 'logs', 'dekoracje-out.log');
+
+  try {
+    // Read the log file synchronously
+    const logs = fs.readFileSync(logFilePath, 'utf8');
+    return logs;
+  } catch (error) {
+    console.error('Error reading log file:', error);
+    return { error: 'Failed to read PM2 logs' };
+  }
+}
+
+// ERRORS
+
+export async function errors() {
+  // Path to the PM2 log file
+  const logFilePath = path.resolve(process.env.HOME, '.pm2', 'logs', 'dekoracje-error.log');
+
+  try {
+    // Read the log file synchronously
+    const logs = fs.readFileSync(logFilePath, 'utf8');
+    return logs;
+  } catch (error) {
+    console.error('Error reading log file:', error);
+    return { error: 'Failed to read PM2 logs' };
+  }
 }
