@@ -16,6 +16,7 @@ async function fetchDecorationData(html) {
         glebokosc: extractText('#wartosc_srednica') || extractText('#wartosc_dlugosc') || '0',
         led: extractText('#wartosc_i_led'),
         moc: extractText('#wartosc_moc'),
+        obraz: $('#obraz img').attr('src') || 'N/A',
     };
 }
 
