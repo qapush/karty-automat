@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 
 // const baseUrl = 'http://localhost:20290';
-const baseUrl = 'http://192.168.1.5/stany';
+const baseUrl = process.env.STANY_URL;
 
 async function fetchDecorationData(html) {
     const $ = cheerio.load(html);
