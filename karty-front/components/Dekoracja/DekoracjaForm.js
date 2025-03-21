@@ -21,7 +21,7 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
   const [typy, setTypy] = useState([]);
   const [cechy, setCechy] = useState([]);
   const [przewagi, setPrzewagi] = useState([]);
-  const [danetech, setDanetech] = useState('');
+  const [danetech, setDanetech] = useState(null);
 
   const getTitles = (data) => {
     const res = {};
@@ -87,7 +87,8 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
    if(res.success) {
      const data = res.data.decorationData;
      console.log(data);
-     setDanetech(`MOC:${data.moc}, \nLED: ${data.led}, \nWYSOKOŚĆ: ${data.wysokosc}, \nSZEROKOŚĆ: ${data.szerokosc}, \nGŁĘBOKOŚĆ: ${data.glebokosc}`);
+    //  setDanetech(`MOC:${data.moc}, \nLED: ${data.led}, \nWYSOKOŚĆ: ${data.wysokosc}, \nSZEROKOŚĆ: ${data.szerokosc}, \nGŁĘBOKOŚĆ: ${data.glebokosc}`);
+    setDanetech(data);
    } else {
      return 'Nie znaleziono danych w ENOVA';
    }
@@ -258,7 +259,10 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
           Dane tech z ENOVA 🔍
         </button>
         <div>
-          { danetech ? <pre>{danetech}</pre> : null }
+          { danetech ? <pre>{`MOC:${danetech.moc}, \nLED: ${danetech.led}, \nWYSOKOŚĆ: ${danetech.wysokosc}, \nSZEROKOŚĆ: ${danetech.szerokosc}, \nGŁĘBOKOŚĆ: ${danetech.glebokosc}`}</pre> : null }
+        </div>
+        <div>
+          { danetech?.obraz ? <img src={danetech?.obraz}/> : null }
         </div>
         </div>
         <label >
