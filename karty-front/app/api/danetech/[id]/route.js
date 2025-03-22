@@ -9,7 +9,7 @@ async function fetchDecorationData(html) {
 
     const extractText = (selector) => $(selector).text().trim() || 'N/A';
 
-    return {
+    const resultObject = {
         nazwa: extractText('#wartosc_nazwa'),
         szerokosc: extractText('#wartosc_srednica') || extractText('#wartosc_szerokosc') || '0',
         wysokosc: extractText('#wartosc_wysokosc'),
@@ -18,6 +18,10 @@ async function fetchDecorationData(html) {
         moc: extractText('#wartosc_moc'),
         obraz: $('#obraz img').attr('src') || 'N/A',
     };
+
+    console.log('Danetech fetched', resultObject);
+
+    return resultObject;
 }
 
 async function fetchDataForId(id) {
