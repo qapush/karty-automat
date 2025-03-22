@@ -9,7 +9,7 @@ export default function DekoracjeTable({dekoracjeData}) {
     const [query, setQuery] = useState('');
     // Fetch decorations
     
-    const dekoracje = dekoracjeData.filter(dekoracja => dekoracja.id.toString().includes(query));
+    const dekoracje = dekoracjeData.filter(dekoracja => dekoracja.id.toString().padStart(6, '0').includes(query));
     const handleChange = (e) => {
       setQuery(e.target.value);
     }
@@ -37,7 +37,7 @@ export default function DekoracjeTable({dekoracjeData}) {
                         
                         
                         return <tr key={dekoracja.id}>
-                        <td>{dekoracja.id}</td>
+                        <td>{dekoracja.id.toString().padStart(6, '0')}</td>
                         <td>
                             <Link href={`dekoracje/${dekoracja.id}`} prefetch={false}>
                                 <span
