@@ -32,3 +32,19 @@
   margin: 2rem auto;
   width: fit-content;
 }
+
+.daneTech {
+  background-color: #d3d3d3;
+  padding: 1rem;
+}
+
+
+.daneTech :global .btm {
+  margin-top: 0;
+}
+
+.stanyPreview {
+  width: 600px;
+  max-width: 90%;
+  margin: 1rem 0;
+}

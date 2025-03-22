@@ -254,16 +254,16 @@ const DekoracjaForm = ({ dekoracjaData = null, id = '', add = false }) => {
         
         <SelectPrzewagi selected={formData.przewagi} all={przewagi} onChange={handleSelectPrzewagi} />
         <SelectCechy all={cechy} selected={formData.cechy} onChange={handleSelectCechy} />
-        <div>
-        <button type="button" className='btn' onClick={daneEnova}>
-          Dane tech z ENOVA 🔍
-        </button>
-        <div>
-          { danetech ? <pre>{`MOC:${danetech.moc}, \nLED: ${danetech.led}, \nWYSOKOŚĆ: ${danetech.wysokosc}, \nSZEROKOŚĆ: ${danetech.szerokosc}, \nGŁĘBOKOŚĆ: ${danetech.glebokosc}`}</pre> : null }
-        </div>
-        <div>
-          { danetech?.obraz ? <img src={danetech?.obraz}/> : null }
-        </div>
+        <div className={styles.daneTech}>
+          <button type="button" className='btn' onClick={daneEnova}>
+            Dane tech z ENOVA 🔍
+          </button>
+          <div>
+            { danetech ? <pre>{`MOC:${danetech.moc}, \nLED: ${danetech.led}, \nWYSOKOŚĆ: ${danetech.wysokosc}, \nSZEROKOŚĆ: ${danetech.szerokosc}, \nGŁĘBOKOŚĆ: ${danetech.glebokosc}`}</pre> : null }
+          </div>
+          <div>
+            { danetech?.obraz ? <img className={styles.stanyPreview} src={danetech?.obraz}/> : null }
+          </div>
         </div>
         <label >
           Ilość LED:
